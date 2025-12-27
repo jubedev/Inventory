@@ -10,22 +10,17 @@ class TipoEquipo extends Model
 {
     use HasFactory;
 
-    protected $table = 'tipos_equipo';
+    protected $table = 'tipo_equipos';
 
     protected $fillable = [
-        'nombre_tipo',
+        'nombre',
         'descripcion',
     ];
 
     protected $casts = [
-        'fecha_creacion' => 'datetime',
-        'ultima_actualizacion' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
-
-    // Laravel busca created_at/updated_at por defecto
-    // Mapear a los nombres personalizados
-    const CREATED_AT = 'fecha_creacion';
-    const UPDATED_AT = 'ultima_actualizacion';
 
     /**
      * Relación: Un tipo de equipo puede tener muchos equipos

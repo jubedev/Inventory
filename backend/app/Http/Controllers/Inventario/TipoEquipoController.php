@@ -24,8 +24,8 @@ class TipoEquipoController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nombre_tipo' => 'required|string|max:100',
-            'descripcion' => 'nullable|string|max:255',
+            'nombre' => 'required|string|max:100',
+            'descripcion' => 'nullable|string',
         ]);
 
         $tipo = TipoEquipo::create($validated);
@@ -53,8 +53,8 @@ class TipoEquipoController extends Controller
         $tipo = TipoEquipo::findOrFail($id);
 
         $validated = $request->validate([
-            'nombre_tipo' => 'sometimes|string|max:100',
-            'descripcion' => 'nullable|string|max:255',
+            'nombre' => 'sometimes|string|max:100',
+            'descripcion' => 'nullable|string',
         ]);
 
         $tipo->update($validated);
