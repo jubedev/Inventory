@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
+import { useTiposEquipo } from '../../../hooks/useTiposEquipo'
 
 const EquipoModal = ({ equipo, onClose, onSubmit }) => {
+  const { tiposEquipo, loading: loadingTipos } = useTiposEquipo()
   const [formData, setFormData] = useState({
     activo: '',
     marca: '',
@@ -236,13 +238,17 @@ const EquipoModal = ({ equipo, onClose, onSubmit }) => {
                 value={formData.tipo_equipo_id}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                disabled={loadingTipos}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100"
               >
-                <option value="">Seleccione un tipo</option>
-                <option value="1">Computador</option>
-                <option value="2">Monitor</option>
-                <option value="3">Impresora</option>
-                <option value="4">Otro</option>
+                <option value="">
+                  {loadingTipos ? 'Cargando...' : 'Seleccione un tipo'}
+                </option>
+                {tiposEquipo.map((tipo) => (
+                  <option key={tipo.id} value={tipo.id}>
+                    {tipo.nombre}
+                  </option>
+                ))}
               </select>
             </div>
 
