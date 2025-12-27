@@ -27,7 +27,7 @@ class TipoEquipo extends Model
      */
     public function equipos(): HasMany
     {
-        return $this->hasMany(Equipo::class, 'tipos_equipo_id');
+        return $this->hasMany(Equipo::class, 'tipo_equipo_id');
     }
 
     /**
@@ -35,6 +35,6 @@ class TipoEquipo extends Model
      */
     public function scopeBuscarPorNombre($query, string $nombre)
     {
-        return $query->where('nombre_tipo', 'like', "%{$nombre}%");
+        return $query->where('nombre', 'like', "%{$nombre}%");
     }
 }

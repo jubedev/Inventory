@@ -41,7 +41,7 @@ class Equipo extends Model
         'direccion_ip',
         'mac_address',
         'observaciones',
-        'tipos_equipo_id',
+        'tipo_equipo_id',
     ];
 
     protected $casts = [
@@ -63,7 +63,7 @@ class Equipo extends Model
      */
     public function tipoEquipo(): BelongsTo
     {
-        return $this->belongsTo(TipoEquipo::class, 'tipos_equipo_id');
+        return $this->belongsTo(TipoEquipo::class, 'tipo_equipo_id');
     }
 
     /**
