@@ -46,7 +46,7 @@ const DashboardHero = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <StatsCard
             title="Total Equipos"
-            value={stats?.total_equipos || 0}
+            value={stats?.total || 0}
             icon="💻"
             color="blue"
           />
@@ -57,8 +57,8 @@ const DashboardHero = () => {
             color="green"
           />
           <StatsCard
-            title="En Uso"
-            value={stats?.en_uso || 0}
+            title="Asignados"
+            value={stats?.asignados || 0}
             icon="🔧"
             color="yellow"
           />
@@ -82,19 +82,19 @@ const DashboardHero = () => {
                 {stats?.disponibles || 0}
               </p>
               <p className="text-xs text-gray-500 mt-1">
-                {stats?.total_equipos > 0
-                  ? Math.round((stats.disponibles / stats.total_equipos) * 100)
+                {stats?.total > 0
+                  ? Math.round((stats.disponibles / stats.total) * 100)
                   : 0}%
               </p>
             </div>
             <div className="text-center p-4 bg-yellow-50 rounded-lg">
-              <p className="text-sm text-gray-600">En Uso</p>
+              <p className="text-sm text-gray-600">Asignados</p>
               <p className="text-2xl font-bold text-yellow-600">
-                {stats?.en_uso || 0}
+                {stats?.asignados || 0}
               </p>
               <p className="text-xs text-gray-500 mt-1">
-                {stats?.total_equipos > 0
-                  ? Math.round((stats.en_uso / stats.total_equipos) * 100)
+                {stats?.total > 0
+                  ? Math.round((stats.asignados / stats.total) * 100)
                   : 0}%
               </p>
             </div>
@@ -104,8 +104,8 @@ const DashboardHero = () => {
                 {stats?.en_mantenimiento || 0}
               </p>
               <p className="text-xs text-gray-500 mt-1">
-                {stats?.total_equipos > 0
-                  ? Math.round((stats.en_mantenimiento / stats.total_equipos) * 100)
+                {stats?.total > 0
+                  ? Math.round((stats.en_mantenimiento / stats.total) * 100)
                   : 0}%
               </p>
             </div>
