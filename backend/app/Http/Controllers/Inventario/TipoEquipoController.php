@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Inventario;
 
+use App\Http\Controllers\Controller;
 use App\Models\Inventario\TipoEquipo;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class TipoEquipoController extends Controller
 {
@@ -12,15 +14,8 @@ class TipoEquipoController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $tipos = TipoEquipo::withCount('equipos')->get();
+        return response()->json($tipos);
     }
 
     /**
@@ -28,38 +23,58 @@ class TipoEquipoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'nombre_tipo' => 'required|string|max:100',
+            'descripcion' => 'nullable|string|max:255',
+        ]);
+
+        $tipo = TipoEquipo::create($validated);
+
+        return response()->json([
+            'message' => 'Tipo de equipo creado exitosamente',
+            'data' => $tipo
+        ], Response::HTTP_CREATED);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(TipoEquipo $tipoEquipo)
+    public function show(string $id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(TipoEquipo $tipoEquipo)
-    {
-        //
+        $tipo = TipoEquipo::with('equipos')->findOrFail($id);
+        return response()->json($tipo);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, TipoEquipo $tipoEquipo)
+    public function update(Request $request, string $id)
     {
-        //
+        $tipo = TipoEquipo::findOrFail($id);
+
+        $validated = $request->validate([
+            'nombre_tipo' => 'sometimes|string|max:100',
+            'descripcion' => 'nullable|string|max:255',
+        ]);
+
+        $tipo->update($validated);
+
+        return response()->json([
+            'message' => 'Tipo de equipo actualizado exitosamente',
+            'data' => $tipo
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TipoEquipo $tipoEquipo)
+    public function destroy(string $id)
     {
-        //
+        $tipo = TipoEquipo::findOrFail($id);
+        $tipo->delete();
+
+        return response()->json([
+            'message' => 'Tipo de equipo eliminado exitosamente'
+        ]);
     }
 }
