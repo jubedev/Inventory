@@ -13,9 +13,11 @@ const EquiposListPage = () => {
   const filteredEquipos = equipos.filter((equipo) => {
     const searchLower = searchTerm.toLowerCase()
     return (
-      equipo.nombre?.toLowerCase().includes(searchLower) ||
-      equipo.codigo?.toLowerCase().includes(searchLower) ||
-      equipo.marca?.toLowerCase().includes(searchLower)
+      equipo.activo?.toLowerCase().includes(searchLower) ||
+      equipo.serial?.toLowerCase().includes(searchLower) ||
+      equipo.marca?.toLowerCase().includes(searchLower) ||
+      equipo.modelo?.toLowerCase().includes(searchLower) ||
+      equipo.ubicacion?.toLowerCase().includes(searchLower)
     )
   })
 
@@ -74,7 +76,7 @@ const EquiposListPage = () => {
           <div className="flex-1 w-full md:w-auto">
             <input
               type="text"
-              placeholder="Buscar por nombre, código o marca..."
+              placeholder="Buscar por activo, serial, marca, modelo o ubicación..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"

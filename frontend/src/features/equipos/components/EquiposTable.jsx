@@ -28,16 +28,19 @@ const EquiposTable = ({ equipos, loading, onEdit, onDelete }) => {
           <thead className="bg-gray-50 border-b-2 border-gray-200">
             <tr>
               <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700">
-                Código
+                Activo
               </th>
               <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700">
-                Nombre
+                Serial
               </th>
               <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700">
                 Marca
               </th>
               <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700">
                 Modelo
+              </th>
+              <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700">
+                Ubicación
               </th>
               <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700">
                 Estado
@@ -62,16 +65,19 @@ const EquiposTable = ({ equipos, loading, onEdit, onDelete }) => {
               equipos.map((equipo) => (
                 <tr key={equipo.id} className="hover:bg-gray-50 transition-colors">
                   <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                    {equipo.codigo}
-                  </td>
-                  <td className="py-4 px-6 text-sm text-gray-900">
-                    {equipo.nombre}
+                    {equipo.activo}
                   </td>
                   <td className="py-4 px-6 text-sm text-gray-600">
-                    {equipo.marca || '-'}
+                    {equipo.serial}
                   </td>
                   <td className="py-4 px-6 text-sm text-gray-600">
-                    {equipo.modelo || '-'}
+                    {equipo.marca}
+                  </td>
+                  <td className="py-4 px-6 text-sm text-gray-600">
+                    {equipo.modelo}
+                  </td>
+                  <td className="py-4 px-6 text-sm text-gray-600">
+                    {equipo.ubicacion || '-'}
                   </td>
                   <td className="py-4 px-6">
                     <span className={`px-3 py-1 rounded-full text-xs font-medium ${getEstadoBadge(equipo.estado)}`}>
