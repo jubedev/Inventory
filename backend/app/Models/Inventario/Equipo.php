@@ -28,16 +28,16 @@ class Equipo extends Model
     protected $table = 'equipos';
 
     protected $fillable = [
-        'n_activo',
+        'activo',
         'marca',
         'modelo',
-        'numero_serie',
+        'serial',
         'estado',
-        'ubicacion_actual',
+        'ubicacion',
         'fecha_compra',
+        'costo',
         'fecha_ultimo_estado',
-        'fecha_fin_garantia',
-        'ultimo_mantenimiento_fecha',
+        'fecha_ultimo_mantenimiento',
         'direccion_ip',
         'mac_address',
         'observaciones',
@@ -47,14 +47,9 @@ class Equipo extends Model
     protected $casts = [
         'fecha_compra' => 'datetime',
         'fecha_ultimo_estado' => 'datetime',
-        'fecha_fin_garantia' => 'datetime',
-        'ultimo_mantenimiento_fecha' => 'datetime',
-        'fecha_creacion' => 'datetime',
-        'ultima_actualizacion' => 'datetime',
+        'fecha_ultimo_mantenimiento' => 'datetime',
+        'costo' => 'decimal:2',
     ];
-
-    const CREATED_AT = 'fecha_creacion';
-    const UPDATED_AT = 'ultima_actualizacion';
 
     // ============== RELACIONES ==============
 
