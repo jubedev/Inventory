@@ -4,7 +4,7 @@ import NotificationsTable from '../components/NotificationsTable'
 
 const DashboardPage = () => {
   return (
-    <main className="pt-16">
+    <main>
       <DashboardHero />
       
       {/* Sección de tablas */}

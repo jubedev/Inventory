@@ -1,29 +1,39 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAppContext } from "../../../hooks/useAppContext";
 
 const LoginForm = () => {
   const navigate = useNavigate();
+  const { login, loading, error } = useAppContext();
   const [formData, setFormData] = useState({
     email: "",
     password: ""
   });
+  const [loginError, setLoginError] = useState("");
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.id]: e.target.value
     });
+    setLoginError(""); // Limpiar error al escribir
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoginError("");
     
-    // Aquí iría la lógica de autenticación
-    // Por ahora solo navegamos al dashboard
-    console.log("Iniciando sesión con:", formData);
+    const result = await login({
+      email: formData.email,
+      password: formData.password
+    });
     
-    // Redirigir al dashboard
-    navigate('/dashboard');
+    if (result.success) {
+      // Redirigir al dashboard después del login exitoso
+      navigate('/dashboard');
+    } else {
+      setLoginError(result.error || "Error al iniciar sesión");
+    }
   };
 
   return (
@@ -57,6 +67,13 @@ const LoginForm = () => {
 
         {/* Línea divisoria sutil */}
         <hr className="border-gray-200" />
+
+        {/* Mensaje de error */}
+        {(loginError || error) && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg text-sm">
+            {loginError || error}
+          </div>
+        )}
 
         {/* 2. Campo de Email */}
         <div>
@@ -99,9 +116,10 @@ const LoginForm = () => {
         {/* 4. Botón de Enviar */}
         <button
           type="submit"
-          className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out"
+          disabled={loading}
+          className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Iniciar Sesión
+          {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
         </button>
 
         {/* 5. Enlace Adicional */}

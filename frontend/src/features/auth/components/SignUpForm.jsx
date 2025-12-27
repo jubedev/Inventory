@@ -1,16 +1,40 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAppContext } from "../../../hooks/useAppContext";
 import AccessReqModal from "./AccessReqModal";
 
 const SignUpForm = () => {
+  const navigate = useNavigate();
+  const { register, loading, error } = useAppContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [submittedEmail, setSubmittedEmail] = useState("");
+  const [registerError, setRegisterError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const email = e.target.email.value;
-    setSubmittedEmail(email);
-    setIsModalOpen(true);
+    setRegisterError("");
+    
+    const formData = {
+      nombre: e.target.fullName.value,
+      email: e.target.email.value,
+      password: "temporal123", // Password temporal - debería venir del form
+      cargo: e.target.position.value,
+      area: e.target.area.value,
+      telefono: e.target.phone.value || null,
+    };
+
+    const result = await register(formData);
+    
+    if (result.success) {
+      setSubmittedEmail(formData.email);
+      setIsModalOpen(true);
+      // Después de cerrar el modal, redirigir al dashboard
+      setTimeout(() => {
+        navigate('/dashboard');
+      }, 2000);
+    } else {
+      setRegisterError(result.error || "Error al registrar usuario");
+    }
   };
 
   return (
@@ -49,6 +73,13 @@ const SignUpForm = () => {
 
           {/* Línea divisoria sutil */}
           <hr className="border-gray-200" />
+
+          {/* Mensaje de error */}
+          {(registerError || error) && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg text-sm">
+              {registerError || error}
+            </div>
+          )}
 
           {/* Descripción */}
           <p className="text-sm text-gray-600 text-center">
@@ -167,9 +198,10 @@ const SignUpForm = () => {
           {/* Botón de Enviar */}
           <button
             type="submit"
-            className="w-full py-3 px-4 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out"
+            disabled={loading}
+            className="w-full py-3 px-4 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Enviar Solicitud
+            {loading ? 'Enviando solicitud...' : 'Enviar Solicitud'}
           </button>
 
           {/* Enlace para volver */}
