@@ -1,0 +1,37 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Abrir Base de Datos Docker",
+      "type": "shell",
+      "command": "docker exec -it laravel_mysql mysql -u admingsa -p13128",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "Iniciar Frontend Vite",
+      "type": "shell",
+      "command": "cd frontend; npm run dev",
+      "problemMatcher": [],
+      "isBackground": true,
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "Iniciar Todo",
+      "dependsOn": [
+        "Abrir Base de Datos Docker",
+        "Iniciar Frontend Vite"
+      ],
+      "problemMatcher": [],
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
+    }
+  ]
+}
