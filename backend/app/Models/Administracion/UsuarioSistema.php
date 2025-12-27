@@ -13,11 +13,13 @@ class UsuarioSistema extends Model
     protected $table = 'usuarios_sistema';
 
     protected $fillable = [
-        'username',
+        'email',
         'password',
-        'estado',
         'roles_id',
-        'usuarios_id',
+    ];
+
+    protected $hidden = [
+        'password',
     ];
 
     protected $casts = [

@@ -19,8 +19,8 @@ class Usuario extends Model
         'nombres',
         'apellidos',
         'num_doc',
-        'correo_corporativo',
-        'contrasena_actualizada',
+        'email',
+        'password',
         'celular_corporativo',
         'celular_personal',
         'cuenta',
@@ -30,7 +30,7 @@ class Usuario extends Model
     ];
 
     protected $hidden = [
-        'contrasena_actualizada',
+        'password',
     ];
 
     protected $casts = [

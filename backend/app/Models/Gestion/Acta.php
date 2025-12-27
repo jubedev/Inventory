@@ -16,6 +16,7 @@ class Acta extends Model
         'numero_acta',
         'fecha',
         'descripcion',
+        'usuarios_id',
     ];
 
     protected $casts = [
@@ -23,5 +24,15 @@ class Acta extends Model
         'updated_at' => 'datetime',
     ];
 
-    public function 
+    public function usuario () {
+        return $this->belongsTo(Usuario::class, 'usuarios_id');
+    }
+
+    public function activoAsignado () {
+        return $this->hasMany(ActivoAsignado::class, 'actas_id');
+    }
+
+    public function movimientoInventario () {
+        return $this->hasMany(MovimientoInventario::class, 'actas_id');
+    }
 }
