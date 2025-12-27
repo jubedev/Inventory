@@ -4,9 +4,27 @@ namespace App\Models\Hardware;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\Inventario\Equipo;
 
 class EquipoAccesorioDetalle extends Model
 {
-    /** @use HasFactory<\Database\Factories\Hardware\EquipoAccesorioDetalleFactory> */
     use HasFactory;
+
+    protected $table = 'equipo_accesorio_detalles';
+
+    protected $fillable = [
+        'nombre_accesorio',
+        'equipos_id',
+    ];
+
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
+    public function equipo(): BelongsTo
+    {
+        return $this->belongsTo(Equipo::class, 'equipos_id');
+    }
 }
