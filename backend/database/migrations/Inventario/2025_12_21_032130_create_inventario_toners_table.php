@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('toner_cian_cantidad', 100);
             $table->string('toner_magenta_cantidad', 100);
             $table->string('toner_amarillo_cantidad', 100);
-            $table->foreignId('equipos_impresoras_detalles_id')->constrained('equipos_impresoras_detalles')->onDelete('no action')->onUpdate('no action');
+            $table->foreignId('equipo_impresora_detalles_id')->constrained('equipo_impresora_detalles')->onDelete('no action')->onUpdate('no action');
             $table->timestamps();
         });
     }
