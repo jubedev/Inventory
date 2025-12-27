@@ -29,10 +29,10 @@ class EquipoController extends Controller
         if ($request->has('search')) {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
-                $q->where('n_activo', 'like', "%{$search}%")
+                $q->where('activo', 'like', "%{$search}%")
                   ->orWhere('marca', 'like', "%{$search}%")
                   ->orWhere('modelo', 'like', "%{$search}%")
-                  ->orWhere('numero_serie', 'like', "%{$search}%");
+                  ->orWhere('serial', 'like', "%{$search}%");
             });
         }
 

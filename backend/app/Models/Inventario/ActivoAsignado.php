@@ -10,7 +10,7 @@ class ActivoAsignado extends Model
     /** @use HasFactory<\Database\Factories\Inventario\ActivoAsignadoFactory> */
     use HasFactory;
 
-    protected $table = 'activos_asignados';
+    protected $table = 'activo_asignados';
     
     protected $fillable = [
         'actas_id',
