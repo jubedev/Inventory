@@ -20,36 +20,51 @@ const router = createBrowserRouter ([
     {
         path: '/',
         element: <App />,
+        errorElement: <Notfound />,
         children: [
             {
                 index: true,
                 element: <LandingPage />
             },
             {
-                path: '/login',
+                path: 'login',
                 element: <LoginPage />
             },
             {
-                path: '/signup',
+                path: 'signup',
                 element: <SignUpPage />
             },
         ],
-        errorElement: <Notfound />,
     },
     {
-        path: '/',
         element: <DashboardLayout />,
+        errorElement: <Notfound />,
         children: [
             {
-                path: '/dashboard',
+                path: 'dashboard',
                 element: <DashboardPage />
             },
             {
-                path: '/equipos',
+                path: 'equipos',
                 element: <EquiposListPage />
             },
+            {
+                path: 'usuarios',
+                element: <div className="p-8"><h1 className="text-2xl">Usuarios (próximamente)</h1></div>
+            },
+            {
+                path: 'tipos-equipo',
+                element: <div className="p-8"><h1 className="text-2xl">Tipos de Equipo (próximamente)</h1></div>
+            },
+            {
+                path: 'movimientos',
+                element: <div className="p-8"><h1 className="text-2xl">Movimientos (próximamente)</h1></div>
+            },
+            {
+                path: 'reportes',
+                element: <div className="p-8"><h1 className="text-2xl">Reportes (próximamente)</h1></div>
+            },
         ],
-        errorElement: <Notfound />,
     }
 ])
 
