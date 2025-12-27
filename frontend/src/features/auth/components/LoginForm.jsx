@@ -1,0 +1,140 @@
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
+const LoginForm = () => {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: ""
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    // Aquí iría la lógica de autenticación
+    // Por ahora solo navegamos al dashboard
+    console.log("Iniciando sesión con:", formData);
+    
+    // Redirigir al dashboard
+    navigate('/dashboard');
+  };
+
+  return (
+    <section 
+      className="flex justify-center items-start sm:items-center min-h-screen bg-cover bg-center bg-no-repeat relative overflow-y-auto py-8"
+      style={{
+        backgroundImage: "url('https://d1ih8jugeo2m5m.cloudfront.net/2023/12/plantillas-de-paginas-web-gratis-1200x685.jpg')"
+      }}
+    >
+      {/* Overlay oscuro para mejorar legibilidad */}
+      <div className="absolute inset-0 bg-black/40"></div>
+      
+      {/* Contenedor Principal del Formulario */}
+      <form onSubmit={handleSubmit} className="relative w-full max-w-md p-8 space-y-6 bg-white/95 backdrop-blur-sm shadow-2xl rounded-2xl border border-gray-100 z-10 mx-4 animate-fade-in-up">
+        {/* 1. Encabezado (Logo y Título) */}
+        <div className="flex items-center space-x-4">
+          {/* Contenedor del Logo */}
+          <div className="hidden sm:flex bg-white rounded-xl p-3 shadow-lg border border-gray-100 items-center justify-center">
+            <img
+              src="/assets/image/spira.png"
+              alt="Logo de GSA Inventory"
+              className="h-auto w-10 object-contain sm:w-12"
+            />
+          </div>
+
+          {/* Título Principal */}
+          <h1 className="text-gray-900 font-extrabold text-2xl md:text-3xl tracking-tight">
+            Iniciar Sesion
+          </h1>
+        </div>
+
+        {/* Línea divisoria sutil */}
+        <hr className="border-gray-200" />
+
+        {/* 2. Campo de Email */}
+        <div>
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Correo Electrónico
+          </label>
+          <input
+            type="email"
+            id="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="tu.correo@ejemplo.com"
+            required
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out"
+          />
+        </div>
+
+        {/* 3. Campo de Contraseña */}
+        <div>
+          <label
+            htmlFor="password"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Contraseña
+          </label>
+          <input
+            type="password"
+            id="password"
+            value={formData.password}
+            onChange={handleChange}
+            placeholder="••••••••"
+            required
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out"
+          />
+        </div>
+
+        {/* 4. Botón de Enviar */}
+        <button
+          type="submit"
+          className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out"
+        >
+          Iniciar Sesión
+        </button>
+
+        {/* 5. Enlace Adicional */}
+        <p className="text-center text-sm text-gray-500">
+          ¿Olvidaste tu contraseña?
+          <a
+            href="#"
+            className="font-medium text-blue-600 hover:text-blue-500 ml-1"
+          >
+            Recuperar
+          </a>
+        </p>
+        <div className="relative flex items-center py-5">
+          {/* La línea a la izquierda y derecha */}
+          <div className="grow border-t border-gray-300"></div>
+
+          {/* El texto "O" en el centro */}
+          <span className="shrink mx-4 text-gray-500 text-sm">O</span>
+
+          {/* La línea a la derecha */}
+          <div className="grow border-t border-gray-300"></div>
+        </div>
+        <Link to="/signup">
+          <button
+            type="button"
+            className="w-full py-2 px-4 bg-white text-gray-600 font-semibold rounded-lg border border-gray-300 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2 transition duration-150 ease-in-out"
+          >
+            Solicitar Acceso
+          </button>
+        </Link>
+      </form>
+    </section>
+  );
+};
+
+export default LoginForm;
