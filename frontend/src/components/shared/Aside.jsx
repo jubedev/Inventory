@@ -1,14 +1,8 @@
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { useAppContext } from '../../hooks/useAppContext'
 
 const Aside = () => {
-  const navigate = useNavigate()
-  const { user, logout } = useAppContext()
-
-  const handleLogout = () => {
-    logout()
-    navigate('/login')
-  }
+  const { user } = useAppContext()
 
   const navItems = [
     {
@@ -78,17 +72,6 @@ const Aside = () => {
           ))}
         </ul>
       </nav>
-
-      {/* Logout */}
-      <div className="p-4 border-t border-gray-700">
-        <button
-          onClick={handleLogout}
-          className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg bg-red-600 hover:bg-red-700 transition-all text-white font-medium"
-        >
-          <span className="text-xl">🚪</span>
-          <span>Cerrar Sesión</span>
-        </button>
-      </div>
     </aside>
   )
 }

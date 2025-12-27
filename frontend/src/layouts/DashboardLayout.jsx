@@ -1,6 +1,7 @@
 import { Outlet, Navigate } from 'react-router-dom'
 import { useAppContext } from '../hooks/useAppContext'
 import Aside from '../components/shared/Aside'
+import Header from '../components/shared/Header'
 
 const DashboardLayout = () => {
   const { isAuthenticated, loading } = useAppContext()
@@ -19,12 +20,15 @@ const DashboardLayout = () => {
   }
 
   return (
-    <div className="flex min-h-screen">
-      <Aside />
-      <div className="flex-1 bg-gray-50">
-        <Outlet />
+    <>
+      <Header />
+      <div className="flex min-h-screen pt-16">
+        <Aside />
+        <div className="flex-1 bg-gray-50">
+          <Outlet />
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 

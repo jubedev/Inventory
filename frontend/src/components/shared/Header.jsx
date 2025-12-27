@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { NavLink, Link, useNavigate, useLocation } from "react-router-dom";
+import { useAppContext } from "../../hooks/useAppContext";
 import MobileMenu from "./MobileMenu";
 import Icon from "../ui/Icon";
 
@@ -7,8 +8,15 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('inicio');
+  const [showUserMenu, setShowUserMenu] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { user, logout, isAuthenticated } = useAppContext();
+
+  // Detectar si estamos en modo admin (rutas privadas)
+  const isAdminMode = ['/dashboard', '/equipos', '/usuarios', '/tipos-equipo', '/movimientos', '/reportes'].some(
+    path => location.pathname.startsWith(path)
+  );
 
   // Resetear scroll al cambiar de página
   useEffect(() => {
@@ -71,13 +79,19 @@ const Header = () => {
     }
   };
 
+  const handleLogout = () => {
+    logout()
+    navigate('/login')
+    setShowUserMenu(false)
+  }
+
   return (
     <header className={`shadow-2xl backdrop-blur-md fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
       scrolled ? 'bg-red-600/95 py-3' : 'bg-red-500/90 py-4'
     }`}>
       <div className="max-w-7xl mx-auto flex justify-between items-center h-full px-5 lg:px-8">
         <Link
-          to="/"
+          to={isAdminMode ? "/dashboard" : "/"}
           className="flex items-center space-x-3 hover:opacity-90 transition-all duration-300 group"
         >
           <div className="bg-white rounded-lg p-2 shadow-md">
@@ -99,8 +113,74 @@ const Header = () => {
           <Icon name={isMenuOpen ? "close" : "hamburger"} className="w-6 h-6" />
         </button>
         <div className="hidden lg:block">
-          <nav>
-            <ul className="flex items-center space-x-2 text-white">
+          {isAdminMode && isAuthenticated ? (
+            // Menú de administrador
+            <nav>
+              <ul className="flex items-center space-x-4 text-white">
+                <li>
+                  <span className="text-sm text-white/80">
+                    Hola, <span className="font-semibold">{user?.nombre || user?.email}</span>
+                  </span>
+                </li>
+                <li className="relative">
+                  <button
+                    onClick={() => setShowUserMenu(!showUserMenu)}
+                    className="flex items-center space-x-2 px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg transition-all"
+                  >
+                    <span className="text-2xl">👤</span>
+                    <span className="text-sm font-medium">Mi Cuenta</span>
+                    <span className="text-xs">▼</span>
+                  </button>
+                  
+                  {showUserMenu && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl py-2 z-50">
+                      <button
+                        onClick={() => {
+                          navigate('/dashboard')
+                          setShowUserMenu(false)
+                        }}
+                        className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors flex items-center space-x-2"
+                      >
+                        <span>📊</span>
+                        <span>Dashboard</span>
+                      </button>
+                      <button
+                        onClick={() => {
+                          alert('Perfil - Próximamente')
+                          setShowUserMenu(false)
+                        }}
+                        className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors flex items-center space-x-2"
+                      >
+                        <span>👤</span>
+                        <span>Mi Perfil</span>
+                      </button>
+                      <button
+                        onClick={() => {
+                          alert('Configuración - Próximamente')
+                          setShowUserMenu(false)
+                        }}
+                        className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors flex items-center space-x-2"
+                      >
+                        <span>⚙️</span>
+                        <span>Configuración</span>
+                      </button>
+                      <hr className="my-2 border-gray-200" />
+                      <button
+                        onClick={handleLogout}
+                        className="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 transition-colors flex items-center space-x-2 font-medium"
+                      >
+                        <span>🚪</span>
+                        <span>Cerrar Sesión</span>
+                      </button>
+                    </div>
+                  )}
+                </li>
+              </ul>
+            </nav>
+          ) : (
+            // Menú público
+            <nav>
+              <ul className="flex items-center space-x-2 text-white">
               <li>
                 <a
                   href="#inicio"
@@ -141,6 +221,7 @@ const Header = () => {
               </li>
             </ul>
           </nav>
+          )}
         </div>
       </div>
       
