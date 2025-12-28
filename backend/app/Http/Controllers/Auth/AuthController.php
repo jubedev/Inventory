@@ -54,9 +54,17 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validated = $request->validate([
-            'email' => 'required|email|unique:usuarios_sistema,email|unique:access_requests,email',
-            'nombre_completo' => 'required|string|max:255',
-            'motivo_solicitud' => 'nullable|string|max:500',
+            'email' => 'required|email:rfc,dns|max:255|unique:usuarios_sistema,email|unique:access_requests,email',
+            'nombre_completo' => 'required|string|min:5|max:255|regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/',
+            'motivo_solicitud' => 'nullable|string|max:1000',
+        ], [
+            'email.required' => 'El correo electrónico es obligatorio',
+            'email.email' => 'Debes proporcionar un correo electrónico válido',
+            'email.unique' => 'Este correo ya está registrado',
+            'nombre_completo.required' => 'El nombre completo es obligatorio',
+            'nombre_completo.min' => 'El nombre debe tener al menos 5 caracteres',
+            'nombre_completo.regex' => 'El nombre solo puede contener letras y espacios',
+            'motivo_solicitud.max' => 'El motivo no puede exceder 1000 caracteres',
         ]);
 
         // Crear solicitud de acceso pendiente

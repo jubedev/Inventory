@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { validatePassword, validatePasswordConfirm } from '../../../utils/validators'
 
 const ApproveModal = ({ solicitud, onConfirm, onCancel }) => {
   const [password, setPassword] = useState('')
@@ -6,18 +7,65 @@ const ApproveModal = ({ solicitud, onConfirm, onCancel }) => {
   const [rolId, setRolId] = useState('2') // Usuario por defecto
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [errors, setErrors] = useState({})
+  const [touched, setTouched] = useState({})
+
+  const validateField = (name, value) => {
+    switch (name) {
+      case 'password':
+        return validatePassword(value)
+      case 'confirmPassword':
+        return validatePasswordConfirm(value, password)
+      default:
+        return null
+    }
+  }
+
+  const handlePasswordChange = (e) => {
+    const value = e.target.value
+    setPassword(value)
+    
+    if (touched.password) {
+      const passwordError = validateField('password', value)
+      setErrors(prev => ({ ...prev, password: passwordError }))
+    }
+    
+    // Re-validate confirm password if it has been touched
+    if (touched.confirmPassword) {
+      const confirmError = validatePasswordConfirm(confirmPassword, value)
+      setErrors(prev => ({ ...prev, confirmPassword: confirmError }))
+    }
+  }
+
+  const handleConfirmPasswordChange = (e) => {
+    const value = e.target.value
+    setConfirmPassword(value)
+    
+    if (touched.confirmPassword) {
+      const error = validateField('confirmPassword', value)
+      setErrors(prev => ({ ...prev, confirmPassword: error }))
+    }
+  }
+
+  const handleBlur = (name) => {
+    setTouched(prev => ({ ...prev, [name]: true }))
+    const value = name === 'password' ? password : confirmPassword
+    const error = validateField(name, value)
+    setErrors(prev => ({ ...prev, [name]: error }))
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
 
-    if (password.length < 6) {
-      setError('La contraseña debe tener al menos 6 caracteres')
-      return
-    }
+    // Validate all fields
+    const passwordError = validateField('password', password)
+    const confirmError = validateField('confirmPassword', confirmPassword)
 
-    if (password !== confirmPassword) {
-      setError('Las contraseñas no coinciden')
+    if (passwordError || confirmError) {
+      setErrors({ password: passwordError, confirmPassword: confirmError })
+      setTouched({ password: true, confirmPassword: true })
+      setError('Por favor corrija los errores en el formulario')
       return
     }
 
@@ -91,12 +139,17 @@ const ApproveModal = ({ solicitud, onConfirm, onCancel }) => {
             <input
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Mínimo 6 caracteres"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+              onChange={handlePasswordChange}
+              onBlur={() => handleBlur('password')}
+              placeholder="Mínimo 8 caracteres, incluir mayúsculas, minúsculas y números"
+              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 ${
+                errors.password && touched.password ? 'border-red-500' : 'border-gray-300'
+              }`}
               required
-              minLength={6}
             />
+            {errors.password && touched.password && (
+              <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+            )}
           </div>
 
           {/* Confirm Password */}
@@ -107,12 +160,17 @@ const ApproveModal = ({ solicitud, onConfirm, onCancel }) => {
             <input
               type="password"
               value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              onChange={handleConfirmPasswordChange}
+              onBlur={() => handleBlur('confirmPassword')}
               placeholder="Repetir contraseña"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 ${
+                errors.confirmPassword && touched.confirmPassword ? 'border-red-500' : 'border-gray-300'
+              }`}
               required
-              minLength={6}
             />
+            {errors.confirmPassword && touched.confirmPassword && (
+              <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>
+            )}
           </div>
 
           {/* Detalle de solicitud */}

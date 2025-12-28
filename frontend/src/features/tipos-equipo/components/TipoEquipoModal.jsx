@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react'
+import { validateNombre, validateDescripcion } from '../../../utils/validators'
 
 const TipoEquipoModal = ({ tipo, onClose, onSubmit }) => {
   const [formData, setFormData] = useState({
     nombre: '',
     descripcion: '',
   })
+  const [errors, setErrors] = useState({})
+  const [touched, setTouched] = useState({})
 
   useEffect(() => {
     if (tipo) {
@@ -15,17 +18,75 @@ const TipoEquipoModal = ({ tipo, onClose, onSubmit }) => {
     }
   }, [tipo])
 
+  const validateField = (name, value) => {
+    switch (name) {
+      case 'nombre':
+        return validateNombre(value)
+      case 'descripcion':
+        return validateDescripcion(value)
+      default:
+        return null
+    }
+  }
+
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }))
+
+    // Validate if field has been touched
+    if (touched[name]) {
+      const error = validateField(name, value)
+      setErrors((prev) => ({
+        ...prev,
+        [name]: error,
+      }))
+    }
+  }
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target
+    setTouched((prev) => ({
+      ...prev,
+      [name]: true,
+    }))
+    const error = validateField(name, value)
+    setErrors((prev) => ({
+      ...prev,
+      [name]: error,
+    }))
+  }
+
+  const validateAllFields = () => {
+    const newErrors = {}
+    let isValid = true
+
+    // Validate nombre (required)
+    const nombreError = validateField('nombre', formData.nombre)
+    if (nombreError) {
+      newErrors.nombre = nombreError
+      isValid = false
+    }
+
+    // Validate descripcion (optional)
+    const descripcionError = validateField('descripcion', formData.descripcion)
+    if (descripcionError) {
+      newErrors.descripcion = descripcionError
+      isValid = false
+    }
+
+    setErrors(newErrors)
+    setTouched({ nombre: true, descripcion: true })
+    return isValid
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    onSubmit(formData)
+    if (validateAllFields()) {
+      onSubmit(formData)
+    }
   }
 
   return (
@@ -57,10 +118,16 @@ const TipoEquipoModal = ({ tipo, onClose, onSubmit }) => {
                 name="nombre"
                 value={formData.nombre}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                  errors.nombre && touched.nombre ? 'border-red-500' : 'border-gray-300'
+                }`}
                 placeholder="Ej: Computador, Monitor, Impresora"
               />
+              {errors.nombre && touched.nombre && (
+                <p className="text-red-500 text-xs mt-1">{errors.nombre}</p>
+              )}
             </div>
 
             {/* Descripción */}
@@ -72,10 +139,16 @@ const TipoEquipoModal = ({ tipo, onClose, onSubmit }) => {
                 name="descripcion"
                 value={formData.descripcion}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 rows={3}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="Descripción del tipo de equipo (opcional)"
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                  errors.descripcion && touched.descripcion ? 'border-red-500' : 'border-gray-300'
+                }`}
+                placeholder="Descripción del tipo de equipo (opcional, máximo 500 caracteres)"
               />
+              {errors.descripcion && touched.descripcion && (
+                <p className="text-red-500 text-xs mt-1">{errors.descripcion}</p>
+              )}
             </div>
           </div>
 

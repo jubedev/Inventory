@@ -13,8 +13,8 @@ const Header = () => {
   const location = useLocation();
   const { user, logout, isAuthenticated } = useAppContext();
 
-  // Detectar si estamos en modo admin (rutas privadas)
-  const isAdminMode = ['/dashboard', '/equipos', '/usuarios', '/tipos-equipo', '/movimientos', '/reportes'].some(
+  // Detectar si estamos en modo admin (rutas privadas) Y autenticado
+  const isAdminMode = isAuthenticated && ['/dashboard', '/equipos', '/usuarios', '/solicitudes', '/tipos-equipo', '/movimientos', '/reportes'].some(
     path => location.pathname.startsWith(path)
   );
 

@@ -1,5 +1,17 @@
 import { useState, useEffect } from 'react'
 import { useTiposEquipo } from '../../../hooks/useTiposEquipo'
+import {
+  validateActivo,
+  validateSerial,
+  validateMarca,
+  validateModelo,
+  validateEstado,
+  validateIP,
+  validateMAC,
+  validateCosto,
+  validateFechaCompra,
+  validateTipoEquipo,
+} from '../../../utils/validators'
 
 const EquipoModal = ({ equipo, onClose, onSubmit }) => {
   const { tiposEquipo, loading: loadingTipos } = useTiposEquipo()
@@ -17,6 +29,8 @@ const EquipoModal = ({ equipo, onClose, onSubmit }) => {
     observaciones: '',
     tipo_equipo_id: '',
   })
+  const [errors, setErrors] = useState({})
+  const [touched, setTouched] = useState({})
 
   useEffect(() => {
     if (equipo) {
@@ -43,11 +57,98 @@ const EquipoModal = ({ equipo, onClose, onSubmit }) => {
       ...prev,
       [name]: value,
     }))
+    
+    // Validar en tiempo real
+    if (touched[name]) {
+      validateField(name, value)
+    }
+  }
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target
+    setTouched((prev) => ({ ...prev, [name]: true }))
+    validateField(name, value)
+  }
+
+  const validateField = (name, value) => {
+    let error = null
+    
+    switch (name) {
+      case 'activo':
+        error = validateActivo(value)
+        break
+      case 'serial':
+        error = validateSerial(value)
+        break
+      case 'marca':
+        error = validateMarca(value)
+        break
+      case 'modelo':
+        error = validateModelo(value)
+        break
+      case 'estado':
+        error = validateEstado(value)
+        break
+      case 'direccion_ip':
+        error = validateIP(value)
+        break
+      case 'mac_address':
+        error = validateMAC(value)
+        break
+      case 'costo':
+        error = validateCosto(value)
+        break
+      case 'fecha_compra':
+        error = validateFechaCompra(value)
+        break
+      case 'tipo_equipo_id':
+        error = validateTipoEquipo(value)
+        break
+      default:
+        break
+    }
+    
+    setErrors((prev) => ({
+      ...prev,
+      [name]: error,
+    }))
+    
+    return error
+  }
+
+  const validateAllFields = () => {
+    const newErrors = {}
+    
+    newErrors.activo = validateActivo(formData.activo)
+    newErrors.serial = validateSerial(formData.serial)
+    newErrors.marca = validateMarca(formData.marca)
+    newErrors.modelo = validateModelo(formData.modelo)
+    newErrors.estado = validateEstado(formData.estado)
+    newErrors.direccion_ip = validateIP(formData.direccion_ip)
+    newErrors.mac_address = validateMAC(formData.mac_address)
+    newErrors.costo = validateCosto(formData.costo)
+    newErrors.fecha_compra = validateFechaCompra(formData.fecha_compra)
+    newErrors.tipo_equipo_id = validateTipoEquipo(formData.tipo_equipo_id)
+    
+    setErrors(newErrors)
+    setTouched({
+      activo: true,
+      serial: true,
+      marca: true,
+      modelo: true,
+      estado: true,
+      tipo_equipo_id: true,
+    })
+    
+    return Object.values(newErrors).every((error) => !error)
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    onSubmit(formData)
+    
+    if (validateAllFields()) {
+      onSubmit(formData)
+    }
   }
 
   return (
@@ -79,10 +180,16 @@ const EquipoModal = ({ equipo, onClose, onSubmit }) => {
                 name="activo"
                 value={formData.activo}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                  errors.activo && touched.activo ? 'border-red-500' : 'border-gray-300'
+                }`}
                 placeholder="ACT-001"
               />
+              {errors.activo && touched.activo && (
+                <p className="text-red-500 text-xs mt-1">{errors.activo}</p>
+              )}
             </div>
 
             {/* Serial */}
@@ -95,10 +202,16 @@ const EquipoModal = ({ equipo, onClose, onSubmit }) => {
                 name="serial"
                 value={formData.serial}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                  errors.serial && touched.serial ? 'border-red-500' : 'border-gray-300'
+                }`}
                 placeholder="SN123456789"
               />
+              {errors.serial && touched.serial && (
+                <p className="text-red-500 text-xs mt-1">{errors.serial}</p>
+              )}
             </div>
 
             {/* Marca */}
@@ -111,10 +224,16 @@ const EquipoModal = ({ equipo, onClose, onSubmit }) => {
                 name="marca"
                 value={formData.marca}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                  errors.marca && touched.marca ? 'border-red-500' : 'border-gray-300'
+                }`}
                 placeholder="Dell"
               />
+              {errors.marca && touched.marca && (
+                <p className="text-red-500 text-xs mt-1">{errors.marca}</p>
+              )}
             </div>
 
             {/* Modelo */}
@@ -127,10 +246,16 @@ const EquipoModal = ({ equipo, onClose, onSubmit }) => {
                 name="modelo"
                 value={formData.modelo}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                  errors.modelo && touched.modelo ? 'border-red-500' : 'border-gray-300'
+                }`}
                 placeholder="Latitude 5420"
               />
+              {errors.modelo && touched.modelo && (
+                <p className="text-red-500 text-xs mt-1">{errors.modelo}</p>
+              )}
             </div>
 
             {/* Estado */}

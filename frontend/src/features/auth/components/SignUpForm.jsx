@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppContext } from "../../../hooks/useAppContext";
+import { validateEmail, validateNombreCompleto } from "../../../utils/validators";
 import AccessReqModal from "./AccessReqModal";
 
 const SignUpForm = () => {
@@ -9,18 +10,104 @@ const SignUpForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [submittedEmail, setSubmittedEmail] = useState("");
   const [registerError, setRegisterError] = useState("");
+  const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
+  const [formData, setFormData] = useState({
+    email: '',
+    fullName: '',
+    position: '',
+    area: '',
+    phone: '',
+    reason: ''
+  });
+
+  const validateField = (name, value) => {
+    switch (name) {
+      case 'email':
+        return validateEmail(value)
+      case 'fullName':
+        return validateNombreCompleto(value)
+      case 'position':
+        return !value?.trim() ? 'El cargo es obligatorio' : 
+               value.trim().length < 3 ? 'El cargo debe tener al menos 3 caracteres' : null
+      case 'area':
+        return !value ? 'El área es obligatoria' : null
+      case 'reason':
+        return !value?.trim() ? 'El motivo es obligatorio' : 
+               value.trim().length < 10 ? 'El motivo debe ser más descriptivo (mínimo 10 caracteres)' :
+               value.length > 1000 ? 'El motivo no puede exceder 1000 caracteres' : null
+      default:
+        return null
+    }
+  }
+
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }))
+
+    // Validate if field has been touched
+    if (touched[name]) {
+      const error = validateField(name, value)
+      setErrors((prev) => ({
+        ...prev,
+        [name]: error,
+      }))
+    }
+  }
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target
+    setTouched((prev) => ({
+      ...prev,
+      [name]: true,
+    }))
+    const error = validateField(name, value)
+    setErrors((prev) => ({
+      ...prev,
+      [name]: error,
+    }))
+  }
+
+  const validateAllFields = () => {
+    const newErrors = {}
+    let isValid = true
+
+    const requiredFields = ['email', 'fullName', 'position', 'area', 'reason']
+    
+    requiredFields.forEach(field => {
+      const error = validateField(field, formData[field])
+      if (error) {
+        newErrors[field] = error
+        isValid = false
+      }
+    })
+
+    setErrors(newErrors)
+    const touchedFields = {}
+    requiredFields.forEach(field => touchedFields[field] = true)
+    setTouched(touchedFields)
+    return isValid
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setRegisterError("");
     
-    const formData = {
-      email: e.target.email.value,
-      nombre_completo: e.target.fullName.value,
-      motivo_solicitud: `Cargo: ${e.target.position.value}, Área: ${e.target.area.value}, Teléfono: ${e.target.phone.value || 'No especificado'}, Motivo: ${e.target.reason.value}`,
+    if (!validateAllFields()) {
+      setRegisterError("Por favor corrija los errores en el formulario");
+      return;
+    }
+    
+    const requestData = {
+      email: formData.email,
+      nombre_completo: formData.fullName,
+      motivo_solicitud: `Cargo: ${formData.position}, Área: ${formData.area}, Teléfono: ${formData.phone || 'No especificado'}, Motivo: ${formData.reason}`,
     };
 
-    const result = await register(formData);
+    const result = await register(requestData);
     
     if (result.success) {
       setSubmittedEmail(formData.email);
@@ -95,10 +182,19 @@ const SignUpForm = () => {
             <input
               type="text"
               id="fullName"
+              name="fullName"
+              value={formData.fullName}
+              onChange={handleChange}
+              onBlur={handleBlur}
               placeholder="Juan Pérez"
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out"
+              className={`w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out ${
+                errors.fullName && touched.fullName ? 'border-red-500' : 'border-gray-300'
+              }`}
             />
+            {errors.fullName && touched.fullName && (
+              <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>
+            )}
           </div>
 
           {/* Campo de Email */}
@@ -113,10 +209,19 @@ const SignUpForm = () => {
             <input
               type="email"
               id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
               placeholder="juan.perez@empresa.com"
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out"
+              className={`w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out ${
+                errors.email && touched.email ? 'border-red-500' : 'border-gray-300'
+              }`}
             />
+            {errors.email && touched.email && (
+              <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+            )}
           </div>
 
           {/* Campo de Cargo */}
@@ -130,10 +235,19 @@ const SignUpForm = () => {
             <input
               type="text"
               id="position"
+              name="position"
+              value={formData.position}
+              onChange={handleChange}
+              onBlur={handleBlur}
               placeholder="Ej: Analista de TI"
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out"
+              className={`w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out ${
+                errors.position && touched.position ? 'border-red-500' : 'border-gray-300'
+              }`}
             />
+            {errors.position && touched.position && (
+              <p className="text-red-500 text-xs mt-1">{errors.position}</p>
+            )}
           </div>
 
           {/* Campo de Área */}
@@ -146,8 +260,14 @@ const SignUpForm = () => {
             </label>
             <select
               id="area"
+              name="area"
+              value={formData.area}
+              onChange={handleChange}
+              onBlur={handleBlur}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out"
+              className={`w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out ${
+                errors.area && touched.area ? 'border-red-500' : 'border-gray-300'
+              }`}
             >
               <option value="">Seleccione un área</option>
               <option value="sistemas">Sistemas/TI</option>
@@ -157,6 +277,9 @@ const SignUpForm = () => {
               <option value="rrhh">Recursos Humanos</option>
               <option value="otro">Otro</option>
             </select>
+            {errors.area && touched.area && (
+              <p className="text-red-500 text-xs mt-1">{errors.area}</p>
+            )}
           </div>
 
           {/* Campo de Teléfono */}
@@ -170,6 +293,9 @@ const SignUpForm = () => {
             <input
               type="tel"
               id="phone"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
               placeholder="Ej: 3001234567 o Ext. 123"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out"
             />
@@ -185,11 +311,20 @@ const SignUpForm = () => {
             </label>
             <textarea
               id="reason"
+              name="reason"
+              value={formData.reason}
+              onChange={handleChange}
+              onBlur={handleBlur}
               rows="3"
               placeholder="Describa brevemente por qué necesita acceso a la plataforma..."
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out resize-none"
+              className={`w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out resize-none ${
+                errors.reason && touched.reason ? 'border-red-500' : 'border-gray-300'
+              }`}
             />
+            {errors.reason && touched.reason && (
+              <p className="text-red-500 text-xs mt-1">{errors.reason}</p>
+            )}
           </div>
 
           {/* Botón de Enviar */}
