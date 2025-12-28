@@ -1,5 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAppContext } from '../../../hooks/useAppContext'
 
 const HeroSection = () => {
   return (
@@ -50,12 +51,12 @@ const HeroSection = () => {
               <span className="relative z-10">Comenzar Ahora</span>
               <span className="absolute inset-0 bg-linear-to-r from-red-50 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
             </Link>
-            <Link 
-              to="/about"
+            <a 
+              href="#modulos"
               className="group px-8 py-4 bg-white/20 backdrop-blur-md text-white font-semibold rounded-xl border-2 border-white hover:bg-white hover:text-red-600 hover:scale-105 transition-all duration-300 text-center font-satoshi"
             >
               Conocer Más
-            </Link>
+            </a>
           </div>
         </div>
 

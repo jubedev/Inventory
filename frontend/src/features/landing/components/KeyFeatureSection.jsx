@@ -1,16 +1,28 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { useAppContext } from '../../../hooks/useAppContext'
 
 const KeyFeatureSection = () => {
+  const navigate = useNavigate()
+  const { isAuthenticated } = useAppContext()
+
+  const handleModuleClick = (link) => {
+    if (!isAuthenticated) {
+      navigate('/login')
+    } else {
+      navigate(link)
+    }
+  }
+
   const features = [
     {
       icon: '📊',
-      title: 'Gestión de Inventario',
+      title: 'Gestión de Equipos',
       description: 'Control completo de todos los equipos y recursos tecnológicos de tu organización.',
       color: 'from-blue-500 to-blue-600',
       hoverColor: 'hover:from-blue-600 hover:to-blue-700',
-      link: '/inventory',
-      action: 'Ver Inventario'
+      link: '/equipos',
+      action: 'Ver Equipos'
     },
     {
       icon: '📝',
@@ -18,17 +30,17 @@ const KeyFeatureSection = () => {
       description: 'Genera reportes detallados en tiempo real sobre el estado de tus activos.',
       color: 'from-green-500 to-green-600',
       hoverColor: 'hover:from-green-600 hover:to-green-700',
-      link: '/reports',
+      link: '/reportes',
       action: 'Ir a Reportes'
     },
     {
       icon: '🔧',
-      title: 'Solicitudes de Servicio',
-      description: 'Crea y gestiona solicitudes de mantenimiento, reparación o asignación de equipos.',
+      title: 'Movimientos',
+      description: 'Crea y gestiona movimientos de equipos, asignaciones y transferencias.',
       color: 'from-purple-500 to-purple-600',
       hoverColor: 'hover:from-purple-600 hover:to-purple-700',
-      link: '/requests',
-      action: 'Crear Solicitud'
+      link: '/movimientos',
+      action: 'Ver Movimientos'
     },
     {
       icon: '👥',
@@ -36,7 +48,7 @@ const KeyFeatureSection = () => {
       description: 'Administra usuarios, roles y permisos de acceso al sistema de forma centralizada.',
       color: 'from-orange-500 to-orange-600',
       hoverColor: 'hover:from-orange-600 hover:to-orange-700',
-      link: '/users',
+      link: '/usuarios',
       action: 'Administrar Usuarios'
     },
     {
@@ -49,13 +61,13 @@ const KeyFeatureSection = () => {
       action: 'Ver Dashboard'
     },
     {
-      icon: '🔔',
-      title: 'Notificaciones',
-      description: 'Mantente informado con alertas automáticas sobre vencimientos y actualizaciones.',
+      icon: '💼',
+      title: 'Tipos de Equipo',
+      description: 'Administra y categoriza los diferentes tipos de equipos de tu inventario.',
       color: 'from-teal-500 to-teal-600',
       hoverColor: 'hover:from-teal-600 hover:to-teal-700',
-      link: '/notifications',
-      action: 'Ver Notificaciones'
+      link: '/tipos-equipo',
+      action: 'Gestionar Tipos'
     }
   ]
 
@@ -104,8 +116,8 @@ const KeyFeatureSection = () => {
                 </p>
                 
                 {/* Botón de acción */}
-                <Link
-                  to={feature.link}
+                <button
+                  onClick={() => handleModuleClick(feature.link)}
                   className={`inline-flex items-center gap-2 px-5 py-3 bg-linear-to-r ${feature.color} ${feature.hoverColor} text-white font-semibold rounded-xl shadow-md hover:shadow-xl transition-all duration-300 group-hover:translate-x-1 font-satoshi`}
                 >
                   <span>{feature.action}</span>
@@ -117,7 +129,7 @@ const KeyFeatureSection = () => {
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
-                </Link>
+                </button>
               </div>
 
               {/* Indicador de estado */}
@@ -137,15 +149,18 @@ const KeyFeatureSection = () => {
             ¿Necesitas ayuda para comenzar?
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              to="/contact"
+            <button
+              onClick={() => navigate('/login')}
               className="px-8 py-4 bg-linear-to-r from-red-500 to-red-600 text-white font-bold rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 font-satoshi"
             >
-              Contactar Soporte
-            </Link>
-            <Link
-              to="/about"
+              Iniciar Sesión
+            </button>
+            <a
+              href="#inicio"
               className="px-8 py-4 bg-white text-gray-700 font-semibold rounded-xl border-2 border-gray-300 hover:border-red-500 hover:text-red-600 hover:scale-105 transition-all duration-300 font-satoshi"
+            >
+              Volver al Inicio
+            </a>
             >
               Conocer Más
             </Link>
