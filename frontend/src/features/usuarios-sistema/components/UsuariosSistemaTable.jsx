@@ -1,4 +1,4 @@
-const UsuariosSistemaTable = ({ usuarios, loading, onRevoke, onRestore }) => {
+const UsuariosSistemaTable = ({ usuarios, loading, currentUser, onRevoke, onRestore }) => {
   if (loading) {
     return (
       <div className="bg-white rounded-lg shadow-sm p-8">
@@ -101,7 +101,11 @@ const UsuariosSistemaTable = ({ usuarios, loading, onRevoke, onRestore }) => {
                   {formatDate(usuario.created_at)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                  {usuario.estado === 'activo' ? (
+                  {usuario.email === currentUser?.email ? (
+                    <span className="text-gray-400 text-xs italic">
+                      (Tu usuario)
+                    </span>
+                  ) : usuario.estado === 'activo' ? (
                     <button
                       onClick={() => onRevoke(usuario)}
                       className="text-red-600 hover:text-red-900 transition"

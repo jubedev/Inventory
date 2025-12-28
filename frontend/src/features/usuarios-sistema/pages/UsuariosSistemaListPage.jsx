@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { useUsuariosSistema } from '../../../hooks/useUsuariosSistema'
+import { useAppContext } from '../../../hooks/useAppContext'
 import UsuariosSistemaTable from '../components/UsuariosSistemaTable'
 
 const UsuariosSistemaListPage = () => {
   const { usuarios, loading, revokeAccess, restoreAccess } = useUsuariosSistema()
+  const { user } = useAppContext()
   const [selectedUser, setSelectedUser] = useState(null)
   const [showRevokeModal, setShowRevokeModal] = useState(false)
   const [showRestoreModal, setShowRestoreModal] = useState(false)
@@ -91,6 +93,7 @@ const UsuariosSistemaListPage = () => {
         <UsuariosSistemaTable
           usuarios={usuarios}
           loading={loading}
+          currentUser={user}
           onRevoke={handleRevoke}
           onRestore={handleRestore}
         />
