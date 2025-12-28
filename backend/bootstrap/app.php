@@ -12,7 +12,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // Para APIs, no redirigir a 'login' cuando falla la autenticación
+        // En su lugar, devolver respuesta JSON 401
+        $middleware->redirectGuestsTo(function () {
+            return null; // Esto previene la redirección automática
+        });
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
