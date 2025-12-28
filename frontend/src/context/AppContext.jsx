@@ -10,13 +10,29 @@ export const AppProvider = ({ children }) => {
 
   // Verificar si hay un usuario autenticado al cargar
   useEffect(() => {
-    const token = localStorage.getItem('token')
-    const storedUser = localStorage.getItem('user')
-    
-    if (token && storedUser) {
-      setUser(JSON.parse(storedUser))
+    const checkAuth = async () => {
+      const token = localStorage.getItem('token')
+      
+      if (token) {
+        try {
+          // Verificar que el token sea válido
+          const response = await api.get('/auth/me')
+          const userData = response.data.user // El backend devuelve { user: {...} }
+          setUser(userData)
+          localStorage.setItem('user', JSON.stringify(userData))
+        } catch (err) {
+          // Token inválido o expirado
+          console.log('Token inválido, limpiando sesión')
+          localStorage.removeItem('token')
+          localStorage.removeItem('user')
+          setUser(null)
+        }
+      }
+      
+      setLoading(false)
     }
-    setLoading(false)
+
+    checkAuth()
   }, [])
 
   // Login
