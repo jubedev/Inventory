@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('access_requests', function (Blueprint $table) {
-            //
+            $table->unsignedBigInteger('revisado_por')->nullable()->change();
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('access_requests', function (Blueprint $table) {
-            //
+            $table->unsignedBigInteger('revisado_por')->nullable(false)->change();
         });
     }
 };
