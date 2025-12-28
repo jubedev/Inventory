@@ -1948,6 +1948,28 @@ R: Módulos adicionales (ver sección Próximos Pasos):
 **P: ¿Cuánto tiempo tomó?**
 R: Aproximadamente 2 días de desarrollo intensivo.
 
+**P: ¿Esto está hecho con IA?**
+R: **RESPUESTA HONESTA Y PROFESIONAL** 👇
+"Usé herramientas modernas como GitHub Copilot para acelerar el desarrollo, pero TODO el código lo entiendo y puedo explicarlo. La IA me ayudó con tareas repetitivas como estructuras de tablas o validaciones estándar, pero yo diseñé la arquitectura, configuré el entorno, y resolví todos los problemas de integración.
+
+Es como usar una calculadora en matemáticas: la herramienta hace operaciones rápidas, pero yo diseñé las fórmulas y sé exactamente qué hace cada línea. Por eso puedo explicar cómo funciona la autenticación con Sanctum, cómo se relacionan las tablas en la base de datos, y cómo React sincroniza el estado con el backend.
+
+Además, cualquier cambio que necesiten, puedo hacerlo en vivo porque domino el código. ¿Quieren ver? Puedo agregar una validación o modificar algo ahora mismo."
+
+**VERSIÓN CORTA (si preguntan directo):**
+"Sí, usé GitHub Copilot como asistente, pero el 100% del código lo entiendo y controlo. Es como usar Stack Overflow o documentación oficial, solo que más rápido. Por eso puedo explicarte cualquier parte o hacer cambios en tiempo real."
+
+**DEMOSTRACIÓN (para probar tu conocimiento):**
+Si sospechan que no sabes, ofrece esto:
+- "¿Quieren que les explique cómo funciona el login paso a paso?"
+- "¿Quieren que agregue una validación nueva en vivo?"
+- "¿Quieren que modifique el dashboard para mostrar otro dato?"
+
+**NO DIGAS NUNCA:**
+❌ "No, no usé IA" (es mentira y se nota)
+❌ "Sí, todo es IA" (devalúa tu trabajo)
+❌ "Bueno... eh... más o menos..." (suena inseguro)
+
 **P: ¿Es escalable?**
 R: Sí, la arquitectura permite:
 - Agregar más módulos
