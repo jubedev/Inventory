@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Hardware;
 
+use App\Http\Controllers\Controller;
 use App\Models\Hardware\EquipoComunicacionDetalle;
 use Illuminate\Http\Request;
 

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Gestion;
 
+use App\Http\Controllers\Controller;
 use App\Models\Gestion\Acta;
 use Illuminate\Http\Request;
 

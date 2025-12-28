@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Inventario;
 
+use App\Http\Controllers\Controller;
 use App\Models\Inventario\MovimientoInventario;
 use Illuminate\Http\Request;
 
