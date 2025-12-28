@@ -16,8 +16,8 @@ const SignUpForm = () => {
     
     const formData = {
       email: e.target.email.value,
-      password: e.target.password?.value || 'temporal123',
-      password_confirmation: e.target.passwordConfirm?.value || 'temporal123',
+      nombre_completo: e.target.fullName.value,
+      motivo_solicitud: `Cargo: ${e.target.position.value}, Área: ${e.target.area.value}, Teléfono: ${e.target.phone.value || 'No especificado'}, Motivo: ${e.target.reason.value}`,
     };
 
     const result = await register(formData);
@@ -25,12 +25,12 @@ const SignUpForm = () => {
     if (result.success) {
       setSubmittedEmail(formData.email);
       setIsModalOpen(true);
-      // Después de cerrar el modal, redirigir al dashboard
+      // Después de cerrar el modal, redirigir al login
       setTimeout(() => {
-        navigate('/dashboard');
-      }, 2000);
+        navigate('/login');
+      }, 3000);
     } else {
-      setRegisterError(result.error || "Error al registrar usuario");
+      setRegisterError(result.error || "Error al enviar solicitud");
     }
   };
 

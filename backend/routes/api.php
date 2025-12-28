@@ -68,8 +68,14 @@ Route::prefix('v1')->group(function () {
     // Actas
     Route::apiResource('actas', ActaController::class);
     
-    // Access Requests
-    Route::apiResource('access-requests', AccessRequestController::class);
+    // Access Requests (protegidas con autenticación para admin)
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('access-requests', [AccessRequestController::class, 'index']);
+        Route::get('access-requests/{id}', [AccessRequestController::class, 'show']);
+        Route::post('access-requests/{id}/approve', [AccessRequestController::class, 'approve']);
+        Route::post('access-requests/{id}/reject', [AccessRequestController::class, 'reject']);
+        Route::delete('access-requests/{id}', [AccessRequestController::class, 'destroy']);
+    });
 });
 
 /*

@@ -56,23 +56,21 @@ export const AppProvider = ({ children }) => {
     }
   }
 
-  // Register
+  // Register - Ahora crea solicitud de acceso
   const register = async (userData) => {
     try {
       setLoading(true)
       setError(null)
       
       const response = await api.post('/auth/register', userData)
-      const { access_token, user: newUser } = response.data
       
-      localStorage.setItem('token', access_token)
-      localStorage.setItem('user', JSON.stringify(newUser))
-      setUser(newUser)
-      
-      return { success: true }
+      return { 
+        success: true, 
+        message: response.data.message 
+      }
       
     } catch (err) {
-      const errorMessage = err.response?.data?.message || 'Error al registrar usuario'
+      const errorMessage = err.response?.data?.message || 'Error al enviar solicitud'
       setError(errorMessage)
       return { success: false, error: errorMessage }
     } finally {

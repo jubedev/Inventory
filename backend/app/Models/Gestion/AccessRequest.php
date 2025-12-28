@@ -11,14 +11,16 @@ class AccessRequest extends Model
 {
     use HasFactory;
 
-    protected $table = 'acs_req';
+    protected $table = 'access_requests';
 
     protected $fillable = [
+        'email',
+        'nombre_completo',
+        'motivo_solicitud',
         'estado',
         'revisado_por',
         'fecha_solicitud',
         'fecha_revision',
-        'usuarios_sistema_id',
     ];
 
     protected $casts = [
@@ -27,11 +29,11 @@ class AccessRequest extends Model
     ];
 
     /**
-     * Relación: Una solicitud pertenece a un usuario del sistema
+     * Relación: Usuario administrador que revisó la solicitud
      */
-    public function usuarioSistema(): BelongsTo
+    public function revisor(): BelongsTo
     {
-        return $this->belongsTo(UsuarioSistema::class, 'usuarios_sistema_id');
+        return $this->belongsTo(UsuarioSistema::class, 'revisado_por');
     }
 
     /**
