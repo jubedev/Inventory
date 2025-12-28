@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Inventario\{EquipoController, TipoEquipoController, ActivoAsignadoController, MovimientoInventarioController};
 use App\Http\Controllers\Administracion\{UsuarioController, CargoController, RazonSocialController, AreaController};
 use App\Http\Controllers\Gestion\{ActaController, AccessRequestController};
@@ -19,6 +20,18 @@ use App\Http\Controllers\Gestion\{ActaController, AccessRequestController};
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+// Rutas públicas de autenticación
+Route::prefix('v1/auth')->group(function () {
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('register', [AuthController::class, 'register']);
+    
+    // Rutas protegidas de autenticación
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('me', [AuthController::class, 'me']);
+        Route::post('logout', [AuthController::class, 'logout']);
+    });
 });
 
 // Rutas públicas (sin autenticación)

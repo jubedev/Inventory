@@ -3,19 +3,20 @@
 namespace App\Models\Administracion;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Laravel\Sanctum\HasApiTokens;
 
-class UsuarioSistema extends Model
+class UsuarioSistema extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\Administracion\UsuarioSistemaFactory> */
-    use HasFactory;
+    use HasFactory, HasApiTokens;
     
     protected $table = 'usuarios_sistema';
 
     protected $fillable = [
         'email',
         'password',
-        'roles_id',
+        'rol_id',
     ];
 
     protected $hidden = [
@@ -27,8 +28,8 @@ class UsuarioSistema extends Model
         'updated_at' => 'datetime',
     ];
 
-    public funcition rol()
+    public function rol(): BelongsTo
     {
-        return $this->belongsTo(Rol::class, 'roles_id');
+        return $this->belongsTo(Rol::class, 'rol_id');
     }
 }

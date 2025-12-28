@@ -15,12 +15,9 @@ const SignUpForm = () => {
     setRegisterError("");
     
     const formData = {
-      nombre: e.target.fullName.value,
       email: e.target.email.value,
-      password: "temporal123", // Password temporal - debería venir del form
-      cargo: e.target.position.value,
-      area: e.target.area.value,
-      telefono: e.target.phone.value || null,
+      password: e.target.password?.value || 'temporal123',
+      password_confirmation: e.target.passwordConfirm?.value || 'temporal123',
     };
 
     const result = await register(formData);
