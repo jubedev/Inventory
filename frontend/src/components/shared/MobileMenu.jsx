@@ -65,7 +65,7 @@ const MobileMenu = ({ isOpen, onClose, activeSection }) => {
               <div className="bg-white/20 rounded-xl p-4 mb-4">
                 <p className="text-white text-sm">Bienvenido,</p>
                 <p className="text-white font-bold text-lg">{user?.nombre || user?.email}</p>
-                <p className="text-white/70 text-xs">{user?.rol || 'Administrador'}</p>
+                <p className="text-white/70 text-xs">{user?.rol?.nombre || 'Administrador'}</p>
               </div>
 
               {/* Navegación */}
@@ -192,62 +192,96 @@ const MobileMenu = ({ isOpen, onClose, activeSection }) => {
             </div>
           ) : (
             // Menú público móvil
-            <ul className="flex flex-col space-y-2">
-            <li>
-              <a
-                href="#inicio"
-                onClick={handleScrollToSection('inicio')}
-                className={`
-                  block text-white px-4 py-3 rounded-xl transition-all duration-300 font-inter
-                  ${activeSection === 'inicio'
-                    ? 'bg-white/30 font-semibold shadow-lg scale-105' 
-                    : 'hover:bg-white/20 hover:scale-105'
-                  }
-                `}
-              >
-                🏠 Inicio
-              </a>
-            </li>
-            <li>
-              <a
-                href="#modulos"
-                onClick={handleScrollToSection('modulos')}
-                className={`
-                  block text-white px-4 py-3 rounded-xl transition-all duration-300 font-inter
-                  ${activeSection === 'modulos'
-                    ? 'bg-white/30 font-semibold shadow-lg scale-105' 
-                    : 'hover:bg-white/20 hover:scale-105'
-                  }
-                `}
-              >
-                📦 Módulos
-              </a>
-            </li>
-            <li>
-              <NavLink
-                to="/contact"
-                onClick={onClose}
-                className={({ isActive }) => `
-                  block text-white px-4 py-3 rounded-xl transition-all duration-300 font-inter
-                  ${isActive 
-                    ? 'bg-white/30 font-semibold shadow-lg scale-105' 
-                    : 'hover:bg-white/20 hover:scale-105'
-                  }
-                `}
-              >
-                📧 Contáctanos
-              </NavLink>
-            </li>
-            <li className="pt-2">
-              <NavLink
-                to="/login"
-                onClick={onClose}
-                className="block text-center px-4 py-3 bg-white text-red-600 font-bold rounded-xl shadow-xl hover:bg-red-50 hover:shadow-2xl hover:scale-105 transition-all duration-300 font-satoshi"
-              >
-                🔐 Iniciar Sesión
-              </NavLink>
-            </li>
-          </ul>
+            <div>
+              {isAuthenticated && (
+                // Info del usuario en landing (móvil)
+                <div className="bg-white/20 rounded-xl p-4 mb-4">
+                  <p className="text-white text-sm">Hola,</p>
+                  <p className="text-white font-bold text-lg">{user?.nombre || user?.email}</p>
+                </div>
+              )}
+              
+              <ul className="flex flex-col space-y-2">
+                <li>
+                  <a
+                    href="#inicio"
+                    onClick={handleScrollToSection('inicio')}
+                    className={`
+                      block text-white px-4 py-3 rounded-xl transition-all duration-300 font-inter
+                      ${activeSection === 'inicio'
+                        ? 'bg-white/30 font-semibold shadow-lg scale-105' 
+                        : 'hover:bg-white/20 hover:scale-105'
+                      }
+                    `}
+                  >
+                    🏠 Inicio
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#modulos"
+                    onClick={handleScrollToSection('modulos')}
+                    className={`
+                      block text-white px-4 py-3 rounded-xl transition-all duration-300 font-inter
+                      ${activeSection === 'modulos'
+                        ? 'bg-white/30 font-semibold shadow-lg scale-105' 
+                        : 'hover:bg-white/20 hover:scale-105'
+                      }
+                    `}
+                  >
+                    📦 Módulos
+                  </a>
+                </li>
+                <li>
+                  <NavLink
+                    to="/contact"
+                    onClick={onClose}
+                    className={({ isActive }) => `
+                      block text-white px-4 py-3 rounded-xl transition-all duration-300 font-inter
+                      ${isActive 
+                        ? 'bg-white/30 font-semibold shadow-lg scale-105' 
+                        : 'hover:bg-white/20 hover:scale-105'
+                      }
+                    `}
+                  >
+                    📧 Contáctanos
+                  </NavLink>
+                </li>
+                
+                {isAuthenticated ? (
+                  // Usuario autenticado en landing
+                  <>
+                    <li className="pt-2">
+                      <button
+                        onClick={() => handleNavClick('/dashboard')}
+                        className="w-full text-center px-4 py-3 bg-white text-red-600 font-bold rounded-xl shadow-xl hover:bg-red-50 hover:shadow-2xl hover:scale-105 transition-all duration-300 font-satoshi"
+                      >
+                        📊 Ir al Dashboard
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={handleLogout}
+                        className="w-full text-center px-4 py-3 bg-red-700 text-white font-semibold rounded-xl hover:bg-red-800 transition-all duration-300"
+                      >
+                        🚪 Cerrar Sesión
+                      </button>
+                    </li>
+                  </>
+                ) : (
+                  // Usuario no autenticado
+                  <li className="pt-2">
+                    <NavLink
+                      to="/login"
+                      onClick={onClose}
+                      className="block text-center px-4 py-3 bg-white text-red-600 font-bold rounded-xl shadow-xl hover:bg-red-50 hover:shadow-2xl hover:scale-105 transition-all duration-300 font-satoshi"
+                    >
+                      🔐 Iniciar Sesión
+                    </NavLink>
+                  </li>
+                )}
+              </ul>
+            </div>
           )}
         </nav>
       </div>
