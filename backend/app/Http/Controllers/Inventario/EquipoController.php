@@ -148,13 +148,20 @@ class EquipoController extends Controller
     {
         $stats = [
             'total' => Equipo::count(),
-            'disponibles' => Equipo::where('estado', 'Disponible')->count(),
-            'asignados' => Equipo::where('estado', 'Asignado')->count(),
-            'en_mantenimiento' => Equipo::where('estado', 'Mantenimiento')->count(),
+            'disponibles' => Equipo::where('estado', 'disponible')->count(),
+            'asignados' => Equipo::where('estado', 'en uso')->count(),
+            'en_mantenimiento' => Equipo::where('estado', 'mantenimiento')->count(),
+            'dados_de_baja' => Equipo::where('estado', 'dado de baja')->count(),
             'por_tipo' => Equipo::selectRaw('tipo_equipo_id, COUNT(*) as total')
                 ->groupBy('tipo_equipo_id')
                 ->with('tipoEquipo:id,nombre')
                 ->get()
+                ->map(function($item) {
+                    return [
+                        'tipo' => $item->tipoEquipo->nombre ?? 'Sin tipo',
+                        'total' => $item->total
+                    ];
+                })
         ];
 
         return response()->json($stats);
