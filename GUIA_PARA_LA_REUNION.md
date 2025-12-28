@@ -662,7 +662,261 @@ frontend/public/assets/image/spira.png
 
 ---
 
-## 💬 SI TE PREGUNTAN ALGO: RESPUESTAS PREPARADAS
+## �️ ESTRATEGIA: Cómo Responder Preguntas Técnicas Específicas
+
+### LA REGLA DE ORO: **FÓRMULA P.E.E**
+
+Cuando te pregunten algo técnico que no sabes exactamente:
+
+**P**ropósito → **E**structura → **E**jemplo
+
+#### Ejemplo Real:
+
+**❓ "¿Cómo hiciste que las validaciones funcionen en tiempo real?"**
+
+**Respuesta usando P.E.E:**
+
+1. **Propósito** (QUÉ hace): 
+   "El objetivo es dar feedback inmediato al usuario mientras escribe, para que corrija errores antes de enviar el formulario"
+
+2. **Estructura** (CÓMO funciona en general):
+   "Usamos eventos de React: cuando el usuario escribe (`onChange`), validamos el campo. Si hay error, lo mostramos debajo del input con borde rojo"
+
+3. **Ejemplo** (Algo concreto):
+   "Por ejemplo, si escribes un email sin @, te dice 'Email inválido' inmediatamente. Esto mejora la experiencia porque no tienes que esperar a enviar para saber que está mal"
+
+---
+
+### PLANTILLAS DE RESPUESTA PARA CUALQUIER PREGUNTA
+
+#### Si te preguntan: **"¿Cómo hiciste [X funcionalidad]?"**
+
+**Plantilla:**
+```
+"Para [funcionalidad], implementé [herramienta/método] porque [razón].
+Básicamente [explicación simple].
+Por ejemplo, [caso concreto que se ve en la demo]."
+```
+
+**Ejemplos reales:**
+
+**❓ "¿Cómo hiciste la búsqueda en tiempo real?"**
+
+✅ "Para la búsqueda en tiempo real, implementé un filtro con JavaScript en el frontend porque es más rápido que consultar el servidor cada vez. Básicamente, cuando escribes en el buscador, filtra la lista de equipos que ya está cargada. Por ejemplo, si escribes 'Dell', solo muestra los equipos Dell sin recargar la página."
+
+**❓ "¿Cómo hiciste que se guarden los equipos?"**
+
+✅ "Para guardar equipos, implementé un formulario React que envía los datos a Laravel mediante una petición POST. Básicamente, Laravel valida que los datos estén correctos y los guarda en MySQL. Por ejemplo, cuando creas un equipo con el modal, se envía al backend, se valida, y aparece inmediatamente en la tabla."
+
+**❓ "¿Cómo hiciste el login?"**
+
+✅ "Para el login, implementé Laravel Sanctum porque es el estándar para APIs. Básicamente, cuando ingresas email y contraseña, Laravel verifica contra la base de datos. Si es correcto, genera un token único que el navegador guarda. Por ejemplo, ese token se incluye en cada petición para identificarte hasta que cierres sesión."
+
+---
+
+#### Si te preguntan: **"¿Para qué sirve [archivo/componente]?"**
+
+**Plantilla:**
+```
+"[Archivo] es responsable de [función principal].
+Lo usamos para [propósito específico].
+Sin él, [qué no funcionaría]."
+```
+
+**Ejemplos reales:**
+
+**❓ "¿Para qué sirve AppContext.jsx?"**
+
+✅ "AppContext.jsx es responsable de manejar la autenticación en toda la aplicación. Lo usamos para guardar quién está logueado, y compartir esa información entre todas las páginas. Sin él, cada página tendría que validar el login por separado, lo que sería ineficiente."
+
+**❓ "¿Para qué sirve el archivo validators.js?"**
+
+✅ "validators.js contiene todas las funciones de validación del frontend. Lo usamos para verificar que emails, contraseñas, códigos, etc., estén bien formados antes de enviarlos. Sin él, tendríamos código de validación duplicado en muchos archivos."
+
+**❓ "¿Para qué sirve useEquipos.js?"**
+
+✅ "useEquipos.js es un custom hook que maneja toda la lógica de equipos: traer datos, crear, editar, eliminar. Lo usamos para evitar repetir código en los componentes. Sin él, cada componente tendría que escribir las mismas peticiones al API."
+
+---
+
+#### Si te preguntan: **"¿Cuál es el flujo de [proceso]?"**
+
+**Plantilla (SIEMPRE usa numeración):**
+```
+"El flujo de [proceso] es:
+1. [Paso inicial - usualmente frontend]
+2. [Paso intermedio - usualmente backend]
+3. [Paso final - usualmente base de datos o respuesta]
+```
+
+**Ejemplos reales:**
+
+**❓ "¿Cuál es el flujo cuando creo un equipo?"**
+
+✅ "El flujo cuando creas un equipo es:
+1. Llenas el formulario en el modal y das clic en Guardar
+2. React envía los datos al backend (Laravel) mediante POST a /api/v1/equipos
+3. Laravel valida los datos (serial único, campos requeridos, etc.)
+4. Si todo está bien, Laravel guarda en MySQL y responde con el equipo creado
+5. React recibe la respuesta, cierra el modal y actualiza la tabla automáticamente"
+
+**❓ "¿Cuál es el flujo de autenticación?"**
+
+✅ "El flujo de autenticación es:
+1. Ingresas email y contraseña en el login
+2. React envía al backend mediante POST a /api/v1/auth/login
+3. Laravel busca el usuario en la base de datos
+4. Si existe y la contraseña es correcta, genera un token con Sanctum
+5. React guarda el token en localStorage del navegador
+6. Todas las peticiones siguientes incluyen ese token en el header
+7. Al cerrar sesión, se elimina el token del servidor y del navegador"
+
+**❓ "¿Cuál es el flujo para aprobar una solicitud?"**
+
+✅ "El flujo para aprobar una solicitud es:
+1. Ves la solicitud pendiente en la tabla
+2. Das clic en Ver Detalle para revisar la información completa
+3. Clic en Aprobar, aparece un modal para asignar contraseña y rol
+4. El backend crea un nuevo usuario en usuarios_sistema con esa contraseña
+5. La solicitud se marca como 'aprobada' con tu ID como revisor
+6. El nuevo usuario ya puede hacer login con su email y la contraseña que asignaste"
+
+---
+
+### FRASES SALVAVIDAS (Úsalas cuando necesites tiempo)
+
+#### Si no entiendes la pregunta:
+- "¿Podrías darme un ejemplo específico de lo que te refieres?"
+- "Déjame asegurarme de entender bien tu pregunta: ¿Te refieres a [reformular]?"
+
+#### Si no sabes la respuesta exacta:
+- "Excelente pregunta. Déjame mostrarte cómo funciona actualmente..." [demo rápida]
+- "Hay varias formas de implementar eso. La que usamos aquí es..." [explicación general]
+- "Eso involucra [concepto técnico]. La implementación específica está en [archivo], y funciona [explicación simple]"
+
+#### Si la pregunta es MUY técnica:
+- "A nivel técnico específico, necesitaría revisar el código exacto. Pero el concepto general es..." [explicación de alto nivel]
+- "Hay varios detalles de implementación ahí. Lo importante es que cumple con [resultado/objetivo]"
+- "Esa es una pregunta de implementación específica. Te puedo mostrar el resultado final y luego revisamos el código juntos si quieres"
+
+#### Si te piden algo que no existe:
+- "Esa funcionalidad está en el roadmap. Por ahora priorizamos [lo que sí está hecho]"
+- "Es perfectamente factible agregar eso. Necesitaría [tiempo estimado] para implementarlo bien"
+- "La arquitectura actual permite agregar eso fácilmente. No está en esta versión porque [razón válida]"
+
+---
+
+### PREGUNTAS TÉCNICAS ESPECÍFICAS (Con respuestas listas)
+
+#### **❓ "¿Cómo funciona el useState?"**
+
+✅ "useState es un hook de React que te permite guardar información que puede cambiar. Por ejemplo, `useState([])` crea una variable vacía para equipos. Cuando traes datos del servidor, usas `setEquipos(datos)` para actualizar esa variable, y React automáticamente actualiza lo que se muestra en pantalla."
+
+#### **❓ "¿Qué es un hook personalizado?"**
+
+✅ "Un hook personalizado es una función reutilizable que contiene lógica común. Por ejemplo, `useEquipos` tiene todas las funciones para manejar equipos: traer, crear, editar, eliminar. En lugar de escribir eso en cada página, lo escribes una vez y lo reutilizas. Es como tener un ayudante especializado."
+
+#### **❓ "¿Cómo funciona el useEffect?"**
+
+✅ "useEffect ejecuta código cuando algo cambia. Por ejemplo, cuando entras a la página de equipos, useEffect se ejecuta automáticamente y trae los datos del servidor. Es como un vigilante que dice 'cuando esta página se cargue, haz esto'."
+
+#### **❓ "¿Qué es un controlador en Laravel?"**
+
+✅ "Un controlador es un archivo que maneja las peticiones del frontend. Por ejemplo, EquipoController tiene funciones para listar, crear, editar y eliminar equipos. Cuando React dice 'dame los equipos', el controlador busca en la base de datos y responde con los datos."
+
+#### **❓ "¿Qué es una migración?"**
+
+✅ "Una migración es como un plano de construcción para la base de datos. Define qué tablas existen y qué columnas tienen. Por ejemplo, hay una migración que dice 'crea la tabla equipos con columnas: activo, serial, marca, modelo'. Si necesitas agregar una columna nueva, creas una migración."
+
+#### **❓ "¿Qué es un modelo en Laravel?"**
+
+✅ "Un modelo representa una tabla de la base de datos en código. Por ejemplo, el modelo Equipo representa la tabla equipos. Te permite trabajar con los datos de forma más fácil: en lugar de escribir SQL, usas `Equipo::all()` para traer todos los equipos."
+
+#### **❓ "¿Qué es Sanctum?"**
+
+✅ "Sanctum es el sistema de autenticación de Laravel para APIs. Genera tokens seguros cuando haces login. Es como una credencial de acceso: mientras tengas el token válido, puedes usar el sistema. Si cierras sesión o el admin te revoca acceso, el token se invalida."
+
+#### **❓ "¿Cómo funciona la validación en Laravel?"**
+
+✅ "Laravel valida datos antes de guardarlos. Le das reglas como 'email requerido', 'serial único', 'máximo 100 caracteres'. Si los datos no cumplen, rechaza la petición y devuelve mensajes de error específicos. Por ejemplo, si intentas crear un equipo sin código de activo, Laravel responde 'El código de activo es obligatorio'."
+
+#### **❓ "¿Qué es Axios?"**
+
+✅ "Axios es una librería para hacer peticiones HTTP desde JavaScript. Es como un cartero que lleva mensajes entre el frontend y el backend. Por ejemplo, cuando creas un equipo, Axios envía los datos a Laravel y trae la respuesta."
+
+#### **❓ "¿Qué es Tailwind CSS?"**
+
+✅ "Tailwind es un framework CSS que te da clases predefinidas para estilos. En lugar de escribir CSS personalizado, usas clases como `bg-blue-600` para fondo azul, `rounded-lg` para esquinas redondeadas. Es más rápido y consistente."
+
+#### **❓ "¿Qué es React Router?"**
+
+✅ "React Router maneja la navegación entre páginas sin recargar el navegador. Por ejemplo, cuando vas de /dashboard a /equipos, no recarga toda la página, solo cambia lo que se muestra. Esto hace que la aplicación sea más rápida y fluida."
+
+#### **❓ "¿Qué es el localStorage?"**
+
+✅ "localStorage es un espacio de almacenamiento en el navegador donde guardas datos que persisten aunque cierres la pestaña. Por ejemplo, guardamos el token de autenticación ahí. Así, si actualizas la página, sigues logueado."
+
+#### **❓ "¿Qué es un token JWT?"**
+
+✅ "Es un tipo de token seguro que contiene información codificada. Laravel Sanctum usa tokens similares. Cuando haces login, el servidor genera un token único que identifica tu sesión. Es como una llave digital que expira cuando cierras sesión."
+
+---
+
+### ESTRATEGIA PARA PREGUNTAS DE IMPLEMENTACIÓN
+
+#### Si te preguntan: "¿Cómo implementaste X?"
+
+**Proceso mental (en tu cabeza):**
+1. ¿Dónde está eso? (Frontend o Backend)
+2. ¿Qué archivo principal lo hace? 
+3. ¿Cuál es el resultado visible?
+
+**Respuesta (en voz alta):**
+```
+"Para implementar [X]:
+- En el [frontend/backend] tenemos [archivo]
+- Que básicamente [qué hace en palabras simples]
+- Y eso se ve en [resultado visible en la demo]
+- ¿Quieres que te muestre cómo funciona en vivo?"
+```
+
+**Ejemplo:**
+
+**❓ "¿Cómo implementaste que no puedas revocarte a ti mismo?"**
+
+✅ "Para implementar eso:
+- En el frontend tenemos el componente UsuariosSistemaTable
+- Que básicamente compara el email del usuario de la tabla con tu email actual
+- Si son iguales, en lugar de mostrar el botón 'Revocar', muestra '(Tu usuario)'
+- ¿Quieres que te muestre? [Ir a página de usuarios y señalar tu propio registro]"
+
+---
+
+### ÚLTIMA ESTRATEGIA: LA DEMOSTRACIÓN
+
+**Si realmente NO SABES responder:**
+
+"Excelente pregunta. En lugar de explicar teoría, déjame mostrarte cómo funciona en la práctica."
+
+Luego:
+1. Abre la aplicación
+2. Muestra el resultado final
+3. Explica QUÉ hace (no cómo está programado)
+4. Si insisten en el código: "El código específico está en [archivo general], puedo enviarte la referencia después"
+
+**Ejemplo:**
+
+**❓ "¿Cómo funciona el sistema de roles internamente?"**
+
+✅ "Excelente pregunta. Déjame mostrarte cómo funciona en la práctica:
+[Abrir solicitud]
+[Mostrar rol Administrador vs Usuario]
+'Cuando apruebo una solicitud, puedo asignar Administrador o Usuario. Los administradores tienen acceso a gestión de usuarios y solicitudes, mientras que los usuarios regulares solo ven el inventario.'
+[Si insisten] 'El código específico de permisos está en Laravel con middleware, puedo compartirte la documentación después de la demo.'"
+
+---
+
+## �💬 SI TE PREGUNTAN ALGO: RESPUESTAS PREPARADAS
 
 ### ❓ "¿Por qué usaron React y no Vue/Angular?"
 
@@ -1547,6 +1801,80 @@ docker-compose up -d
 
 ---
 
+## 🎭 PRÁCTICA: Simulación de Preguntas Difíciles
+
+### EJERCICIO 1: Responde en voz alta
+
+Lee cada pregunta y responde EN VOZ ALTA usando las estrategias de arriba. Grábate si puedes.
+
+1. **"¿Cómo implementaste las validaciones en tiempo real?"**
+2. **"¿Para qué sirve el archivo AppContext.jsx?"**
+3. **"¿Cuál es el flujo cuando un usuario hace login?"**
+4. **"¿Cómo funciona React Router?"**
+5. **"¿Por qué usaste Tailwind en lugar de CSS normal?"**
+6. **"¿Qué pasa si la base de datos se cae?"**
+7. **"¿Cómo optimizarías esto para 10,000 equipos?"**
+8. **"¿Por qué no usaste GraphQL en lugar de REST?"**
+9. **"¿Cómo manejas las imágenes de los equipos?"** (No está implementado)
+10. **"¿El sistema funciona offline?"** (No)
+
+### EJERCICIO 2: Practica las respuestas salvavidas
+
+Cuando NO sepas algo, practica decir:
+
+- [ ] "Excelente pregunta. Déjame mostrarte cómo funciona actualmente..."
+- [ ] "Hay varias formas de implementar eso, la que usamos aquí es..."
+- [ ] "A nivel técnico específico necesitaría revisar el código exacto, pero el concepto general es..."
+- [ ] "Esa funcionalidad está en el roadmap para la siguiente fase"
+- [ ] "¿Podrías darme un ejemplo específico de lo que te refieres?"
+
+### EJERCICIO 3: Timing
+
+Practica responder en:
+- **10 segundos** → Respuesta corta y directa
+- **30 segundos** → Respuesta completa con ejemplo
+- **1 minuto** → Respuesta con demo en vivo
+
+---
+
+## 📝 CHECKLIST DE PREPARACIÓN MENTAL
+
+### Antes de dormir hoy (28 dic):
+
+- [ ] Leí la guía completa
+- [ ] Practiqué la demo 2 veces
+- [ ] Respondí las 10 preguntas del ejercicio EN VOZ ALTA
+- [ ] Identifiqué mis 3 respuestas más difíciles y las practiqué extra
+- [ ] Preparé agua/café para mañana
+- [ ] Configuré alarma con 2 horas de anticipación
+- [ ] **DECIDÍ que voy a tener éxito**
+
+### Mañana antes de la demo:
+
+- [ ] Desayuné bien
+- [ ] Probé que todo funciona (frontend, backend, docker)
+- [ ] Hice la demo completa 1 vez más
+- [ ] Respiré profundo 5 veces
+- [ ] Me repetí: "Yo sé esto. Voy a hacerlo bien."
+
+### Durante la demo:
+
+- [ ] Sonrío aunque esté nervioso
+- [ ] Hablo despacio y claro
+- [ ] Si me tranco, respiro y continúo
+- [ ] Si no sé algo, uso mis frases salvavidas
+- [ ] Mantengo contacto visual
+- [ ] Señalo con el mouse lo que explico
+
+### Después de la demo:
+
+- [ ] Respiro profundo (ya pasó)
+- [ ] Anoto feedback sin justificarme
+- [ ] Agradezco las preguntas
+- [ ] Celebro que lo HICISTE
+
+---
+
 ## ❓ RESPUESTAS A PREGUNTAS FRECUENTES
 
 ### Preguntas Técnicas
@@ -1816,6 +2144,169 @@ git diff HEAD~1 EquipoController.php
 - [ ] Sé dónde está EquipoController.php
 - [ ] Sé dónde está AppContext.jsx
 - [ ] Sé dónde está router.jsx
+
+---
+
+## 🎓 RESUMEN FINAL: Lo Que REALMENTE Necesitas Saber
+
+### Cuando te pregunten CÓMO hiciste algo:
+
+**Usa la fórmula P.E.E:**
+1. **Propósito** - "El objetivo era [X]"
+2. **Estructura** - "Implementé [herramienta/método]"
+3. **Ejemplo** - "Por ejemplo, [cosa visible en la demo]"
+
+### Cuando te pregunten PARA QUÉ sirve algo:
+
+**3 partes:**
+1. "Es responsable de [función]"
+2. "Lo usamos para [propósito]"
+3. "Sin él, [problema]"
+
+### Cuando te pregunten el FLUJO de algo:
+
+**Siempre numerado:**
+1. [Usuario hace X en frontend]
+2. [Frontend envía a backend]
+3. [Backend procesa]
+4. [Base de datos guarda]
+5. [Respuesta vuelve a frontend]
+
+### Cuando NO sepas responder:
+
+**Frases salvavidas:**
+- "Excelente pregunta. Déjame mostrarte cómo funciona..." [demo]
+- "A nivel técnico específico, lo importante es que [resultado]"
+- "Hay varias formas, la que usamos es [explicación general]"
+- "¿Podrías darme un ejemplo específico?"
+
+### Lo MÁS IMPORTANTE de todo:
+
+**NO tienes que ser experto.**
+
+Solo necesitas:
+- ✅ Mostrar que funciona
+- ✅ Explicar QUÉ hace (no necesariamente CÓMO en detalle)
+- ✅ Responder con confianza usando las plantillas
+- ✅ Si no sabes, redirigir a una demo práctica
+
+---
+
+## 💪 MENSAJE FINAL ACTUALIZADO
+
+### AHORA SÍ tienes TODO:
+
+1. ✅ **Sistema funcional** → Listo y probado
+2. ✅ **Script de demo** → Paso a paso con timing
+3. ✅ **Respuestas preparadas** → Más de 30 respuestas listas
+4. ✅ **Estrategia de comunicación** → Fórmulas P.E.E para cualquier pregunta
+5. ✅ **Frases salvavidas** → Para cuando no sepas algo
+6. ✅ **Ejemplos específicos** → Cómo responder preguntas técnicas
+7. ✅ **Ejercicios de práctica** → Para ensayar esta noche
+8. ✅ **Plan de emergencia** → Si algo falla
+9. ✅ **Checklist mental** → Preparación antes/durante/después
+
+### Lo que vas a hacer mañana:
+
+1. **Mostrar** el sistema funcionando
+2. **Explicar** lo que hace cada parte (con las plantillas)
+3. **Responder** preguntas usando P.E.E
+4. **Demostrar** en vivo cuando no sepas explicar con palabras
+5. **Manejar** lo inesperado con las frases salvavidas
+
+### Si te preguntan algo MUY específico que no sabes:
+
+**Respuesta mágica:**
+
+"Esa es una pregunta de implementación muy específica. En lugar de darte una respuesta teórica que podría ser incorrecta, déjame mostrarte cómo funciona en la práctica [hacer demo]. Si necesitas el detalle exacto de implementación, puedo compartirte el código después de la reunión para que lo revises con calma."
+
+**Esta respuesta:**
+- ✅ Te hace ver profesional (no das info incorrecta)
+- ✅ Te da tiempo (ofreces revisar después)
+- ✅ Demuestra competencia (muestras el resultado)
+- ✅ Es honesto (no finges saber)
+
+---
+
+## 🌟 TU VENTAJA SECRETA
+
+**¿Sabes cuál es tu mayor ventaja?**
+
+NO es saber programación experta.
+
+Es tener:
+1. **Un sistema que SÍ funciona** (muchos proyectos no llegan ni ahí)
+2. **Una guía completa** (la mayoría improvisa)
+3. **Respuestas preparadas** (nadie hace esto)
+4. **Estrategias de comunicación** (game changer)
+5. **Confianza** (porque ahora sabes que estás preparado)
+
+**La gente espera ver:**
+- ✅ Que el sistema funcione → LO HACE
+- ✅ Que entiendas qué hace → LO ENTIENDES
+- ✅ Que puedas explicarlo → TIENES LAS PLANTILLAS
+- ✅ Que manejes preguntas → TIENES LAS FRASES
+
+**NO esperan:**
+- ❌ Que seas experto mundial en React
+- ❌ Que memorices todo el código
+- ❌ Que sepas cada detalle técnico
+- ❌ Que todo salga perfecto
+
+---
+
+## 📖 ÚLTIMO CONSEJO
+
+### Esta noche:
+
+1. **Lee la sección de estrategias 3 veces**
+2. **Practica las 10 preguntas del ejercicio EN VOZ ALTA**
+3. **Haz la demo 2 veces usando el script**
+4. **Duerme 7-8 horas** (CRUCIAL)
+
+### Mañana:
+
+1. **Desayuna bien** (tu cerebro necesita energía)
+2. **Prueba que todo funciona** 30 min antes
+3. **Respira profundo** antes de empezar
+4. **Sonríe** aunque estés nervioso
+5. **Confía** en tu preparación
+
+### Durante la demo:
+
+1. **Habla despacio** (nervios hacen hablar rápido)
+2. **Señala con el mouse** lo que explicas
+3. **Usa las plantillas** P.E.E
+4. **Si te trancas**, respira y usa las frases salvavidas
+5. **Disfrútalo** (ya hiciste el trabajo duro)
+
+---
+
+## 🎯 ÚLTIMA PALABRA
+
+Tienes TODO lo que necesitas.
+
+El sistema funciona ✅
+Las respuestas están listas ✅
+Las estrategias son claras ✅
+El plan está definido ✅
+
+Solo falta UNA cosa:
+
+**Que TÚ creas que puedes hacerlo.**
+
+Y la verdad es: **SÍ PUEDES.**
+
+Mañana a esta hora vas a estar celebrando que salió bien.
+
+**Te lo garantizo.**
+
+---
+
+**Última actualización: 28 de Diciembre 2025, 11:59 PM**
+**Con estrategias completas de comunicación y respuestas para CUALQUIER pregunta**
+
+**AHORA SÍ, VAS A BRILLAR. 🌟**
 
 ---
 
