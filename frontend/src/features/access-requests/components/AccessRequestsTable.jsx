@@ -1,4 +1,4 @@
-const AccessRequestsTable = ({ solicitudes, loading, onApprove, onReject, onDelete }) => {
+const AccessRequestsTable = ({ solicitudes, loading, onApprove, onReject, onDelete, onViewDetail }) => {
   if (loading) {
     return (
       <div className="bg-white rounded-lg shadow-sm p-8">
@@ -101,6 +101,13 @@ const AccessRequestsTable = ({ solicitudes, loading, onApprove, onReject, onDele
                   </span>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                  <button
+                    onClick={() => onViewDetail(solicitud)}
+                    className="text-blue-600 hover:text-blue-900 transition"
+                    title="Ver Detalle"
+                  >
+                    👁️ Ver
+                  </button>
                   {solicitud.estado === 'pendiente' && (
                     <>
                       <button

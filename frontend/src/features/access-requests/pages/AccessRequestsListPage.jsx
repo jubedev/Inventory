@@ -2,12 +2,14 @@ import { useState } from 'react'
 import { useAccessRequests } from '../../../hooks/useAccessRequests'
 import AccessRequestsTable from '../components/AccessRequestsTable'
 import ApproveModal from '../components/ApproveModal'
+import RequestDetailModal from '../components/RequestDetailModal'
 
 const AccessRequestsListPage = () => {
   const { solicitudes, loading, approveSolicitud, rejectSolicitud, deleteSolicitud, fetchSolicitudes } = useAccessRequests()
   const [filter, setFilter] = useState('pendiente')
   const [selectedSolicitud, setSelectedSolicitud] = useState(null)
   const [showApproveModal, setShowApproveModal] = useState(false)
+  const [showDetailModal, setShowDetailModal] = useState(false)
 
   const filteredSolicitudes = solicitudes.filter(s => 
     filter === 'todas' ? true : s.estado === filter
@@ -37,6 +39,11 @@ const AccessRequestsListPage = () => {
     if (window.confirm('¿Estás seguro de eliminar esta solicitud?')) {
       await deleteSolicitud(id)
     }
+  }
+
+  const handleViewDetail = (solicitud) => {
+    setSelectedSolicitud(solicitud)
+    setShowDetailModal(true)
   }
 
   return (
@@ -137,6 +144,7 @@ const AccessRequestsListPage = () => {
           onApprove={handleApprove}
           onReject={handleReject}
           onDelete={handleDelete}
+          onViewDetail={handleViewDetail}
         />
 
         {/* Modal de Aprobación */}
@@ -146,6 +154,17 @@ const AccessRequestsListPage = () => {
             onConfirm={handleApproveConfirm}
             onCancel={() => {
               setShowApproveModal(false)
+              setSelectedSolicitud(null)
+            }}
+          />
+        )}
+
+        {/* Modal de Detalle */}
+        {showDetailModal && (
+          <RequestDetailModal
+            solicitud={selectedSolicitud}
+            onClose={() => {
+              setShowDetailModal(false)
               setSelectedSolicitud(null)
             }}
           />

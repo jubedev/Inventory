@@ -5,62 +5,74 @@ namespace App\Http\Controllers\Administracion;
 use App\Http\Controllers\Controller;
 use App\Models\Administracion\UsuarioSistema;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class UsuarioSistemaController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Listar todos los usuarios del sistema
+     * GET /api/v1/usuarios-sistema
      */
     public function index()
     {
-        //
+        $usuarios = UsuarioSistema::with('rol')->orderBy('created_at', 'desc')->get();
+        return response()->json($usuarios);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Ver detalle de un usuario
+     * GET /api/v1/usuarios-sistema/{id}
      */
-    public function create()
+    public function show($id)
     {
-        //
+        $usuario = UsuarioSistema::with('rol')->findOrFail($id);
+        return response()->json($usuario);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Revocar acceso a un usuario
+     * POST /api/v1/usuarios-sistema/{id}/revoke
      */
-    public function store(Request $request)
+    public function revoke($id)
     {
-        //
+        $usuario = UsuarioSistema::findOrFail($id);
+
+        if ($usuario->estado === 'revocado') {
+            return response()->json([
+                'message' => 'Este usuario ya tiene el acceso revocado'
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        $usuario->update(['estado' => 'revocado']);
+
+        // Eliminar todos los tokens de acceso del usuario
+        $usuario->tokens()->delete();
+
+        return response()->json([
+            'message' => 'Acceso revocado correctamente',
+            'usuario' => $usuario,
+        ]);
     }
 
     /**
-     * Display the specified resource.
+     * Restaurar acceso a un usuario
+     * POST /api/v1/usuarios-sistema/{id}/restore
      */
-    public function show(UsuarioSistema $usuarioSistema)
+    public function restore($id)
     {
-        //
-    }
+        $usuario = UsuarioSistema::findOrFail($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(UsuarioSistema $usuarioSistema)
-    {
-        //
-    }
+        if ($usuario->estado === 'activo') {
+            return response()->json([
+                'message' => 'Este usuario ya tiene acceso activo'
+            ], Response::HTTP_BAD_REQUEST);
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, UsuarioSistema $usuarioSistema)
-    {
-        //
-    }
+        $usuario->update(['estado' => 'activo']);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(UsuarioSistema $usuarioSistema)
-    {
-        //
+        return response()->json([
+            'message' => 'Acceso restaurado correctamente',
+            'usuario' => $usuario,
+        ]);
     }
 }

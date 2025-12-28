@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Inventario\{EquipoController, TipoEquipoController, ActivoAsignadoController, MovimientoInventarioController};
-use App\Http\Controllers\Administracion\{UsuarioController, CargoController, RazonSocialController, AreaController};
+use App\Http\Controllers\Administracion\{UsuarioController, CargoController, RazonSocialController, AreaController, UsuarioSistemaController};
 use App\Http\Controllers\Gestion\{ActaController, AccessRequestController};
 
 /*
@@ -75,6 +75,12 @@ Route::prefix('v1')->group(function () {
         Route::post('access-requests/{id}/approve', [AccessRequestController::class, 'approve']);
         Route::post('access-requests/{id}/reject', [AccessRequestController::class, 'reject']);
         Route::delete('access-requests/{id}', [AccessRequestController::class, 'destroy']);
+        
+        // Usuarios Sistema (gestión de usuarios con acceso al sistema)
+        Route::get('usuarios-sistema', [UsuarioSistemaController::class, 'index']);
+        Route::get('usuarios-sistema/{id}', [UsuarioSistemaController::class, 'show']);
+        Route::post('usuarios-sistema/{id}/revoke', [UsuarioSistemaController::class, 'revoke']);
+        Route::post('usuarios-sistema/{id}/restore', [UsuarioSistemaController::class, 'restore']);
     });
 });
 

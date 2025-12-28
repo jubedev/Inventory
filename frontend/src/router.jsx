@@ -17,6 +17,7 @@ import DashboardPage from './features/dashboard/pages/DashboardPage'
 import EquiposListPage from './features/equipos/pages/EquiposListPage'
 import TiposEquipoListPage from './features/tipos-equipo/pages/TiposEquipoListPage'
 import AccessRequestsListPage from './features/access-requests/pages/AccessRequestsListPage'
+import UsuariosSistemaListPage from './features/usuarios-sistema/pages/UsuariosSistemaListPage'
 
 const router = createBrowserRouter ([
     {
@@ -52,7 +53,7 @@ const router = createBrowserRouter ([
             },
             {
                 path: 'usuarios',
-                element: <div className="p-8"><h1 className="text-2xl">Usuarios (próximamente)</h1></div>
+                element: <UsuariosSistemaListPage />
             },
             {
                 path: 'solicitudes',

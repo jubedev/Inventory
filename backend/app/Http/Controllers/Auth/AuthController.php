@@ -25,7 +25,8 @@ class AuthController extends Controller
 
         $usuario = UsuarioSistema::where('email', $request->email)->first();
 
-        if (!$usuario || !Hash::check($request->password, $usuario->password)) {
+        // Si el usuario no existe, password incorrecta, o está revocado: mismo mensaje genérico
+        if (!$usuario || !Hash::check($request->password, $usuario->password) || $usuario->estado === 'revocado') {
             throw ValidationException::withMessages([
                 'email' => ['Las credenciales proporcionadas son incorrectas.'],
             ]);

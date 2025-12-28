@@ -17,6 +17,7 @@ class UsuarioSistema extends Authenticatable
         'email',
         'password',
         'rol_id',
+        'estado',
     ];
 
     protected $hidden = [
