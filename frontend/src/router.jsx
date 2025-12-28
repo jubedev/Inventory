@@ -15,6 +15,7 @@ import LandingPage from './features/landing/pages/LandingPage'
 // Private Views
 import DashboardPage from './features/dashboard/pages/DashboardPage'
 import EquiposListPage from './features/equipos/pages/EquiposListPage'
+import TiposEquipoListPage from './features/tipos-equipo/pages/TiposEquipoListPage'
 
 const router = createBrowserRouter ([
     {
@@ -54,7 +55,7 @@ const router = createBrowserRouter ([
             },
             {
                 path: 'tipos-equipo',
-                element: <div className="p-8"><h1 className="text-2xl">Tipos de Equipo (próximamente)</h1></div>
+                element: <TiposEquipoListPage />
             },
             {
                 path: 'movimientos',
