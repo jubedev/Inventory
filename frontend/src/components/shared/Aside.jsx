@@ -21,6 +21,11 @@ const Aside = () => {
       icon: '👥',
     },
     {
+      name: 'Solicitudes',
+      path: '/solicitudes',
+      icon: '📋',
+    },
+    {
       name: 'Tipos de Equipo',
       path: '/tipos-equipo',
       icon: '🏷️',
