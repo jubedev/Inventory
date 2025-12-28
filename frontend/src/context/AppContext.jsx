@@ -56,16 +56,16 @@ export const AppProvider = ({ children }) => {
     }
   }
 
-  // Rconst response = await api.post('/auth/register', userData)
+  // Register
+  const register = async (userData) => {
+    try {
+      setLoading(true)
+      setError(null)
+      
+      const response = await api.post('/auth/register', userData)
       const { access_token, user: newUser } = response.data
       
-      localStorage.setItem('token', access_
-        nombre: userData.nombre,
-        email: userData.email,
-        rol: 'usuario'
-      }
-      
-      localStorage.setItem('token', token)
+      localStorage.setItem('token', access_token)
       localStorage.setItem('user', JSON.stringify(newUser))
       setUser(newUser)
       

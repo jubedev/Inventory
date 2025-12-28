@@ -161,9 +161,6 @@ const KeyFeatureSection = () => {
             >
               Volver al Inicio
             </a>
-            >
-              Conocer Más
-            </Link>
           </div>
         </div>
       </div>
