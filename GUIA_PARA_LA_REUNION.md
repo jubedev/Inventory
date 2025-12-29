@@ -2060,7 +2060,217 @@ $validated = $request->validate([
 
 ---
 
-## 🚀 PRÓXIMOS PASOS (Para después de la reunión)
+## � MODIFICACIONES SEGURAS EN VIVO (Si te piden hacer cambios)
+
+### ⚡ CAMBIO ULTRA FÁCIL #1: Cambiar texto del Dashboard
+**Tiempo:** 30 segundos | **Riesgo:** CERO | **Impacto:** VISIBLE
+
+**Ubicación:** `frontend/src/features/dashboard/pages/DashboardPage.jsx` línea ~11
+
+**Cambio:**
+```jsx
+// ANTES:
+<h2 className="text-2xl font-bold text-gray-900 mb-6">
+  Dashboard de Inventario
+
+// DESPUÉS:
+<h2 className="text-2xl font-bold text-gray-900 mb-6">
+  Panel de Control GSA
+```
+
+**Resultado:** El título cambia inmediatamente (Hot Reload) ✨
+
+---
+
+### ⚡ CAMBIO ULTRA FÁCIL #2: Agregar validación visual
+**Tiempo:** 1 minuto | **Riesgo:** BAJO | **Impacto:** MUY VISIBLE
+
+**Ubicación:** `frontend/src/features/equipos/pages/EquipoFormPage.jsx` línea ~85
+
+**Cambio:** Agregar validación de longitud de serial
+```jsx
+// Buscar donde dice:
+if (!formData.serial.trim()) {
+  newErrors.serial = 'El serial es obligatorio'
+}
+
+// AGREGAR DESPUÉS:
+if (formData.serial.trim().length < 5) {
+  newErrors.serial = 'El serial debe tener al menos 5 caracteres'
+}
+```
+
+**Cómo probar:**
+1. Ir a "Nuevo Equipo"
+2. Escribir serial corto: "ABC"
+3. Intentar guardar
+4. ¡Aparece el error! ✓
+
+---
+
+### ⚡ CAMBIO ULTRA FÁCIL #3: Cambiar color de botón
+**Tiempo:** 20 segundos | **Riesgo:** CERO | **Impacto:** VISIBLE
+
+**Ubicación:** `frontend/src/features/equipos/pages/EquipoListPage.jsx` línea ~125
+
+**Cambio:**
+```jsx
+// ANTES:
+<button className="px-4 py-2 bg-red-600 text-white rounded-lg...
+
+// DESPUÉS:
+<button className="px-4 py-2 bg-green-600 text-white rounded-lg...
+```
+
+**Resultado:** Botón "Nuevo Equipo" cambia de rojo a verde 🟢
+
+---
+
+### ⚡ CAMBIO MEDIO #1: Agregar validación en backend
+**Tiempo:** 2 minutos | **Riesgo:** BAJO | **Impacto:** PROFESIONAL
+
+**Ubicación:** `backend/app/Http/Controllers/Inventario/EquipoController.php` línea ~50
+
+**Cambio:** Validar que marca tenga mínimo 2 caracteres
+```php
+// Buscar en método store():
+'marca' => 'required|string|max:255',
+
+// CAMBIAR POR:
+'marca' => 'required|string|min:2|max:255',
+```
+
+**Cómo probar:**
+1. Ir a "Nuevo Equipo"
+2. Escribir marca: "A"
+3. Intentar guardar
+4. ¡Backend rechaza con error 422! ✓
+
+**IMPORTANTE:** También cambiar en método `update()` (línea ~110)
+
+---
+
+### ⚡ CAMBIO MEDIO #2: Agregar campo calculado
+**Tiempo:** 2 minutos | **Riesgo:** BAJO | **Impacto:** IMPRESIONANTE
+
+**Ubicación:** `frontend/src/features/dashboard/pages/DashboardPage.jsx` línea ~90
+
+**Cambio:** Mostrar porcentaje de equipos disponibles
+```jsx
+// Buscar donde se muestran las stats
+// AGREGAR NUEVA TARJETA después de "Operativos":
+
+<div className="bg-white rounded-xl shadow-md p-6">
+  <div className="flex items-center justify-between">
+    <div>
+      <p className="text-sm text-gray-500">% Disponibles</p>
+      <p className="text-3xl font-bold text-blue-600">
+        {stats.total > 0 
+          ? Math.round((stats.disponibles / stats.total) * 100)
+          : 0}%
+      </p>
+    </div>
+    <span className="text-4xl">📊</span>
+  </div>
+</div>
+```
+
+**Resultado:** Nueva tarjeta con porcentaje calculado en tiempo real! 📈
+
+---
+
+### 🎬 PROCEDIMIENTO PARA CAMBIOS EN VIVO
+
+**ANTES de hacer cualquier cambio:**
+```bash
+# 1. Guardar estado actual
+git add .
+git stash
+```
+
+**HACER el cambio:**
+1. Abrir archivo en VS Code
+2. Buscar línea exacta (Ctrl+G)
+3. Hacer cambio
+4. Guardar (Ctrl+S)
+5. Ver resultado en navegador
+
+**SI FUNCIONA:**
+```bash
+git add .
+git commit -m "feat: agregar [descripción del cambio]"
+```
+
+**SI FALLA (Plan de Emergencia):**
+```bash
+# Deshacer TODO
+git stash pop
+# O
+Ctrl+Z varias veces
+```
+
+---
+
+### 🚨 REGLAS DE ORO PARA CAMBIOS EN VIVO
+
+✅ **SÍ TOCAR:**
+- Textos en JSX (componentes React)
+- Clases de Tailwind (colores, tamaños)
+- Validaciones simples (min, max, required)
+- Mensajes de error personalizados
+
+❌ **NO TOCAR (Alto Riesgo):**
+- Estructura de base de datos (migraciones)
+- Middleware de autenticación
+- Rutas de API (routes/api.php)
+- Configuración de Docker
+- package.json o composer.json
+
+---
+
+### 💡 TIPS PARA IMPRESIONAR
+
+**Si te piden algo que NO sabes hacer:**
+1. **Pide especificaciones:** "¿Quieres que sea una validación en frontend o backend?"
+2. **Busca archivo similar:** "Déjame revisar cómo lo hice en otro módulo..."
+3. **Divide el problema:** "Primero agrego el campo, luego la validación"
+
+**Frases que te salvan:**
+- "Voy a hacer un cambio rápido para mostrar la flexibilidad del sistema"
+- "Esto es perfecto para demostrar cómo funciona la validación"
+- "Déjame asegurarme de que el cambio no afecte otras áreas"
+- "Genial, voy a implementarlo usando el mismo patrón del módulo de equipos"
+
+**Si cometes error en vivo:**
+- ❌ NO entres en pánico
+- ✅ Di: "Interesante, déjame revisar la sintaxis..."
+- ✅ Usa Ctrl+Z para deshacer
+- ✅ O di: "Hagamos el cambio más simple primero"
+
+---
+
+### 🎯 CAMBIOS QUE TE HACEN VER EXPERTO
+
+**Cambio Visual Impresionante (1 min):**
+```jsx
+// Agregar animación a botón "Nuevo Equipo"
+className="... hover:scale-110 transition-transform duration-300"
+```
+
+**Cambio Backend Profesional (2 min):**
+```php
+// Agregar mensaje personalizado de validación
+'activo.unique' => 'Ya existe un equipo con este número de activo',
+```
+
+**Cambio Fullstack Coordinado (3 min):**
+1. Backend: Agregar validación `'marca' => 'min:2'`
+2. Frontend: Agregar mensaje `'La marca debe tener al menos 2 caracteres'`
+3. Probar: Intentar crear equipo con marca "A" → Error en frontend Y backend ✓
+
+---
+
+## �🚀 PRÓXIMOS PASOS (Para después de la reunión)
 
 ### Corto Plazo (Esta semana)
 1. **Usuarios Sistema** - CRUD para administrar quién accede
