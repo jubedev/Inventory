@@ -43,12 +43,19 @@ const EquiposListPage = () => {
   }
 
   const handleSubmit = async (equipoData) => {
+    console.log('EquiposListPage: handleSubmit llamado con', equipoData)
+    console.log('EquiposListPage: selectedEquipo', selectedEquipo)
+    
     let result
     if (selectedEquipo) {
+      console.log('EquiposListPage: Actualizando equipo', selectedEquipo.id)
       result = await updateEquipo(selectedEquipo.id, equipoData)
     } else {
+      console.log('EquiposListPage: Creando nuevo equipo')
       result = await createEquipo(equipoData)
     }
+
+    console.log('EquiposListPage: Resultado', result)
 
     if (result.success) {
       setIsModalOpen(false)
