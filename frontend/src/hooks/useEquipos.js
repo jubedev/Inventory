@@ -47,14 +47,17 @@ export const useEquipos = () => {
   // Actualizar un equipo
   const updateEquipo = useCallback(async (id, equipoData) => {
     try {
+      console.log('useEquipos: Actualizando equipo', id, equipoData)
       setLoading(true)
       setError(null)
       const response = await api.put(`/equipos/${id}`, equipoData)
+      console.log('useEquipos: Respuesta del servidor', response.data)
       setEquipos((prev) =>
         prev.map((equipo) => (equipo.id === id ? response.data.data : equipo))
       )
       return { success: true, data: response.data }
     } catch (err) {
+      console.error('useEquipos: Error al actualizar', err)
       const errorMessage = err.response?.data?.message || 'Error al actualizar equipo'
       setError(errorMessage)
       return { success: false, error: errorMessage }
