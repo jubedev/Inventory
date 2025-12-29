@@ -39,7 +39,7 @@ const EquipoModal = ({ equipo, onClose, onSubmit }) => {
         marca: equipo.marca || '',
         modelo: equipo.modelo || '',
         serial: equipo.serial || '',
-        estado: equipo.estado || 'disponible',
+        estado: equipo.estado?.toLowerCase() || 'disponible',
         ubicacion: equipo.ubicacion || '',
         fecha_compra: equipo.fecha_compra ? equipo.fecha_compra.split('T')[0] : '',
         costo: equipo.costo || '',
@@ -138,6 +138,10 @@ const EquipoModal = ({ equipo, onClose, onSubmit }) => {
       modelo: true,
       estado: true,
       tipo_equipo_id: true,
+      direccion_ip: true,
+      mac_address: true,
+      costo: true,
+      fecha_compra: true,
     })
     
     return Object.values(newErrors).every((error) => !error)
@@ -146,14 +150,32 @@ const EquipoModal = ({ equipo, onClose, onSubmit }) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     
+    console.log('Validando formulario...', formData)
+    
     if (validateAllFields()) {
+      console.log('Formulario válido, enviando datos...', formData)
       onSubmit(formData)
+    } else {
+      console.log('Errores de validación:', errors)
+      // Mostrar un mensaje al usuario
+      const erroresTexto = Object.entries(errors)
+        .filter(([_, error]) => error)
+        .map(([campo, error]) => `${campo}: ${error}`)
+        .join('\n')
+      
+      alert(`Por favor corrige los siguientes errores:\n\n${erroresTexto}`)
     }
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div 
+        className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <h2 className="text-2xl font-bold text-gray-800">
@@ -275,6 +297,9 @@ const EquipoModal = ({ equipo, onClose, onSubmit }) => {
                 <option value="mantenimiento">Mantenimiento</option>
                 <option value="dado de baja">Dado de Baja</option>
               </select>
+              {errors.estado && touched.estado && (
+                <p className="text-red-500 text-xs mt-1">{errors.estado}</p>
+              )}
             </div>
 
             {/* Ubicación */}
@@ -303,8 +328,14 @@ const EquipoModal = ({ equipo, onClose, onSubmit }) => {
                 name="fecha_compra"
                 value={formData.fecha_compra}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                onBlur={handleBlur}
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                  errors.fecha_compra && touched.fecha_compra ? 'border-red-500' : 'border-gray-300'
+                }`}
               />
+              {errors.fecha_compra && touched.fecha_compra && (
+                <p className="text-red-500 text-xs mt-1">{errors.fecha_compra}</p>
+              )}
             </div>
 
             {/* Costo */}
@@ -318,9 +349,15 @@ const EquipoModal = ({ equipo, onClose, onSubmit }) => {
                 name="costo"
                 value={formData.costo}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                onBlur={handleBlur}
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                  errors.costo && touched.costo ? 'border-red-500' : 'border-gray-300'
+                }`}
                 placeholder="1500.00"
               />
+              {errors.costo && touched.costo && (
+                <p className="text-red-500 text-xs mt-1">{errors.costo}</p>
+              )}
             </div>
 
             {/* Dirección IP */}
@@ -333,9 +370,15 @@ const EquipoModal = ({ equipo, onClose, onSubmit }) => {
                 name="direccion_ip"
                 value={formData.direccion_ip}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                onBlur={handleBlur}
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                  errors.direccion_ip && touched.direccion_ip ? 'border-red-500' : 'border-gray-300'
+                }`}
                 placeholder="192.168.1.100"
               />
+              {errors.direccion_ip && touched.direccion_ip && (
+                <p className="text-red-500 text-xs mt-1">{errors.direccion_ip}</p>
+              )}
             </div>
 
             {/* MAC Address */}
@@ -348,9 +391,15 @@ const EquipoModal = ({ equipo, onClose, onSubmit }) => {
                 name="mac_address"
                 value={formData.mac_address}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                onBlur={handleBlur}
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                  errors.mac_address && touched.mac_address ? 'border-red-500' : 'border-gray-300'
+                }`}
                 placeholder="00:1B:44:11:3A:B7"
               />
+              {errors.mac_address && touched.mac_address && (
+                <p className="text-red-500 text-xs mt-1">{errors.mac_address}</p>
+              )}
             </div>
 
             {/* Tipo de Equipo */}
@@ -362,9 +411,12 @@ const EquipoModal = ({ equipo, onClose, onSubmit }) => {
                 name="tipo_equipo_id"
                 value={formData.tipo_equipo_id}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 required
                 disabled={loadingTipos}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100"
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 ${
+                  errors.tipo_equipo_id && touched.tipo_equipo_id ? 'border-red-500' : 'border-gray-300'
+                }`}
               >
                 <option value="">
                   {loadingTipos ? 'Cargando...' : 'Seleccione un tipo'}
@@ -375,6 +427,9 @@ const EquipoModal = ({ equipo, onClose, onSubmit }) => {
                   </option>
                 ))}
               </select>
+              {errors.tipo_equipo_id && touched.tipo_equipo_id && (
+                <p className="text-red-500 text-xs mt-1">{errors.tipo_equipo_id}</p>
+              )}
             </div>
 
             {/* Observaciones - Full width */}
