@@ -1,8 +1,24 @@
 # 📈 MI PROGRESO DE APRENDIZAJE
 
-**Nombre:** [Tu nombre]  
-**Fecha de inicio:** __ / __ / 2026  
+**Nombre:** [Tu nombre - complétalo]  
+**Fecha de inicio:** 06 / 01 / 2026  
 **Objetivo:** Dominar sistema de inventario y prepararse para freelance 2026
+
+---
+
+## 🎯 MI PLAN DE HOY (06/01/2026)
+
+**Tiempo disponible:** 6-8 horas
+**Energía inicial:** __ / 10 (completa esto)
+**Motivación inicial:** __ / 10 (completa esto)
+
+### Plan del día:
+- [ ] **MAÑANA (9:00-13:00):** Fase 0 + Ejercicio 1.1
+- [ ] **TARDE (14:00-18:00):** Ejercicio 1.2 + 1.3
+- [ ] **Reflexión (18:00-18:30):** Documentar lo aprendido
+
+**Hora de inicio:** ______
+**Hora de término:** ______
 
 ---
 
@@ -10,13 +26,35 @@
 
 | Fase | Progreso | Tiempo Real | Dificultad Percibida |
 |------|----------|-------------|---------------------|
-| Fase 0: Preparación | __ / 1 | ___h | __ / 10 |
-| Fase 1: Modificaciones Simples | __ / 3 | ___h | __ / 10 |
-| Fase 2: Features Nuevas | __ / 2 | ___h | __ / 10 |
-| Fase 3: Debugging | __ / 2 | ___h | __ / 10 |
-| Fase 4: Mini-Proyectos | __ / 2 | ___h | __ / 10 |
-| Fase 5: Node.js + Firebase | __ / 1 | ___h | __ / 10 |
-| **TOTAL** | **__ / 11** | **___h** | **promedio: __** |
+| Fase 0: Preparación | 0 / 1 | 0h | -- / 10 |
+| Fase 1: Modificaciones Simples | 0 / 3 | 0h | -- / 10 |
+| Fase 2: Features Nuevas | 0 / 2 | 0h | -- / 10 |
+| Fase 3: Debugging | 0 / 2 | 0h | -- / 10 |
+| Fase 4: Mini-Proyectos | 0 / 2 | 0h | -- / 10 |
+| Fase 5: Node.js + Firebase | 0 / 1 | 0h | -- / 10 |
+| **TOTAL** | **0 / 11** | **0h** | **promedio: --** |
+
+---
+
+## 📝 MÉTODO DE TRABAJO
+
+### Cómo usar este documento:
+1. ✅ **Antes de cada ejercicio:** Lee las instrucciones en PLAN_DE_APRENDIZAJE.md
+2. 💻 **Durante el ejercicio:** Programa TÚ, yo te guío si te trabas
+3. 📝 **Después del ejercicio:** Documenta aquí lo que aprendiste
+4. 🔄 **Cada 90 minutos:** Descanso de 15 minutos (Técnica Pomodoro)
+
+### Sistema de ayuda:
+- 🟢 **Verde:** Lo entiendo completamente, puedo explicarlo
+- 🟡 **Amarillo:** Lo entiendo a medias, necesito práctica
+- 🔴 **Rojo:** No lo entiendo, necesito ayuda
+
+### Regla de los 30 minutos:
+Si estás trabado más de 30 minutos:
+1. Documenta QUÉ intentaste
+2. Documenta QUÉ error obtuviste
+3. Documenta QUÉ esperabas que pasara
+4. Pide ayuda específica
 
 ---
 
@@ -45,6 +83,185 @@
 **Notas de lectura:**
 ```
 [Escribe aquí conceptos clave que aprendiste]
+```
+
+---
+
+## 🟢 FASE 0: PREPARACIÓN
+
+### ✅ Actividad 0.1: Mapeo del Proyecto
+- **Fecha inicio:** 06 / 01 / 2026 - Hora: ______
+- **Fecha fin:** __ / __ / 2026 - Hora: ______
+- **Tiempo:** ___ horas (estimado: 2h)
+- **Dificultad real:** __ / 10
+- **Estado:** 🟡 En progreso
+
+**TAREA: Responde estas 4 preguntas (sin ver el código primero)**
+
+1. **¿Dónde se define la ruta para crear un equipo?**
+```
+Mi respuesta:
+
+
+Verificación: ¿Acerté? ⬜ Sí | ⬜ No
+Respuesta correcta: backend/routes/api.php - Route::post('equipos', ...)
+```
+
+2. **¿Qué archivo maneja el login en backend?**
+```
+Mi respuesta:
+
+
+Verificación: ¿Acerté? ⬜ Sí | ⬜ No
+Respuesta correcta: backend/app/Http/Controllers/Auth/AuthController.php
+```
+
+3. **¿Dónde se guarda el token de autenticación?**
+```
+Mi respuesta:
+
+
+Verificación: ¿Acerté? ⬜ Sí | ⬜ No
+Respuesta correcta: localStorage (en el navegador)
+```
+
+4. **¿Qué componente muestra la lista de equipos?**
+```
+Mi respuesta:
+
+
+Verificación: ¿Acerté? ⬜ Sí | ⬜ No
+Respuesta correcta: frontend/src/features/equipos/pages/EquiposListPage.jsx
+```
+
+**TAREA: Crea archivo proyecto-mapa.txt**
+
+Copia y pega esta estructura en un archivo `proyecto-mapa.txt` en la raíz del proyecto y completa con tus observaciones:
+
+```
+===========================================
+    MAPA DEL PROYECTO - INVENTARIO GSA
+===========================================
+
+BACKEND (Laravel)
+=================
+
+📁 backend/
+│
+├─ 📁 app/
+│  ├─ 📁 Http/Controllers/
+│  │  ├─ Auth/AuthController.php
+│  │  │  └─ Función: [Escribe qué hace]
+│  │  │
+│  │  ├─ Inventario/
+│  │  │  ├─ EquipoController.php
+│  │  │  │  └─ Función: [Escribe qué hace]
+│  │  │  └─ TipoEquipoController.php
+│  │  │     └─ Función: [Escribe qué hace]
+│  │  │
+│  │  ├─ Administracion/
+│  │  │  └─ [Explora y lista los controladores]
+│  │  │
+│  │  └─ Gestion/
+│  │     └─ [Explora y lista los controladores]
+│  │
+│  └─ 📁 Models/
+│     ├─ Inventario/
+│     │  ├─ Equipo.php → Tabla: equipos
+│     │  └─ [Explora qué otros modelos hay]
+│     │
+│     └─ [Explora otras carpetas]
+│
+├─ 📁 routes/
+│  └─ api.php
+│     └─ Total de rutas definidas: _____
+│     └─ Rutas protegidas: _____ | Rutas públicas: _____
+│
+└─ 📁 database/
+   └─ migrations/
+      └─ Total de tablas: _____
+      └─ Lista las 5 tablas más importantes:
+         1. 
+         2. 
+         3. 
+         4. 
+         5. 
+
+
+FRONTEND (React)
+================
+
+📁 frontend/src/
+│
+├─ 📁 features/ (Organización por módulo)
+│  │
+│  ├─ 📁 auth/
+│  │  ├─ components/ → LoginForm.jsx, SignUpForm.jsx
+│  │  ├─ pages/ → LoginPage.jsx, SignUpPage.jsx
+│  │  └─ Función: [Escribe qué hace este módulo]
+│  │
+│  ├─ 📁 dashboard/
+│  │  └─ Función: [Escribe qué hace]
+│  │
+│  ├─ 📁 equipos/
+│  │  ├─ components/ → [Lista los componentes]
+│  │  ├─ pages/ → [Lista las páginas]
+│  │  ├─ hooks/ → [Lista los hooks personalizados]
+│  │  └─ Función: [Escribe qué hace]
+│  │
+│  └─ [Explora otros módulos]
+│
+├─ 📁 context/
+│  └─ AppContext.jsx
+│     └─ Función: [Explica qué guarda y para qué]
+│
+├─ 📁 services/
+│  └─ api.js
+│     └─ Función: [Explica su propósito]
+│
+├─ 📁 utils/
+│  └─ validators.js
+│     └─ Función: [Explica qué hace]
+│
+└─ router.jsx
+   └─ Rutas públicas: _____ | Rutas privadas: _____
+
+
+FLUJO COMPLETO: CREAR EQUIPO
+==============================
+
+Usuario hace clic en "Crear Equipo"
+        ↓
+[Completa el flujo paso a paso, archivo por archivo]
+1. 
+2. 
+3. 
+4. 
+5. 
+
+
+FLUJO COMPLETO: LOGIN
+=====================
+
+Usuario escribe email y password
+        ↓
+[Completa el flujo]
+1. 
+2. 
+3. 
+```
+
+**Conceptos que necesito entender mejor:**
+```
+[Lista aquí conceptos que te confunden]
+1. 
+2. 
+3. 
+```
+
+**¿Qué me sorprendió del proyecto?**
+```
+
 ```
 
 ---
