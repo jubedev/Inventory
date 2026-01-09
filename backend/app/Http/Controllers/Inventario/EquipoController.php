@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Inventario;
 
 use App\Http\Controllers\Controller;
 use App\Models\Inventario\Equipo;
+use App\Models\Inventario\MovimientoInventario;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Log;
 
 class EquipoController extends Controller
 {
@@ -41,6 +44,61 @@ class EquipoController extends Controller
         $equipos = $query->paginate($perPage);
 
         return response()->json($equipos);
+    }
+
+    /**
+     * Obtener historial completo de movimientos de un equipo
+     * GET /api/v1/equipos/{id}/movimientos
+     */
+    public function movimientos($id)
+    {
+        try {
+            // Verificar que el equipo exista
+            $equipo = Equipo::findOrFail($id);
+
+            // Obtener todos los movimientos del equipo con relaciones
+            $movimientos = MovimientoInventario::where('equipo_id', $id)
+                ->with([
+                    'tipoMovimiento:id,nombre,descripcion',
+                    'usuario:id,nombres,apellidos,email',
+                    'acta:id,numero_acta,fecha_acta'
+                ])
+                ->orderBy('fecha_movimiento', 'desc')
+                ->get();
+
+            // Información del equipo para contexto
+            $equipoInfo = [
+                'id' => $equipo->id,
+                'activo' => $equipo->activo,
+                'marca' => $equipo->marca,
+                'modelo' => $equipo->modelo,
+                'serial' => $equipo->serial,
+                'estado' => $equipo->estado,
+                'ubicacion' => $equipo->ubicacion,
+                'observaciones' => $equipo->observaciones,
+                'tipo_equipo_id' => $equipo->tipo_equipo_id,
+            ];
+
+            return response()->json([
+                'equipo' => $equipoInfo,
+                'movimientos' => $movimientos,
+                'total_movimientos' => $movimientos->count()
+            ], 200);
+
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'error' => 'Equipo no encontrado',
+                'message' => "No existe un equipo con ID: {$id}"
+            ], 404);
+
+        } catch (\Exception $e) {
+            Log::error("Error al obtener historial del equipo {$id}: " . $e->getMessage());
+            
+            return response()->json([
+                'error' => 'Error al obtener el historial de movimientos',
+                'message' => 'Ocurrió un error al consultar el historial de movimientos del equipo.'
+            ], 500);
+        }
     }
 
     /**

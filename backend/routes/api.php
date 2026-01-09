@@ -40,6 +40,7 @@ Route::prefix('v1')->group(function () {
     // ============== MÓDULO INVENTARIO ==============
     // Equipos
     Route::get('equipos/stats', [EquipoController::class, 'stats']); // Stats antes del resource
+    Route::get('equipos/{id}/movimientos', [EquipoController::class, 'movimientos']); // Historial de movimientos
     Route::apiResource('equipos', EquipoController::class);
     
     // Tipos de Equipo
@@ -49,7 +50,7 @@ Route::prefix('v1')->group(function () {
     Route::apiResource('activos-asignados', ActivoAsignadoController::class);
     
     // Movimientos de Inventario
-    Route::apiResource('movimientos-inventario', MovimientoInventarioController::class);
+    Route::apiResource('movimientos', MovimientoInventarioController::class);
     
     // ============== MÓDULO ADMINISTRACIÓN ==============
     // Usuarios
