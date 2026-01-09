@@ -2,6 +2,35 @@
 .env
 .env.local
 .env.*.local
+.env.backup
+.env.production
+
+# Dependencies
+node_modules/
+vendor/
+
+# Lock files (comentar si quieres trackearlos)
+package-lock.json
+composer.lock
+yarn.lock
+pnpm-lock.yaml
+
+# Build outputs
+dist/
+build/
+public/build/
+public/hot
+public/storage
+storage/*.key
+
+# Laravel specific
+/backend/bootstrap/cache/*
+/backend/storage/logs/*
+/backend/storage/framework/cache/*
+/backend/storage/framework/sessions/*
+/backend/storage/framework/testing/*
+/backend/storage/framework/views/*
+/backend/.phpunit.result.cache
 
 # OS
 .DS_Store
@@ -15,6 +44,8 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
+*.swp
+*~
 
 # Logs
 *.log
@@ -23,8 +54,17 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+# Testing
+coverage/
+.nyc_output/
+
 # Obsidian
 .obsidian/
 
-# Markdown (opcional, si no quieres trackear markdown/)
-# .markdown
+# Temp files
+*.tmp
+*.temp
+.cache/
+
+# Docker volumes
+db_data/
