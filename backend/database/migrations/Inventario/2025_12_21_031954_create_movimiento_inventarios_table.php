@@ -18,10 +18,10 @@ return new class extends Migration
             $table->integer('ubicacion_destino');
             $table->string('proveedor_cliente_involucrado', 255);
             $table->text('observaciones')->nullable();
-            $table->foreignId('equipos_id')->constrained('equipos')->onDelete('no action')->onUpdate('no action');
-            $table->foreignId('actas_id')->constrained('actas')->onDelete('no action')->onUpdate('no action');
-            $table->foreignId('usuarios_id')->constrained('usuarios')->onDelete('no action')->onUpdate('no action');
-            $table->foreignId('tipo_movimientos_id')->constrained('tipo_movimientos')->onDelete('no action')->onUpdate('no action');
+            $table->foreignId('equipo_id')->constrained('equipos')->onDelete('no action')->onUpdate('no action');
+            $table->foreignId('acta_id')->constrained('actas')->onDelete('no action')->onUpdate('no action');
+            $table->foreignId('usuario_id')->constrained('usuarios')->onDelete('no action')->onUpdate('no action');
+            $table->foreignId('tipo_movimiento_id')->constrained('tipo_movimientos')->onDelete('no action')->onUpdate('no action');
             $table->timestamps();
         });
     }

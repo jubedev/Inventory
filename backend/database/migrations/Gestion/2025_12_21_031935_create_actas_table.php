@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('actas', function (Blueprint $table) {
             $table->id();
+            $table->string('numero_acta');
             $table->string('ruta_archivo');
             $table->foreignId('usuario_id')->constrained('usuarios')->onDelete('cascade');
             $table->timestamps();

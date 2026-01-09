@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('email', 255)->unique();
             $table->string('password', 255);
             $table->foreignId('rol_id')->constrained('roles')->onDelete('restrict');
+            $table->enum('estado', ['activo', 'revocado'])->default('activo');
             $table->timestamps();
         });
     }

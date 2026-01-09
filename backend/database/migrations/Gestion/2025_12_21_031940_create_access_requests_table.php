@@ -13,11 +13,22 @@ return new class extends Migration
     {
         Schema::create('access_requests', function (Blueprint $table) {
             $table->id();
-            $table->string('estado');
-            $table->foreignId('revisado_por')->constrained('usuarios_sistema')->onDelete('cascade')->nullable();
-            $table->timestamp('fecha_solicitud');
+            
+            // Datos del solicitante (AÚN NO es usuario del sistema)
+            $table->string('email')->unique();
+            $table->string('nombre_completo');
+            $table->text('motivo_solicitud')->nullable();
+            
+            // Estado y auditoría
+            $table->enum('estado', ['pendiente', 'aprobado', 'rechazado'])->default('pendiente');
+            $table->foreignId('revisado_por')->nullable()
+                  ->constrained('usuarios_sistema')
+                  ->onDelete('set null');
+            
+            // Fechas
+            $table->timestamp('fecha_solicitud')->useCurrent();
             $table->timestamp('fecha_revision')->nullable();
-            $table->foreignId('usuario_solicitante')->constrained('usuarios_sistema')->onDelete('cascade');
+            
             $table->timestamps();
         });
     }

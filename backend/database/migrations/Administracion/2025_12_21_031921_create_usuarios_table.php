@@ -17,12 +17,12 @@ return new class extends Migration
             $table->string('apellidos', 50);
             $table->string('numero_documento', 50)->unique();
             $table->string('email', 100)->unique();
-            $table->string('password', 255);
+            // Campo password eliminado - no almacenamos contraseñas de correos
             $table->string('telefono', 20)->nullable();
             $table->string('telefono_corporativo', 20)->nullable();
             $table->string('ciudad', 50)->nullable();
-            $table->foreignId('areas_id')->constrained('areas')->onDelete('cascade');
-            $table->foreignId('cargos_id')->constrained('cargos')->onDelete('cascade');
+            $table->foreignId('area_id')->constrained('areas')->onDelete('cascade');
+            $table->foreignId('cargo_id')->constrained('cargos')->onDelete('cascade');
             $table->foreignId('razon_social_id')->constrained('razon_social')->onDelete('cascade');
             $table->timestamps();
         });

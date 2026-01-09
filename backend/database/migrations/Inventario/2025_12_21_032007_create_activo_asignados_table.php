@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('activo_asignados', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('usuarios_id')->constrained('usuarios')->onDelete('no action')->onUpdate('no action');
-            $table->foreignId('actas_id')->constrained('actas')->onDelete('no action')->onUpdate('no action');
-            $table->foreignId('equipos_id')->constrained('equipos')->onDelete('no action')->onUpdate('no action');
+            $table->foreignId('usuario_id')->constrained('usuarios')->onDelete('no action')->onUpdate('no action');
+            $table->foreignId('acta_id')->constrained('actas')->onDelete('no action')->onUpdate('no action');
+            $table->foreignId('equipo_id')->constrained('equipos')->onDelete('no action')->onUpdate('no action');
             $table->date('fecha_asignacion');
             $table->date('fecha_devolucion')->nullable();
             $table->string('estado', 45);
