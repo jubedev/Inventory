@@ -18,6 +18,7 @@ import EquiposListPage from './features/equipos/pages/EquiposListPage'
 import TiposEquipoListPage from './features/tipos-equipo/pages/TiposEquipoListPage'
 import AccessRequestsListPage from './features/access-requests/pages/AccessRequestsListPage'
 import UsuariosSistemaListPage from './features/usuarios-sistema/pages/UsuariosSistemaListPage'
+import MovimientosListPage from './features/movimientos_inventario/pages/MovimientosListPage'
 
 const router = createBrowserRouter ([
     {
@@ -65,7 +66,7 @@ const router = createBrowserRouter ([
             },
             {
                 path: 'movimientos',
-                element: <div className="p-8"><h1 className="text-2xl">Movimientos (próximamente)</h1></div>
+                element: <MovimientosListPage />
             },
             {
                 path: 'reportes',
