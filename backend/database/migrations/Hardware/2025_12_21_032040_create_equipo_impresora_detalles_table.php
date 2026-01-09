@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('sede', 100)->nullable();
             $table->string('piso_numero', 50)->nullable();
             $table->string('ubicacion_especifica_area', 255)->nullable();
-            $table->foreignId('equipos_id')->unique()->constrained('equipos')->onDelete('no action')->onUpdate('no action');
+            $table->foreignId('equipo_id')->unique()->constrained('equipos')->onDelete('no action')->onUpdate('no action');
             $table->timestamps();
         });
     }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('tipo_conexion', 100)->nullable();
             $table->decimal('pulgadas', 5, 2)->nullable();
             $table->string('cc', 100)->nullable();
-            $table->foreignId('equipos_id')->unique()->constrained('equipos')->onDelete('no action')->onUpdate('no action');
+            $table->foreignId('equipo_id')->unique()->constrained('equipos')->onDelete('no action')->onUpdate('no action');
             $table->timestamps();
         });
     }

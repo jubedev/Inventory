@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('equipo_videobeam_detalles', function (Blueprint $table) {
             $table->id();
             $table->string('tipo_conexion', 100)->nullable();
-            $table->foreignId('equipos_id')->unique()->constrained('equipos')->onDelete('no action')->onUpdate('no action');
+            $table->foreignId('equipo_id')->unique()->constrained('equipos')->onDelete('no action')->onUpdate('no action');
             $table->timestamps();
         });
     }

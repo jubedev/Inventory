@@ -25,7 +25,7 @@ return new class extends Migration
             $table->smallInteger('cantidad_multipuertos')->nullable();
             $table->smallInteger('cantidad_adaptadores')->nullable();
             $table->smallInteger('cantidad_cables_red')->nullable();
-            $table->foreignId('equipos_id')->unique()->constrained('equipos')->onDelete('no action')->onUpdate('no action');
+            $table->foreignId('equipo_id')->unique()->constrained('equipos')->onDelete('no action')->onUpdate('no action');
             $table->timestamps();
         });
     }

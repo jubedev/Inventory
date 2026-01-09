@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('equipo_sim_card_detalles', function (Blueprint $table) {
             $table->id();
             $table->string('operador', 100)->nullable();
-            $table->foreignId('equipos_id')->unique()->constrained('equipos')->onDelete('no action')->onUpdate('no action');
+            $table->foreignId('equipo_id')->unique()->constrained('equipos')->onDelete('no action')->onUpdate('no action');
             $table->timestamps();
         });
     }

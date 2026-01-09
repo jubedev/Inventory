@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('extension', 50)->nullable();
             $table->string('numero_parte', 100)->nullable();
-            $table->foreignId('equipos_id')->unique()->constrained('equipos')->onDelete('no action')->onUpdate('no action');
+            $table->foreignId('equipo_id')->unique()->constrained('equipos')->onDelete('no action')->onUpdate('no action');
             $table->timestamps();
         });
     }

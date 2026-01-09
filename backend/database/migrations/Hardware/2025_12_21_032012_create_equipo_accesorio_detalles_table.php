@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('equipo_accesorio_detalles', function (Blueprint $table) {
             $table->id();
             $table->string('nombre_accesorio', 45)->nullable();
-            $table->foreignId('equipos_id')->constrained('equipos')->onDelete('no action')->onUpdate('no action');
+            $table->foreignId('equipo_id')->constrained('equipos')->onDelete('no action')->onUpdate('no action');
             $table->timestamps();
         });
     }

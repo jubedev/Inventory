@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('imei_2', 50)->nullable();
             $table->string('numero_linea', 50)->nullable();
             $table->string('cuenta_celular', 100)->nullable();
-            $table->foreignId('equipos_id')->unique()->constrained('equipos')->onDelete('no action')->onUpdate('no action');
+            $table->foreignId('equipo_id')->unique()->constrained('equipos')->onDelete('no action')->onUpdate('no action');
             $table->timestamps();
         });
     }

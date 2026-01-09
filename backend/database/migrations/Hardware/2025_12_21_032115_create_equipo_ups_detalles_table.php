@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('potencia', 50)->nullable();
             $table->string('input_voltaje', 50)->nullable();
             $table->string('output_voltaje', 50)->nullable();
-            $table->foreignId('equipos_id')->unique()->constrained('equipos')->onDelete('no action')->onUpdate('no action');
+            $table->foreignId('equipo_id')->unique()->constrained('equipos')->onDelete('no action')->onUpdate('no action');
             $table->timestamps();
         });
     }

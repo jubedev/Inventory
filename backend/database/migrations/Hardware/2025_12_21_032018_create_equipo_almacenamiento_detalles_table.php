@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('capacidad', 50)->nullable();
             $table->string('tipo_interfaz', 100)->nullable();
-            $table->foreignId('equipos_id')->unique()->constrained('equipos')->onDelete('no action')->onUpdate('no action');
+            $table->foreignId('equipo_id')->unique()->constrained('equipos')->onDelete('no action')->onUpdate('no action');
             $table->timestamps();
         });
     }

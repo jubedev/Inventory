@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('equipo_comunicacion_detalles', function (Blueprint $table) {
             $table->id();
             $table->string('tipo_elemento_comunicacion', 255)->nullable();
-            $table->foreignId('equipos_id')->unique()->constrained('equipos')->onDelete('no action')->onUpdate('no action');
+            $table->foreignId('equipo_id')->unique()->constrained('equipos')->onDelete('no action')->onUpdate('no action');
             $table->timestamps();
         });
     }

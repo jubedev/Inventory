@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('disco_duro', 255)->nullable();
             $table->string('sistema_operativo', 255)->nullable();
             $table->string('version_so', 255)->nullable();
-            $table->foreignId('equipos_id')->unique()->constrained('equipos')->onDelete('no action')->onUpdate('no action');
+            $table->foreignId('equipo_id')->unique()->constrained('equipos')->onDelete('no action')->onUpdate('no action');
             $table->timestamps();
         });
     }
