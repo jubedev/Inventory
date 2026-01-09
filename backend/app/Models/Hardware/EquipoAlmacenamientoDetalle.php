@@ -16,7 +16,7 @@ class EquipoAlmacenamientoDetalle extends Model
     protected $fillable = [
         'capacidad',
         'tipo_interfaz',
-        'equipos_id',
+        'equipo_id',
     ];
 
     protected $casts = [
@@ -26,6 +26,6 @@ class EquipoAlmacenamientoDetalle extends Model
 
     public function equipo(): BelongsTo
     {
-        return $this->belongsTo(Equipo::class, 'equipos_id');
+        return $this->belongsTo(Equipo::class, 'equipo_id');
     }
 }

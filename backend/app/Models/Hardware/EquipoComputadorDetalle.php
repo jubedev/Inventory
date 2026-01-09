@@ -26,7 +26,7 @@ class EquipoComputadorDetalle extends Model
         'cantidad_multipuertos',
         'cantidad_adaptadores',
         'cantidad_cables_red',
-        'equipos_id',
+        'equipo_id',
     ];
 
     protected $casts = [
@@ -44,7 +44,7 @@ class EquipoComputadorDetalle extends Model
      */
     public function equipo(): BelongsTo
     {
-        return $this->belongsTo(Equipo::class, 'equipos_id');
+        return $this->belongsTo(Equipo::class, 'equipo_id');
     }
 
     /**

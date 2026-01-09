@@ -15,7 +15,7 @@ class EquipoAccesorioDetalle extends Model
 
     protected $fillable = [
         'nombre_accesorio',
-        'equipos_id',
+        'equipo_id',
     ];
 
     protected $casts = [
@@ -25,6 +25,6 @@ class EquipoAccesorioDetalle extends Model
 
     public function equipo(): BelongsTo
     {
-        return $this->belongsTo(Equipo::class, 'equipos_id');
+        return $this->belongsTo(Equipo::class, 'equipo_id');
     }
 }

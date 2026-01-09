@@ -17,7 +17,7 @@ class EquipoTelevisorDetalle extends Model
         'tipo_conexion',
         'pulgadas',
         'cc',
-        'equipos_id',
+        'equipo_id',
     ];
 
     protected $casts = [
@@ -28,6 +28,6 @@ class EquipoTelevisorDetalle extends Model
 
     public function equipo(): BelongsTo
     {
-        return $this->belongsTo(Equipo::class, 'equipos_id');
+        return $this->belongsTo(Equipo::class, 'equipo_id');
     }
 }

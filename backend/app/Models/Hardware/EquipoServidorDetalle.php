@@ -22,7 +22,7 @@ class EquipoServidorDetalle extends Model
         'disco_duro',
         'sistema_operativo',
         'version_so',
-        'equipos_id',
+        'equipo_id',
     ];
 
     protected $casts = [
@@ -32,6 +32,6 @@ class EquipoServidorDetalle extends Model
 
     public function equipo(): BelongsTo
     {
-        return $this->belongsTo(Equipo::class, 'equipos_id');
+        return $this->belongsTo(Equipo::class, 'equipo_id');
     }
 }

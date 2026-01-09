@@ -16,7 +16,7 @@ class Acta extends Model
         'numero_acta',
         'fecha',
         'descripcion',
-        'usuarios_id',
+        'usuario_id',
     ];
 
     protected $casts = [
@@ -25,14 +25,14 @@ class Acta extends Model
     ];
 
     public function usuario () {
-        return $this->belongsTo(Usuario::class, 'usuarios_id');
+        return $this->belongsTo(Usuario::class, 'usuario_id');
     }
 
     public function activoAsignado () {
-        return $this->hasMany(ActivoAsignado::class, 'actas_id');
+        return $this->hasMany(ActivoAsignado::class, 'acta_id');
     }
 
     public function movimientoInventario () {
-        return $this->hasMany(MovimientoInventario::class, 'actas_id');
+        return $this->hasMany(MovimientoInventario::class, 'acta_id');
     }
 }

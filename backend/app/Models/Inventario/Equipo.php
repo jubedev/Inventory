@@ -66,7 +66,7 @@ class Equipo extends Model
      */
     public function movimientos(): HasMany
     {
-        return $this->hasMany(MovimientoInventario::class, 'equipos_id');
+        return $this->hasMany(MovimientoInventario::class, 'equipo_id');
     }
 
     /**
@@ -74,74 +74,74 @@ class Equipo extends Model
      */
     public function activoAsignado(): HasOne
     {
-        return $this->hasOne(ActivoAsignado::class, 'equipos_id');
+        return $this->hasOne(ActivoAsignado::class, 'equipo_id');
     }
 
     // ============== RELACIONES CON DETALLES ESPECÍFICOS ==============
 
     public function detalleAccesorio(): HasOne
     {
-        return $this->hasOne(EquipoAccesorioDetalle::class, 'equipos_id');
+        return $this->hasOne(EquipoAccesorioDetalle::class, 'equipo_id');
     }
 
     public function detalleAlmacenamiento(): HasOne
     {
-        return $this->hasOne(EquipoAlmacenamientoDetalle::class, 'equipos_id');
+        return $this->hasOne(EquipoAlmacenamientoDetalle::class, 'equipo_id');
     }
 
     public function detalleCelular(): HasOne
     {
-        return $this->hasOne(EquipoCelularDetalle::class, 'equipos_id');
+        return $this->hasOne(EquipoCelularDetalle::class, 'equipo_id');
     }
 
     public function detalleComputador(): HasOne
     {
-        return $this->hasOne(EquipoComputadorDetalle::class, 'equipos_id');
+        return $this->hasOne(EquipoComputadorDetalle::class, 'equipo_id');
     }
 
     public function detalleComunicacion(): HasOne
     {
-        return $this->hasOne(EquipoComunicacionDetalle::class, 'equipos_id');
+        return $this->hasOne(EquipoComunicacionDetalle::class, 'equipo_id');
     }
 
     public function detalleImpresora(): HasOne
     {
-        return $this->hasOne(EquipoImpresoraDetalle::class, 'equipos_id');
+        return $this->hasOne(EquipoImpresoraDetalle::class, 'equipo_id');
     }
 
     public function detalleMonitor(): HasOne
     {
-        return $this->hasOne(EquipoMonitorDetalle::class, 'equipos_id');
+        return $this->hasOne(EquipoMonitorDetalle::class, 'equipo_id');
     }
 
     public function detalleServidor(): HasOne
     {
-        return $this->hasOne(EquipoServidorDetalle::class, 'equipos_id');
+        return $this->hasOne(EquipoServidorDetalle::class, 'equipo_id');
     }
 
     public function detalleSimCard(): HasOne
     {
-        return $this->hasOne(EquipoSimCardDetalle::class, 'equipos_id');
+        return $this->hasOne(EquipoSimCardDetalle::class, 'equipo_id');
     }
 
     public function detalleTelefonoIp(): HasOne
     {
-        return $this->hasOne(EquipoTelefonoIpDetalle::class, 'equipos_id');
+        return $this->hasOne(EquipoTelefonoIpDetalle::class, 'equipo_id');
     }
 
     public function detalleTelevisor(): HasOne
     {
-        return $this->hasOne(EquipoTelevisorDetalle::class, 'equipos_id');
+        return $this->hasOne(EquipoTelevisorDetalle::class, 'equipo_id');
     }
 
     public function detalleUps(): HasOne
     {
-        return $this->hasOne(EquipoUpsDetalle::class, 'equipos_id');
+        return $this->hasOne(EquipoUpsDetalle::class, 'equipo_id');
     }
 
     public function detalleVideobeam(): HasOne
     {
-        return $this->hasOne(EquipoVideobeamDetalle::class, 'equipos_id');
+        return $this->hasOne(EquipoVideobeamDetalle::class, 'equipo_id');
     }
 
     // ============== MÉTODOS DE UTILIDAD ==============

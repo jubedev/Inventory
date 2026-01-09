@@ -15,7 +15,7 @@ class EquipoMonitorDetalle extends Model
 
     protected $fillable = [
         'tamano_pulgadas',
-        'equipos_id',
+        'equipo_id',
     ];
 
     protected $casts = [
@@ -26,6 +26,6 @@ class EquipoMonitorDetalle extends Model
 
     public function equipo(): BelongsTo
     {
-        return $this->belongsTo(Equipo::class, 'equipos_id');
+        return $this->belongsTo(Equipo::class, 'equipo_id');
     }
 }

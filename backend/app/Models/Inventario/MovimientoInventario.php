@@ -19,10 +19,10 @@ class MovimientoInventario extends Model
         'proveedor_cliente_involucrado',
         'razon_movimiento',
         'observaciones',
-        'equipos_id',
-        'usuarios_id',
-        'actas_id',
-        'tipo_movimientos_id',
+        'equipo_id',
+        'usuario_id',
+        'acta_id',
+        'tipo_movimiento_id',
     ];
 
     protected $casts = [
@@ -32,20 +32,20 @@ class MovimientoInventario extends Model
     ];
 
     public function equipo () {
-        return $this->belongsTo(Equipo::class, 'equipos_id');
+        return $this->belongsTo(Equipo::class, 'equipo_id');
     }
 
     public function usuario () {
-        return $this->belongsTo(Usuario::class, 'usuarios_id');
+        return $this->belongsTo(Usuario::class, 'usuario_id');
     }
 
     public function acta()
     {
-        return $this->belongsTo(\App\Models\Gestion\Acta::class, 'actas_id');
+        return $this->belongsTo(\App\Models\Gestion\Acta::class, 'acta_id');
     }
 
     public function tipoMovimiento()
     {
-        return $this->belongsTo(TipoMovimiento::class, 'tipo_movimientos_id');
+        return $this->belongsTo(TipoMovimiento::class, 'tipo_movimiento_id');
     }
 }

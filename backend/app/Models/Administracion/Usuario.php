@@ -21,18 +21,16 @@ class Usuario extends Authenticatable
         'apellidos',
         'num_doc',
         'email',
-        'password',
         'celular_corporativo',
         'celular_personal',
         'cuenta',
         'ciudad',
-        'cargos_id',
+        'cargo_id',
         'razon_social_id',
+        'area_id',
     ];
 
-    protected $hidden = [
-        'password',
-    ];
+    // Ya no hay campo password en esta tabla (solo en usuarios_sistema)
 
     protected $casts = [
         'celular_corporativo' => 'integer',
@@ -47,7 +45,7 @@ class Usuario extends Authenticatable
      */
     public function cargo(): BelongsTo
     {
-        return $this->belongsTo(Cargo::class, 'cargos_id');
+        return $this->belongsTo(Cargo::class, 'cargo_id');
     }
 
     /**
@@ -63,7 +61,7 @@ class Usuario extends Authenticatable
      */
     public function actas(): HasMany
     {
-        return $this->hasMany(Acta::class, 'usuarios_id');
+        return $this->hasMany(Acta::class, 'usuario_id');
     }
 
     /**
@@ -71,7 +69,7 @@ class Usuario extends Authenticatable
      */
     public function activosAsignados(): HasMany
     {
-        return $this->hasMany(ActivoAsignado::class, 'usuarios_id');
+        return $this->hasMany(ActivoAsignado::class, 'usuario_id');
     }
 
     /**
@@ -79,7 +77,7 @@ class Usuario extends Authenticatable
      */
     public function movimientosInventario(): HasMany
     {
-        return $this->hasMany(MovimientoInventario::class, 'usuarios_id');
+        return $this->hasMany(MovimientoInventario::class, 'usuario_id');
     }
 
     /**

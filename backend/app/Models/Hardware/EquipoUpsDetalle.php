@@ -17,7 +17,7 @@ class EquipoUpsDetalle extends Model
         'potencia',
         'input_voltaje',
         'output_voltaje',
-        'equipos_id',
+        'equipo_id',
     ];
 
     protected $casts = [
@@ -27,6 +27,6 @@ class EquipoUpsDetalle extends Model
 
     public function equipo(): BelongsTo
     {
-        return $this->belongsTo(Equipo::class, 'equipos_id');
+        return $this->belongsTo(Equipo::class, 'equipo_id');
     }
 }

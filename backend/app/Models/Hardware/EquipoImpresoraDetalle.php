@@ -17,7 +17,7 @@ class EquipoImpresoraDetalle extends Model
         'sede',
         'piso_numero',
         'ubicacion_especifica_area',
-        'equipos_id',
+        'equipo_id',
     ];
 
     protected $casts = [
@@ -27,7 +27,7 @@ class EquipoImpresoraDetalle extends Model
 
     public function equipo(): BelongsTo
     {
-        return $this->belongsTo(Equipo::class, 'equipos_id');
+        return $this->belongsTo(Equipo::class, 'equipo_id');
     }
 
     public function inventariosToner(): HasMany

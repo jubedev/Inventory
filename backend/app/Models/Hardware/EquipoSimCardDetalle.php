@@ -15,7 +15,7 @@ class EquipoSimCardDetalle extends Model
 
     protected $fillable = [
         'operador',
-        'equipos_id',
+        'equipo_id',
     ];
 
     protected $casts = [
@@ -25,6 +25,6 @@ class EquipoSimCardDetalle extends Model
 
     public function equipo(): BelongsTo
     {
-        return $this->belongsTo(Equipo::class, 'equipos_id');
+        return $this->belongsTo(Equipo::class, 'equipo_id');
     }
 }

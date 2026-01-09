@@ -13,9 +13,9 @@ class ActivoAsignado extends Model
     protected $table = 'activo_asignados';
     
     protected $fillable = [
-        'actas_id',
-        'equipos_id',
-        'usuarios_id',
+        'acta_id',
+        'equipo_id',
+        'usuario_id',
         'fecha_asignacion',
         'fecha_devolucion',
         'estado',
@@ -29,14 +29,14 @@ class ActivoAsignado extends Model
     ];
 
     public function acta () {
-        return $this->belongsTo(Acta::class, 'actas_id');
+        return $this->belongsTo(Acta::class, 'acta_id');
     }
 
     public function usuario () {
-        return $this->belongsTo(Usuario::class, 'usuarios_id');
+        return $this->belongsTo(Usuario::class, 'usuario_id');
     }
 
     public function equipo () {
-        return $this->belongsTo(Equipo::class, 'equipos_id');
+        return $this->belongsTo(Equipo::class, 'equipo_id');
     }
 }
