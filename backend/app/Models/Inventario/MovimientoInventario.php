@@ -4,6 +4,7 @@ namespace App\Models\Inventario;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Administracion\Usuario;
 
 class MovimientoInventario extends Model
 {
