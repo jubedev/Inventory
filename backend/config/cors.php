@@ -19,7 +19,13 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://localhost:5173', 'http://localhost:3000'],
+    'allowed_origins' => env('APP_ENV') === 'local' ? ['*'] : [
+        'http://localhost:5173', 
+        'http://localhost:3000',
+        'http://backend.test',
+        'https://backend.test',
+        'http://127.0.0.1:5173',
+    ],
 
     'allowed_origins_patterns' => [],
 
