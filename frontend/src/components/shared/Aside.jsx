@@ -43,7 +43,7 @@ const Aside = () => {
   ]
 
   return (
-    <aside className="min-h-screen w-64 bg-gradient-to-br from-gray-800 to-gray-900 text-white flex flex-col">
+    <aside className="min-h-screen w-64 bg-linear-to-br from-gray-800 to-gray-900 text-white flex flex-col fixed left-0" >
       {/* Logo y usuario */}
       <div className="p-6 border-b border-gray-700">
         <h1 className="text-2xl font-bold mb-2">Inventario</h1>
