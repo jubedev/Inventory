@@ -2,24 +2,41 @@ import { useState } from 'react'
 import { useEquipos } from '../../../hooks/useEquipos'
 import EquiposTable from '../components/EquiposTable'
 import EquipoModal from '../components/EquipoModal'
+import EquiposFilters from '../components/EquiposFilters'
 
 const EquiposListPage = () => {
-  const { equipos, loading, error, createEquipo, updateEquipo, deleteEquipo } = useEquipos()
+  const { equipos, pagination, loading, error, fetchEquipos, createEquipo, updateEquipo, deleteEquipo } = useEquipos()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedEquipo, setSelectedEquipo] = useState(null)
   const [searchTerm, setSearchTerm] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
+  const [filters, setFilters] = useState({})
 
-  // Filtrar equipos por búsqueda
-  const filteredEquipos = equipos.filter((equipo) => {
-    const searchLower = searchTerm.toLowerCase()
-    return (
-      equipo.activo?.toLowerCase().includes(searchLower) ||
-      equipo.serial?.toLowerCase().includes(searchLower) ||
-      equipo.marca?.toLowerCase().includes(searchLower) ||
-      equipo.modelo?.toLowerCase().includes(searchLower) ||
-      equipo.ubicacion?.toLowerCase().includes(searchLower)
-    )
-  })
+  // Manejar cambio de página
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage)
+    fetchEquipos(newPage, pagination.per_page, { ...filters, search: searchTerm })
+  }
+
+  // Manejar búsqueda
+  const handleSearch = () => {
+    setCurrentPage(1)
+    fetchEquipos(1, pagination.per_page, { ...filters, search: searchTerm })
+  }
+
+  // Manejar cambio de filtros
+  const handleFilterChange = (newFilters) => {
+    setFilters(newFilters)
+    setCurrentPage(1)
+    fetchEquipos(1, pagination.per_page, { ...newFilters, search: searchTerm })
+  }
+
+  // Limpiar filtros
+  const handleClearFilters = () => {
+    setFilters({})
+    setCurrentPage(1)
+    fetchEquipos(1, pagination.per_page, { search: searchTerm })
+  }
 
   const handleCreate = () => {
     setSelectedEquipo(null)
@@ -36,6 +53,7 @@ const EquiposListPage = () => {
       const result = await deleteEquipo(id)
       if (result.success) {
         alert('Equipo eliminado exitosamente')
+        fetchEquipos(currentPage, pagination.per_page, { ...filters, search: searchTerm })
       } else {
         alert(`Error: ${result.error}`)
       }
@@ -60,6 +78,7 @@ const EquiposListPage = () => {
     if (result.success) {
       setIsModalOpen(false)
       alert(selectedEquipo ? 'Equipo actualizado' : 'Equipo creado')
+      fetchEquipos(currentPage, pagination.per_page, { ...filters, search: searchTerm })
     } else {
       alert(`Error: ${result.error}`)
     }
@@ -78,16 +97,29 @@ const EquiposListPage = () => {
           </p>
         </div>
 
-        {/* Barra de acciones */}
+        {/* Filtros */}
+        <EquiposFilters 
+          onFilterChange={handleFilterChange}
+          onClear={handleClearFilters}
+        />
+
+        {/* Barra de búsqueda y acciones */}
         <div className="bg-white rounded-lg shadow-md p-4 mb-6 flex flex-col md:flex-row gap-4 justify-between items-center">
-          <div className="flex-1 w-full md:w-auto">
+          <div className="flex-1 w-full md:w-auto flex gap-2">
             <input
               type="text"
               placeholder="Buscar por activo, serial, marca, modelo o ubicación..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
+            <button
+              onClick={handleSearch}
+              className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-all"
+            >
+              Buscar
+            </button>
           </div>
           <button
             onClick={handleCreate}
@@ -98,19 +130,78 @@ const EquiposListPage = () => {
           </button>
         </div>
 
-        {/* Tabla de equipos */}
+        {/* Mensaje de error */}
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
             {error}
           </div>
         )}
 
+        {/* Tabla de equipos */}
         <EquiposTable
-          equipos={filteredEquipos}
+          equipos={equipos}
           loading={loading}
           onEdit={handleEdit}
           onDelete={handleDelete}
         />
+
+        {/* Controles de paginación */}
+        {!loading && pagination.total > 0 && (
+          <div className="bg-white rounded-lg shadow-md p-4 mt-6 flex flex-col md:flex-row gap-4 justify-between items-center">
+            <div className="text-sm text-gray-600">
+              Mostrando {equipos.length} de {pagination.total} equipos
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              >
+                ← Anterior
+              </button>
+              
+              <div className="flex gap-1">
+                {[...Array(pagination.last_page)].map((_, i) => {
+                  const page = i + 1
+                  // Mostrar solo páginas cercanas a la actual
+                  if (
+                    page === 1 ||
+                    page === pagination.last_page ||
+                    (page >= currentPage - 2 && page <= currentPage + 2)
+                  ) {
+                    return (
+                      <button
+                        key={page}
+                        onClick={() => handlePageChange(page)}
+                        className={`px-4 py-2 border rounded-lg transition-all ${
+                          currentPage === page
+                            ? 'bg-blue-600 text-white border-blue-600'
+                            : 'border-gray-300 hover:bg-gray-100'
+                        }`}
+                      >
+                        {page}
+                      </button>
+                    )
+                  } else if (
+                    page === currentPage - 3 ||
+                    page === currentPage + 3
+                  ) {
+                    return <span key={page} className="px-2 py-2">...</span>
+                  }
+                  return null
+                })}
+              </div>
+
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === pagination.last_page}
+                className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              >
+                Siguiente →
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Modal */}
         {isModalOpen && (
