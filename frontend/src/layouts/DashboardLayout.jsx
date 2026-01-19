@@ -24,8 +24,8 @@ const DashboardLayout = () => {
       <Header />
       <div className="flex min-h-screen pt-16">
         <Aside />
-        <div className="flex-1 bg-gray-50">
-          <Outlet />
+        <div className="flex-1 bg-gray-50 ml-64">
+          <Outlet/>
         </div>
       </div>
     </>
