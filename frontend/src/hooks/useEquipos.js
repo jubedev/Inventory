@@ -7,16 +7,29 @@ import api from '../services/api'
  */
 export const useEquipos = () => {
   const [equipos, setEquipos] = useState([])
+  const [pagination, setPagination] = useState({
+    current_page: 1,
+    last_page: 1,
+    per_page: 15,
+    total: 0
+  })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
   // Obtener todos los equipos
-  const fetchEquipos = useCallback(async () => {
+  const fetchEquipos = useCallback(async (page = 1, perPage = 15, filters = {}) => {
     try {
       setLoading(true)
       setError(null)
-      const response = await api.get('/equipos')
+      const params = { page, per_page: perPage, ...filters }
+      const response = await api.get('/equipos', { params })
       setEquipos(response.data.data || response.data)
+      setPagination({
+        current_page: response.data.current_page || 1,
+        last_page: response.data.last_page || 1,
+        per_page: response.data.per_page || perPage,
+        total: response.data.total || 0
+      })
       return { success: true, data: response.data }
     } catch (err) {
       const errorMessage = err.response?.data?.message || 'Error al obtener equipos'
@@ -105,8 +118,7 @@ export const useEquipos = () => {
   }, [fetchEquipos])
 
   return {
-    equipos,
-    loading,
+    equipos,    pagination,    loading,
     error,
     fetchEquipos,
     createEquipo,
