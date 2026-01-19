@@ -142,20 +142,33 @@ export const asideLinks = [
     path: "/equipos",
     icon: "💻",
   },
+  
+  {
+    name: "Tipos de Equipo",
+    path: "/tipos-equipo",
+    icon: "🏷️",
+  },
   {
     name: "Usuarios",
     path: "/usuarios",
     icon: "👥",
   },
+  
   {
-    name: "Solicitudes",
-    path: "/solicitudes",
-    icon: "📋",
+    name: "Usuarios Sistema",
+    path: "/usuarios-sistema",
+    icon: "🛠️",
+  },
+  
+  {
+    name: "Actas",
+    path: "/actas",
+    icon: "📝",
   },
   {
-    name: "Tipos de Equipo",
-    path: "/tipos-equipo",
-    icon: "🏷️",
+    name: "Solicitudes de Acceso",
+    path: "/solicitudes",
+    icon: "📋",
   },
   {
     name: "Movimientos",
