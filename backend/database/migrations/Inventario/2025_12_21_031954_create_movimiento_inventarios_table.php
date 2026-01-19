@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('movimientos_inventario', function (Blueprint $table) {
             $table->id();
-            $table->string('tipo_movimiento', 100);
             $table->date('fecha_movimiento');
-            $table->integer('ubicacion_destino');
-            $table->string('proveedor_cliente_involucrado', 255);
+            $table->string('ubicacion_destino', 255)->nullable();
+            $table->string('proveedor_cliente_involucrado', 255)->nullable();
             $table->text('observaciones')->nullable();
             $table->foreignId('equipo_id')->constrained('equipos')->onDelete('no action')->onUpdate('no action');
-            $table->foreignId('acta_id')->constrained('actas')->onDelete('no action')->onUpdate('no action');
-            $table->foreignId('usuario_id')->constrained('usuarios')->onDelete('no action')->onUpdate('no action');
+            $table->foreignId('acta_id')->nullable()->constrained('actas')->onDelete('no action')->onUpdate('no action');
+            $table->foreignId('usuario_id')->nullable()->constrained('usuarios')->onDelete('no action')->onUpdate('no action');
             $table->foreignId('tipo_movimiento_id')->constrained('tipo_movimientos')->onDelete('no action')->onUpdate('no action');
+            $table->boolean('activo')->default(true);
             $table->timestamps();
         });
     }

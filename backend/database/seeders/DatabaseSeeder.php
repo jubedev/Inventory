@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Database\Seeders\Administracion\{RoleSeeder, UsuarioSistemaSeeder};
-use Database\Seeders\Inventario\{TipoEquipoSeeder, EquipoSeeder};
+use Database\Seeders\Inventario\{TipoEquipoSeeder, EquipoSeeder, TipoMovimientoSeeder, MovimientoInventarioSeeder};
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
             UsuarioSistemaSeeder::class,
             TipoEquipoSeeder::class,
             EquipoSeeder::class,
+            TipoMovimientoSeeder::class,
+            MovimientoInventarioSeeder::class,
         ]);
     }
 }
