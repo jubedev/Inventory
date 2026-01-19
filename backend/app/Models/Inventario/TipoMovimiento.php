@@ -10,10 +10,10 @@ class TipoMovimiento extends Model
     /** @use HasFactory<\Database\Factories\Inventario\TipoMovimientoFactory> */
     use HasFactory;
 
-    protected $table = 'tipos_movimiento';
+    protected $table = 'tipo_movimientos';
 
     protected $fillable = [
-        'nombre_tipo',
+        'nombre',
         'descripcion',
     ];
 
@@ -27,6 +27,6 @@ class TipoMovimiento extends Model
      */
     public function movimientos()
     {
-        return $this->hasMany(MovimientoInventario::class, 'tipo_movimientos_id');
+        return $this->hasMany(MovimientoInventario::class, 'tipo_movimiento_id');
     }
 }
