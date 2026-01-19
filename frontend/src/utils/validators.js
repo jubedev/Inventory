@@ -130,3 +130,41 @@ export const formatDate = (dateString) => {
     day: "2-digit",
   });
 };
+
+export const asideLinks = [
+  {
+    name: "Dashboard",
+    path: "/dashboard",
+    icon: "📊",
+  },
+  {
+    name: "Equipos",
+    path: "/equipos",
+    icon: "💻",
+  },
+  {
+    name: "Usuarios",
+    path: "/usuarios",
+    icon: "👥",
+  },
+  {
+    name: "Solicitudes",
+    path: "/solicitudes",
+    icon: "📋",
+  },
+  {
+    name: "Tipos de Equipo",
+    path: "/tipos-equipo",
+    icon: "🏷️",
+  },
+  {
+    name: "Movimientos",
+    path: "/movimientos",
+    icon: "📦",
+  },
+  {
+    name: "Reportes",
+    path: "/reportes",
+    icon: "📈",
+  },
+];

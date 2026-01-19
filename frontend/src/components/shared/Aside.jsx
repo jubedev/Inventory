@@ -1,46 +1,9 @@
 import { NavLink } from 'react-router-dom'
 import { useAppContext } from '../../hooks/useAppContext'
+import { asideLinks } from '../../utils/validators'
 
 const Aside = () => {
   const { user } = useAppContext()
-
-  const navItems = [
-    {
-      name: 'Dashboard',
-      path: '/dashboard',
-      icon: '📊',
-    },
-    {
-      name: 'Equipos',
-      path: '/equipos',
-      icon: '💻',
-    },
-    {
-      name: 'Usuarios',
-      path: '/usuarios',
-      icon: '👥',
-    },
-    {
-      name: 'Solicitudes',
-      path: '/solicitudes',
-      icon: '📋',
-    },
-    {
-      name: 'Tipos de Equipo',
-      path: '/tipos-equipo',
-      icon: '🏷️',
-    },
-    {
-      name: 'Movimientos',
-      path: '/movimientos',
-      icon: '📦',
-    },
-    {
-      name: 'Reportes',
-      path: '/reportes',
-      icon: '📈',
-    },
-  ]
 
   return (
     <aside className="min-h-screen w-64 bg-linear-to-br from-gray-800 to-gray-900 text-white flex flex-col fixed left-0" >
@@ -58,7 +21,7 @@ const Aside = () => {
       {/* Navegación */}
       <nav className="flex-1 p-4">
         <ul className="space-y-2">
-          {navItems.map((item) => (
+          {asideLinks.map((item) => (
             <li key={item.path}>
               <NavLink
                 to={item.path}
