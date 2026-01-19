@@ -14,22 +14,22 @@ class MovimientoInventario extends Model
     protected $table = 'movimientos_inventario';
 
     protected $fillable = [
-        'tipo_movimiento', 
         'fecha_movimiento',
         'ubicacion_destino',
         'proveedor_cliente_involucrado',
-        'razon_movimiento',
         'observaciones',
         'equipo_id',
         'usuario_id',
         'acta_id',
         'tipo_movimiento_id',
+        'activo',
     ];
 
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'fecha_movimiento' => 'datetime',
+        'activo' => 'boolean',
     ];
 
     public function equipo () {
