@@ -110,3 +110,34 @@
 .delay-1000 {
     animation-delay: 1s;
 }
+
+/* ========================================
+   SCROLLBAR COMPLETAMENTE OCULTO
+   ======================================== */
+
+/* Para Firefox - ocultar completamente */
+* {
+    scrollbar-width: none;
+}
+
+/* Para Chrome, Safari, Edge - ocultar completamente */
+*::-webkit-scrollbar {
+    display: none;
+}
+
+/* Mantener funcionalidad de scroll pero sin barra visible */
+* {
+    -ms-overflow-style: none;  /* IE y Edge antiguos */
+}
+
+/* Asegurar que body y html no tengan scrollbar visible */
+html,
+body {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none;
+}
