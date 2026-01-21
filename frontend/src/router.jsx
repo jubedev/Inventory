@@ -17,6 +17,7 @@ import DashboardPage from './features/dashboard/pages/DashboardPage'
 import EquiposListPage from './features/equipos/pages/EquiposListPage'
 import TiposEquipoListPage from './features/tipos-equipo/pages/TiposEquipoListPage'
 import AccessRequestsListPage from './features/access-requests/pages/AccessRequestsListPage'
+import UsuariosListPage from './features/usuarios/pages/UsuariosListPage'
 import UsuariosSistemaListPage from './features/usuarios-sistema/pages/UsuariosSistemaListPage'
 import MovimientosListPage from './features/movimientos_inventario/pages/MovimientosListPage'
 
@@ -53,7 +54,15 @@ const router = createBrowserRouter ([
                 element: <EquiposListPage />
             },
             {
+                path: 'tipos-equipo',
+                element: <TiposEquipoListPage />
+            },
+            {
                 path: 'usuarios',
+                element: <UsuariosListPage />            
+            },
+            {
+                path: 'usuarios-sistema',
                 element: <UsuariosSistemaListPage />
             },
             {
@@ -61,8 +70,8 @@ const router = createBrowserRouter ([
                 element: <AccessRequestsListPage />
             },
             {
-                path: 'tipos-equipo',
-                element: <TiposEquipoListPage />
+                path: 'actas',
+                element: <div className="p-8"><h1 className="text-2xl">Actas (próximamente)</h1></div>
             },
             {
                 path: 'movimientos',
