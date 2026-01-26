@@ -10,7 +10,7 @@ class RazonSocial extends Model
     /** @use HasFactory<\Database\Factories\Administracion\RazonSocialFactory> */
     use HasFactory;
 
-    protected $table = 'razones_sociales';
+    protected $table = 'razon_social';
 
     protected $fillable = [
         'nombre',
