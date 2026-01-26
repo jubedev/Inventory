@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('telefono', 20)->nullable();
             $table->string('telefono_corporativo', 20)->nullable();
             $table->string('ciudad', 50)->nullable();
+            $table->enum('estado', ['activo', 'inactivo', 'suspendido'])->default('activo');
             $table->foreignId('area_id')->constrained('areas')->onDelete('cascade');
             $table->foreignId('cargo_id')->constrained('cargos')->onDelete('cascade');
             $table->foreignId('razon_social_id')->constrained('razon_social')->onDelete('cascade');
