@@ -13,7 +13,8 @@ class RazonSocialController extends Controller
      */
     public function index()
     {
-        //
+        $razones_sociales = RazonSocial::all();
+        return response()->json($razones_sociales);
     }
 
     /**
