@@ -14,7 +14,7 @@ class UsuarioController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Usuario::with(['cargo', 'razonSocial']);
+        $query = Usuario::with(['area', 'cargo', 'razonSocial']);
 
         if ($request->has('ciudad')) {
             $query->porCiudad($request->ciudad);
@@ -25,8 +25,8 @@ class UsuarioController extends Controller
             $query->where(function ($q) use ($search) {
                 $q->where('nombres', 'like', "%{$search}%")
                   ->orWhere('apellidos', 'like', "%{$search}%")
-                  ->orWhere('correo_corporativo', 'like', "%{$search}%")
-                  ->orWhere('num_doc', 'like', "%{$search}%");
+                  ->orWhere('email', 'like', "%{$search}%")
+                  ->orWhere('numero_documento', 'like', "%{$search}%");
             });
         }
 
@@ -41,21 +41,21 @@ class UsuarioController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nombres' => 'required|string|max:100',
-            'apellidos' => 'required|string|max:100',
-            'num_doc' => 'required|integer|unique:usuarios,num_doc',
-            'correo_corporativo' => 'required|email|max:255',
-            'contrasena_actualizada' => 'required|string|max:255',
-            'celular_corporativo' => 'nullable|integer',
-            'celular_personal' => 'nullable|integer',
-            'cuenta' => 'required|string|max:100',
-            'ciudad' => 'required|string|max:100',
-            'cargos_id' => 'required|exists:cargos,id',
+            'nombres' => 'required|string|max:50',
+            'apellidos' => 'required|string|max:50',
+            'numero_documento' => 'required|string|max:50|unique:usuarios,numero_documento',
+            'email' => 'required|email|max:100|unique:usuarios,email',
+            'telefono' => 'nullable|string|max:20',
+            'telefono_corporativo' => 'nullable|string|max:20',
+            'ciudad' => 'nullable|string|max:50',
+            'estado' => 'nullable|in:Activo,Inactivo,Suspendido',
+            'area_id' => 'required|exists:areas,id',
+            'cargo_id' => 'required|exists:cargos,id',
             'razon_social_id' => 'required|exists:razon_social,id',
         ]);
 
         $usuario = Usuario::create($validated);
-        $usuario->load(['cargo', 'razonSocial']);
+        $usuario->load(['area', 'cargo', 'razonSocial']);
 
         return response()->json([
             'message' => 'Usuario creado exitosamente',
@@ -86,20 +86,21 @@ class UsuarioController extends Controller
         $usuario = Usuario::findOrFail($id);
 
         $validated = $request->validate([
-            'nombres' => 'sometimes|string|max:100',
-            'apellidos' => 'sometimes|string|max:100',
-            'num_doc' => 'sometimes|integer|unique:usuarios,num_doc,' . $id,
-            'correo_corporativo' => 'sometimes|email|max:255',
-            'celular_corporativo' => 'nullable|integer',
-            'celular_personal' => 'nullable|integer',
-            'cuenta' => 'sometimes|string|max:100',
-            'ciudad' => 'sometimes|string|max:100',
-            'cargos_id' => 'sometimes|exists:cargos,id',
+            'nombres' => 'sometimes|string|max:50',
+            'apellidos' => 'sometimes|string|max:50',
+            'numero_documento' => 'sometimes|string|max:50|unique:usuarios,numero_documento,' . $id,
+            'email' => 'sometimes|email|max:100|unique:usuarios,email,' . $id,
+            'telefono' => 'nullable|string|max:20',
+            'telefono_corporativo' => 'nullable|string|max:20',
+            'ciudad' => 'nullable|string|max:50',
+            'estado' => 'nullable|in:Activo,Inactivo,Suspendido',
+            'area_id' => 'sometimes|exists:areas,id',
+            'cargo_id' => 'sometimes|exists:cargos,id',
             'razon_social_id' => 'sometimes|exists:razon_social,id',
         ]);
 
         $usuario->update($validated);
-        $usuario->load(['cargo', 'razonSocial']);
+        $usuario->load(['area', 'cargo', 'razonSocial']);
 
         return response()->json([
             'message' => 'Usuario actualizado exitosamente',
