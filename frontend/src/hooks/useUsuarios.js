@@ -3,15 +3,28 @@ import api from "../services/api";
 
 export const useUsuarios = () => {
   const [usuarios, setUsuarios] = useState([]);
+  const [pagination, setPagination] = useState({
+    current_page: 1,
+    last_page: 1,
+    per_page: 15,
+    total: 0
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchUsuarios = useCallback(async () => {
+  const fetchUsuarios = useCallback(async (page = 1, perPage = 15, filters = {}) => {
     try {
       setLoading(true);
       setError(null);
-      const response = await api.get("/usuarios");
+      const params = { page, per_page: perPage, ...filters };
+      const response = await api.get("/usuarios", { params });
       setUsuarios(response.data.data || response.data);
+      setPagination({
+        current_page: response.data.current_page || 1,
+        last_page: response.data.last_page || 1,
+        per_page: response.data.per_page || perPage,
+        total: response.data.total || 0
+      });
       return { success: true, data: response.data };
     } catch (err) {
       setError(err.response?.data?.message || "Error al obtener usuarios");
@@ -81,6 +94,7 @@ export const useUsuarios = () => {
 
   return {
     usuarios,
+    pagination,
     loading,
     error,
     fetchUsuarios,
