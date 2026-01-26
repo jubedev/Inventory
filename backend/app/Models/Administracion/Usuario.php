@@ -19,12 +19,12 @@ class Usuario extends Authenticatable
     protected $fillable = [
         'nombres',
         'apellidos',
-        'num_doc',
+        'numero_documento',
         'email',
-        'celular_corporativo',
-        'celular_personal',
-        'cuenta',
+        'telefono',
+        'telefono_corporativo',
         'ciudad',
+        'estado',
         'cargo_id',
         'razon_social_id',
         'area_id',
@@ -33,12 +33,17 @@ class Usuario extends Authenticatable
     // Ya no hay campo password en esta tabla (solo en usuarios_sistema)
 
     protected $casts = [
-        'celular_corporativo' => 'integer',
-        'celular_personal' => 'integer',
-        'num_doc' => 'integer',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    /**
+     * Relación: Un usuario pertenece a un cargo
+     */
+    public function area(): BelongsTo
+    {
+        return $this->belongsTo(Area::class, 'area_id');
+    }
 
     /**
      * Relación: Un usuario pertenece a un cargo
