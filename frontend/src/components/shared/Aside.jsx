@@ -14,7 +14,7 @@ const Aside = () => {
         scrollbarColor: '#4B5563 #1F2937'
       }}
     >
-      <style jsx>{`
+      <style>{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 8px;
         }
