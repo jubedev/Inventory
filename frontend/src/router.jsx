@@ -81,6 +81,10 @@ const router = createBrowserRouter ([
                 path: 'reportes',
                 element: <div className="p-8"><h1 className="text-2xl">Reportes (próximamente)</h1></div>
             },
+            {
+                path: '*',
+                element: <Notfound />
+            },
         ],
     }
 ])
