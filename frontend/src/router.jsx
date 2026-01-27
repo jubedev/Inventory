@@ -20,6 +20,7 @@ import AccessRequestsListPage from './features/access-requests/pages/AccessReque
 import UsuariosListPage from './features/usuarios/pages/UsuariosListPage'
 import UsuariosSistemaListPage from './features/usuarios-sistema/pages/UsuariosSistemaListPage'
 import MovimientosListPage from './features/movimientos_inventario/pages/MovimientosListPage'
+import ActivosAsignadosListPage from './features/activos_asignados/pages/ActivosAsignadosListPage'
 
 const router = createBrowserRouter ([
     {
@@ -56,6 +57,10 @@ const router = createBrowserRouter ([
             {
                 path: 'tipos-equipo',
                 element: <TiposEquipoListPage />
+            },
+            {
+                path: 'activos-asignados',
+                element: <ActivosAsignadosListPage />
             },
             {
                 path: 'usuarios',
