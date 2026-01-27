@@ -54,8 +54,8 @@ class MovimientoInventarioController extends Controller
         }
 
         $perPage = $request->get('per_page', 15);
-        $movimientos = $query->orderBy('activo', 'desc')  // Activos primero (1 > 0)
-                             ->orderBy('fecha_movimiento', 'desc')
+        $movimientos = $query->orderBy('fecha_movimiento', 'desc')
+                             ->orderBy('created_at', 'desc')  // Orden por fecha y hora
                              ->paginate($perPage);
 
         return response()->json($movimientos, Response::HTTP_OK);
