@@ -28,7 +28,7 @@ const MovimientosFilters = ({ onFilterChange, onClear }) => {
     const fetchTiposMovimiento = async () => {
       try {
         setLoading(true);
-        const response = await api.get('/tipo-movimientos');
+        const response = await api.get('/tipos-movimiento');
         setTiposMovimiento(response.data.data || response.data);
       } catch (err) {
         console.error('Error al cargar tipos de movimiento:', err);

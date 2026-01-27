@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Inventario\{EquipoController, TipoEquipoController, ActivoAsignadoController, MovimientoInventarioController};
+use App\Http\Controllers\Inventario\{EquipoController, TipoEquipoController, TipoMovimientoController, ActivoAsignadoController, MovimientoInventarioController};
 use App\Http\Controllers\Administracion\{UsuarioController, CargoController, RazonSocialController, AreaController, UsuarioSistemaController};
 use App\Http\Controllers\Gestion\{ActaController, AccessRequestController};
 
@@ -46,8 +46,12 @@ Route::prefix('v1')->group(function () {
     // Tipos de Equipo
     Route::apiResource('tipos-equipo', TipoEquipoController::class);
     
+    // Tipos de Movimiento
+    Route::apiResource('tipos-movimiento', TipoMovimientoController::class);
+    
     // Activos Asignados
     Route::apiResource('activos-asignados', ActivoAsignadoController::class);
+    Route::post('activos-asignados/{id}/marcar-devolucion', [ActivoAsignadoController::class, 'marcarDevolucion']);
     
     // Movimientos de Inventario
     Route::apiResource('movimientos', MovimientoInventarioController::class);

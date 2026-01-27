@@ -13,7 +13,8 @@ class TipoMovimientoController extends Controller
      */
     public function index()
     {
-        //
+        $tiposMovimiento = TipoMovimiento::all();
+        return response()->json(['data' => $tiposMovimiento]);
     }
 
     /**
