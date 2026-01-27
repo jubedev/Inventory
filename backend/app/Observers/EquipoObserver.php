@@ -35,12 +35,16 @@ class EquipoObserver
             $estadoAnterior = $equipo->getOriginal('estado');
             $estadoNuevo = $equipo->estado;
 
+            // NO crear movimiento si es asignación (en_uso) o devolución (disponible desde en_uso)
+            // Estos movimientos los maneja ActivoAsignadoObserver
+            if ($estadoNuevo === 'en_uso' || ($estadoNuevo === 'disponible' && $estadoAnterior === 'en_uso')) {
+                return;
+            }
+
             // Determinar tipo de movimiento según el nuevo estado            
             $tipoMovimientoId = match($estadoNuevo) {
-            'en uso' => 2,           // Asignación
             'mantenimiento' => 5,    // Mantenimiento
-            'disponible' => 3,       // Devolución
-            'dado de baja' => 6,     // Baja
+            'dado_de_baja' => 6,     // Baja
             default => 4,            // Traslado
             };
 
