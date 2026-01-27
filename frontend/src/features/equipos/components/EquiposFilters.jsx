@@ -12,10 +12,12 @@ const EquiposFilters = ({ onFilterChange, onClear }) => {
     const fetchTiposEquipo = async () => {
       try {
         setLoading(true);
-        const response = await api.get('/tipo-equipos');
-        setTiposEquipo(response.data.data || response.data);
+        const response = await api.get('/tipos-equipo');
+        const tiposData = response.data.data || response.data;
+        setTiposEquipo(Array.isArray(tiposData) ? tiposData : []);
       } catch (err) {
         console.error('Error al cargar tipos de equipo:', err);
+        setTiposEquipo([]);
       } finally {
         setLoading(false);
       }

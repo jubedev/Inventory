@@ -4,6 +4,9 @@ namespace App\Models\Gestion;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Administracion\Usuario;
+use App\Models\Inventario\ActivoAsignado;
+use App\Models\Inventario\MovimientoInventario;
 
 class Acta extends Model
 {
@@ -14,8 +17,7 @@ class Acta extends Model
     
     protected $fillable = [
         'numero_acta',
-        'fecha',
-        'descripcion',
+        'ruta_archivo',
         'usuario_id',
     ];
 

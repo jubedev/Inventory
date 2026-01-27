@@ -142,11 +142,15 @@ export const asideLinks = [
     path: "/equipos",
     icon: "💻",
   },
-
   {
     name: "Tipos de Equipo",
     path: "/tipos-equipo",
     icon: "🏷️",
+  },
+  {
+    name: "Activos Asignados",
+    path: "/activos-asignados",
+    icon: "📦",
   },
   {
     name: "Usuarios",
@@ -171,7 +175,7 @@ export const asideLinks = [
   {
     name: "Movimientos",
     path: "/movimientos",
-    icon: "📦",
+    icon: "🚚",
   },
   {
     name: "Reportes",

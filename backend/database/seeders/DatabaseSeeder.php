@@ -12,6 +12,7 @@ use Database\Seeders\Administracion\{
     CargoSeeder,
     UsuarioSeeder
 };
+use Database\Seeders\Gestion\ActaSeeder;
 use Database\Seeders\Inventario\{
     TipoEquipoSeeder,
     EquipoSeeder,
@@ -39,6 +40,9 @@ class DatabaseSeeder extends Seeder
             // Administración - usuarios (depende de area, cargo, razon_social)
             UsuarioSeeder::class,
             UsuarioSistemaSeeder::class,
+            
+            // Gestión - actas (depende de usuarios)
+            ActaSeeder::class,
             
             // Inventario
             TipoEquipoSeeder::class,

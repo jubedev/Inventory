@@ -11,9 +11,20 @@ class ActaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $query = Acta::with('usuario');
+
+        // Filtro por usuario_id si se proporciona
+        if ($request->has('usuario_id')) {
+            $query->where('usuario_id', $request->usuario_id);
+        }
+
+        $actas = $query->get();
+
+        return response()->json([
+            'data' => $actas
+        ]);
     }
 
     /**
