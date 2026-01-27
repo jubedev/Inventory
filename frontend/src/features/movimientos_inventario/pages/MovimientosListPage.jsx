@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useMovimientos } from "../../../hooks/useMovimientos";
 import MovimientosTable from "../components/MovimientosTable";
 import MovimientosFilters from "../components/MovimientosFilters";
+import PaginationControls from "../../../components/shared/PaginationControls";
 
 const MovimientosListPage = () => {
   const {
@@ -115,61 +116,14 @@ const MovimientosListPage = () => {
       />
 
       {/* Controles de paginación */}
-      {!loading && pagination.last_page > 1 && (
-        <div className="bg-whitotal > 0 shadow-md p-4 mt-6 flex flex-col md:flex-row gap-4 justify-between items-center">
-          <div className="text-sm text-gray-600">
-            Mostrando {movimientos.length} de {pagination.total} movimientos
-          </div>
-          <div className="flex gap-2">
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-              className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-            >
-              ← Anterior
-            </button>
-            
-            <div className="flex gap-1">
-              {[...Array(pagination.last_page)].map((_, i) => {
-                const page = i + 1;
-                // Mostrar solo páginas cercanas a la actual
-                if (
-                  page === 1 ||
-                  page === pagination.last_page ||
-                  (page >= currentPage - 2 && page <= currentPage + 2)
-                ) {
-                  return (
-                    <button
-                      key={page}
-                      onClick={() => handlePageChange(page)}
-                      className={`px-4 py-2 border rounded-lg transition-all ${
-                        currentPage === page
-                          ? 'bg-blue-600 text-white border-blue-600'
-                          : 'border-gray-300 hover:bg-gray-100'
-                      }`}
-                    >
-                      {page}
-                    </button>
-                  );
-                } else if (
-                  page === currentPage - 3 ||
-                  page === currentPage + 3
-                ) {
-                  return <span key={page} className="px-2 py-2">...</span>;
-                }
-                return null;
-              })}
-            </div>
-
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === pagination.last_page}
-              className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-            >
-              Siguiente →
-            </button>
-          </div>
-        </div>
+      {!loading && (
+        <PaginationControls
+          pagination={pagination}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+          itemsCount={movimientos.length}
+          itemName="movimientos"
+        />
       )}
     </div>
   );
