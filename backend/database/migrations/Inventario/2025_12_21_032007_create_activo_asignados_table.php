@@ -18,7 +18,9 @@ return new class extends Migration
             $table->foreignId('equipo_id')->constrained('equipos')->onDelete('no action')->onUpdate('no action');
             $table->date('fecha_asignacion');
             $table->date('fecha_devolucion')->nullable();
+            $table->string('ubicacion_destino', 255)->nullable();
             $table->string('estado', 45);
+            $table->text('observaciones')->nullable();
             $table->timestamps();
         });
     }

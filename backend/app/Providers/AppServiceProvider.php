@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Models\Inventario\Equipo;
+use App\Models\Inventario\ActivoAsignado;
 use App\Observers\EquipoObserver;
+use App\Observers\ActivoAsignadoObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Equipo::observe(EquipoObserver::class);
+        ActivoAsignado::observe(ActivoAsignadoObserver::class);
 
         $this->loadMigrationsFrom([
             database_path('migrations'),

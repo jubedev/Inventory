@@ -4,6 +4,8 @@ namespace App\Models\Inventario;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Administracion\Usuario;
+use App\Models\Gestion\Acta;
 
 class ActivoAsignado extends Model
 {
@@ -18,7 +20,9 @@ class ActivoAsignado extends Model
         'usuario_id',
         'fecha_asignacion',
         'fecha_devolucion',
+        'ubicacion_destino',
         'estado',
+        'observaciones',
     ];
 
     protected $casts = [
