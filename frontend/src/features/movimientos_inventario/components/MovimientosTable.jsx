@@ -100,10 +100,10 @@ const MovimientosTable = ({
                   <td className="py-4 px-6 text-sm text-gray">
                     <span
                       className={`px-3 py-1 rounded-full text-xs font-medium ${getTipoBadge(
-                        movimiento.tipoMovimiento?.nombre
+                        movimiento.tipo_movimiento?.nombre
                       )}`}
                     >
-                      {movimiento.tipoMovimiento?.nombre || '-'}
+                      {movimiento.tipo_movimiento?.nombre || '-'}
                     </span>
                   </td>
                   <td className="py-4 px-6 text-sm text-gray">
@@ -163,6 +163,15 @@ const MovimientosTable = ({
           </tbody>
         </table>
       </div>
+      
+      {/* Footer con total */}
+      {movimientos.length > 0 && (
+        <div className="bg-gray-50 px-6 py-4 border-t border-gray-200">
+          <p className="text-sm text-gray-600">
+            Mostrando <span className="font-semibold">{movimientos.length}</span> movimiento(s)
+          </p>
+        </div>
+      )}
     </div>
   );
 };
