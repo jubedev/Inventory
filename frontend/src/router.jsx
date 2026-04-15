@@ -21,6 +21,7 @@ import UsuariosListPage from './features/usuarios/pages/UsuariosListPage'
 import UsuariosSistemaListPage from './features/usuarios-sistema/pages/UsuariosSistemaListPage'
 import MovimientosListPage from './features/movimientos_inventario/pages/MovimientosListPage'
 import ActivosAsignadosListPage from './features/activos_asignados/pages/ActivosAsignadosListPage'
+import ActasListPage from './features/actas/pages/ActasListPage'
 
 const router = createBrowserRouter ([
     {
@@ -76,7 +77,7 @@ const router = createBrowserRouter ([
             },
             {
                 path: 'actas',
-                element: <div className="p-8"><h1 className="text-2xl">Actas (próximamente)</h1></div>
+                element: <ActasListPage />
             },
             {
                 path: 'movimientos',
