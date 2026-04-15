@@ -95,14 +95,10 @@ const Header = () => {
           className="flex items-center space-x-3 hover:opacity-90 transition-all duration-300 group"
         >
           <div className="bg-white rounded-lg p-2 shadow-md">
-            <img
-              src="/assets/image/spira.png"
-              alt="Logo"
-              className="h-auto w-20 object-contain"
-            />
+            <span className="text-red-600 font-bold text-xl">INV</span>
           </div>
           <span className="text-white font-bold text-lg sm:text-xl hidden sm:block whitespace-nowrap font-satoshi tracking-tight">
-            GSA Inventory
+            Inventory App
           </span>
         </Link>
         <button

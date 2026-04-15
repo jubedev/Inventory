@@ -12,13 +12,9 @@ const Footer = () => {
           <div className="space-y-4">
             <div className="flex items-center space-x-3">
               <div className="bg-white rounded-lg p-2 shadow-md">
-                <img
-                  src="/assets/image/spira.png"
-                  alt="Logo"
-                  className="h-auto w-16 object-contain"
-                />
+                <span className="text-gray-800 font-bold text-xl">INV</span>
               </div>
-              <h3 className="text-xl font-bold font-satoshi">GSA Inventory</h3>
+              <h3 className="text-xl font-bold font-satoshi">Inventory App</h3>
             </div>
             <p className="text-gray-400 text-sm font-inter leading-relaxed">
               Plataforma de gestión de recursos tecnológicos. Control total de tu inventario con reportes en tiempo real.
@@ -107,8 +103,8 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-2 text-gray-400">
                 <span className="text-red-400">✉️</span>
-                <a href="mailto:info@gsainventory.com" className="hover:text-white transition-colors">
-                  info@gsainventory.com
+                <a href="mailto:info@inventoryapp.com" className="hover:text-white transition-colors">
+                  info@inventoryapp.com
                 </a>
               </li>
             </ul>
@@ -121,7 +117,7 @@ const Footer = () => {
         {/* Bottom bar */}
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <p className="text-gray-400 text-sm font-geist">
-            © {currentYear} GSA Inventory IT. Todos los derechos reservados.
+            © {currentYear} Inventory App IT. Todos los derechos reservados.
           </p>
           <div className="flex space-x-6 text-sm font-inter">
             <a href="#" className="text-gray-400 hover:text-white transition-colors">

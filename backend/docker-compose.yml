@@ -4,8 +4,8 @@ services:
     container_name: laravel_mysql
     restart: always
     environment:
-      MYSQL_DATABASE: gsa_inventory_db
-      MYSQL_USER: admingsa
+      MYSQL_DATABASE: inventory_db
+      MYSQL_USER: admin_user
       MYSQL_PASSWORD: 13128
       MYSQL_ROOT_PASSWORD: 13128-*/.
     ports:
@@ -20,7 +20,7 @@ services:
     restart: always
     environment:
       PMA_HOST: mysql
-      PMA_USER: admingsa
+      PMA_USER: admin_user
       PMA_PASSWORD: 13128
       MYSQL_ROOT_PASSWORD: 13128-*/.
     ports:

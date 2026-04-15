@@ -142,11 +142,7 @@ const SignUpForm = () => {
           <div className="flex items-center space-x-4">
             {/* Contenedor del Logo */}
             <div className="hidden sm:flex bg-white rounded-xl p-3 shadow-lg border border-gray-100 items-center justify-center">
-              <img
-                src="/assets/image/spira.png"
-                alt="Logo de GSA Inventory"
-                className="h-auto w-10 object-contain sm:w-12"
-              />
+              <span className="text-red-600 font-bold text-2xl">INV</span>
             </div>
 
             {/* Título Principal */}

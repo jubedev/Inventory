@@ -8,17 +8,17 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema gsa_inventory_db
+-- Schema inventory_db
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `gsa_inventory_db`;
-CREATE SCHEMA IF NOT EXISTS `gsa_inventory_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE `gsa_inventory_db`;
+DROP SCHEMA IF EXISTS `inventory_db`;
+CREATE SCHEMA IF NOT EXISTS `inventory_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `inventory_db`;
 
 -- -----------------------------------------------------
--- Table `gsa_inventory_db`.`roles`
+-- Table `inventory_db`.`roles`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `gsa_inventory_db`.`roles`;
-CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`roles` (
+DROP TABLE IF EXISTS `inventory_db`.`roles`;
+CREATE TABLE IF NOT EXISTS `inventory_db`.`roles` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nombre_rol` VARCHAR(100) NULL DEFAULT NULL,
   `descripcion` VARCHAR(255) NULL DEFAULT NULL,
@@ -29,10 +29,10 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `gsa_inventory_db`.`cargos`
+-- Table `inventory_db`.`cargos`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `gsa_inventory_db`.`cargos`;
-CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`cargos` (
+DROP TABLE IF EXISTS `inventory_db`.`cargos`;
+CREATE TABLE IF NOT EXISTS `inventory_db`.`cargos` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nombreCargo` VARCHAR(45) NOT NULL,
   `descripcion` VARCHAR(45) NULL,
@@ -44,10 +44,10 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `gsa_inventory_db`.`razon_social`
+-- Table `inventory_db`.`razon_social`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `gsa_inventory_db`.`razon_social`;
-CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`razon_social` (
+DROP TABLE IF EXISTS `inventory_db`.`razon_social`;
+CREATE TABLE IF NOT EXISTS `inventory_db`.`razon_social` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NOT NULL,
   `descripcion` VARCHAR(45) NULL,
@@ -59,10 +59,10 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `gsa_inventory_db`.`usuarios`
+-- Table `inventory_db`.`usuarios`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `gsa_inventory_db`.`usuarios`;
-CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`usuarios` (
+DROP TABLE IF EXISTS `inventory_db`.`usuarios`;
+CREATE TABLE IF NOT EXISTS `inventory_db`.`usuarios` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nombres` VARCHAR(100) NOT NULL,
   `apellidos` VARCHAR(100) NOT NULL,
@@ -83,22 +83,22 @@ CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`usuarios` (
   INDEX `fk_usuarios_razon_social1_idx` (`razon_social_id` ASC) VISIBLE,
   CONSTRAINT `fk_usuarios_cargos`
     FOREIGN KEY (`cargos_id`)
-    REFERENCES `gsa_inventory_db`.`cargos` (`id`)
+    REFERENCES `inventory_db`.`cargos` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_usuarios_razon_social1`
     FOREIGN KEY (`razon_social_id`)
-    REFERENCES `gsa_inventory_db`.`razon_social` (`id`)
+    REFERENCES `inventory_db`.`razon_social` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `gsa_inventory_db`.`tipos_equipo`
+-- Table `inventory_db`.`tipos_equipo`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `gsa_inventory_db`.`tipos_equipo`;
-CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`tipos_equipo` (
+DROP TABLE IF EXISTS `inventory_db`.`tipos_equipo`;
+CREATE TABLE IF NOT EXISTS `inventory_db`.`tipos_equipo` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nombre_tipo` VARCHAR(100) NULL DEFAULT NULL,
   `descripcion` VARCHAR(255) NULL DEFAULT NULL,
@@ -109,10 +109,10 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `gsa_inventory_db`.`equipos`
+-- Table `inventory_db`.`equipos`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `gsa_inventory_db`.`equipos`;
-CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`equipos` (
+DROP TABLE IF EXISTS `inventory_db`.`equipos`;
+CREATE TABLE IF NOT EXISTS `inventory_db`.`equipos` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `n_activo` VARCHAR(100) NULL DEFAULT NULL,
   `marca` VARCHAR(100) NULL DEFAULT NULL,
@@ -134,17 +134,17 @@ CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`equipos` (
   INDEX `fk_equipos_tipos_equipo1_idx` (`tipos_equipo_id` ASC) VISIBLE,
   CONSTRAINT `fk_equipos_tipos_equipo1`
     FOREIGN KEY (`tipos_equipo_id`)
-    REFERENCES `gsa_inventory_db`.`tipos_equipo` (`id`)
+    REFERENCES `inventory_db`.`tipos_equipo` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `gsa_inventory_db`.`actas`
+-- Table `inventory_db`.`actas`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `gsa_inventory_db`.`actas`;
-CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`actas` (
+DROP TABLE IF EXISTS `inventory_db`.`actas`;
+CREATE TABLE IF NOT EXISTS `inventory_db`.`actas` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `tipo_acta` VARCHAR(100) NULL DEFAULT NULL,
   `numero_acta_interno` VARCHAR(100) NULL DEFAULT NULL,
@@ -156,17 +156,17 @@ CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`actas` (
   INDEX `fk_actas_usuarios1_idx` (`usuarios_id` ASC) VISIBLE,
   CONSTRAINT `fk_actas_usuarios1`
     FOREIGN KEY (`usuarios_id`)
-    REFERENCES `gsa_inventory_db`.`usuarios` (`id`)
+    REFERENCES `inventory_db`.`usuarios` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `gsa_inventory_db`.`tipos_movimiento`
+-- Table `inventory_db`.`tipos_movimiento`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `gsa_inventory_db`.`tipos_movimiento`;
-CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`tipos_movimiento` (
+DROP TABLE IF EXISTS `inventory_db`.`tipos_movimiento`;
+CREATE TABLE IF NOT EXISTS `inventory_db`.`tipos_movimiento` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NOT NULL,
   `descripcion` VARCHAR(45) NULL,
@@ -178,10 +178,10 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `gsa_inventory_db`.`movimientos_inventario`
+-- Table `inventory_db`.`movimientos_inventario`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `gsa_inventory_db`.`movimientos_inventario`;
-CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`movimientos_inventario` (
+DROP TABLE IF EXISTS `inventory_db`.`movimientos_inventario`;
+CREATE TABLE IF NOT EXISTS `inventory_db`.`movimientos_inventario` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `tipo_movimiento` VARCHAR(100) NULL DEFAULT NULL,
   `fecha_movimiento` TIMESTAMP NOT NULL,
@@ -201,32 +201,32 @@ CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`movimientos_inventario` (
   INDEX `fk_movimientos_inventario_tipos_movimiento1_idx` (`tipos_movimiento_id` ASC) VISIBLE,
   CONSTRAINT `fk_movimientos_inventario_equipos1`
     FOREIGN KEY (`equipos_id`)
-    REFERENCES `gsa_inventory_db`.`equipos` (`id`)
+    REFERENCES `inventory_db`.`equipos` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_movimientos_inventario_usuarios1`
     FOREIGN KEY (`usuarios_id`)
-    REFERENCES `gsa_inventory_db`.`usuarios` (`id`)
+    REFERENCES `inventory_db`.`usuarios` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_movimientos_inventario_actas1`
     FOREIGN KEY (`actas_id`)
-    REFERENCES `gsa_inventory_db`.`actas` (`id`)
+    REFERENCES `inventory_db`.`actas` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_movimientos_inventario_tipos_movimiento1`
     FOREIGN KEY (`tipos_movimiento_id`)
-    REFERENCES `gsa_inventory_db`.`tipos_movimiento` (`id`)
+    REFERENCES `inventory_db`.`tipos_movimiento` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `gsa_inventory_db`.`equipos_impresoras_detalles`
+-- Table `inventory_db`.`equipos_impresoras_detalles`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `gsa_inventory_db`.`equipos_impresoras_detalles`;
-CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`equipos_impresoras_detalles` (
+DROP TABLE IF EXISTS `inventory_db`.`equipos_impresoras_detalles`;
+CREATE TABLE IF NOT EXISTS `inventory_db`.`equipos_impresoras_detalles` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `sede` VARCHAR(100) NULL DEFAULT NULL,
   `piso_numero` VARCHAR(50) NULL DEFAULT NULL,
@@ -237,17 +237,17 @@ CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`equipos_impresoras_detalles` (
   UNIQUE INDEX `equipos_id_UNIQUE` (`equipos_id` ASC) VISIBLE,
   CONSTRAINT `fk_equipos_impresoras_detalles_equipos1`
     FOREIGN KEY (`equipos_id`)
-    REFERENCES `gsa_inventory_db`.`equipos` (`id`)
+    REFERENCES `inventory_db`.`equipos` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `gsa_inventory_db`.`inventario_toners`
+-- Table `inventory_db`.`inventario_toners`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `gsa_inventory_db`.`inventario_toners`;
-CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`inventario_toners` (
+DROP TABLE IF EXISTS `inventory_db`.`inventario_toners`;
+CREATE TABLE IF NOT EXISTS `inventory_db`.`inventario_toners` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `fecha_registro` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `toner_negro_cantidad` INT NULL DEFAULT NULL,
@@ -259,17 +259,17 @@ CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`inventario_toners` (
   INDEX `fk_inventario_toners_equipos_impresoras_detalles1_idx` (`equipos_impresoras_detalles_id` ASC) VISIBLE,
   CONSTRAINT `fk_inventario_toners_equipos_impresoras_detalles1`
     FOREIGN KEY (`equipos_impresoras_detalles_id`)
-    REFERENCES `gsa_inventory_db`.`equipos_impresoras_detalles` (`id`)
+    REFERENCES `inventory_db`.`equipos_impresoras_detalles` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `gsa_inventory_db`.`equipos_computadores_detalles`
+-- Table `inventory_db`.`equipos_computadores_detalles`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `gsa_inventory_db`.`equipos_computadores_detalles`;
-CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`equipos_computadores_detalles` (
+DROP TABLE IF EXISTS `inventory_db`.`equipos_computadores_detalles`;
+CREATE TABLE IF NOT EXISTS `inventory_db`.`equipos_computadores_detalles` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `procesador` VARCHAR(255) NULL DEFAULT NULL,
   `ram` VARCHAR(255) NULL DEFAULT NULL,
@@ -289,17 +289,17 @@ CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`equipos_computadores_detalles` (
   UNIQUE INDEX `equipos_id_UNIQUE` (`equipos_id` ASC) VISIBLE,
   CONSTRAINT `fk_equipos_computadores_detalles_equipos1`
     FOREIGN KEY (`equipos_id`)
-    REFERENCES `gsa_inventory_db`.`equipos` (`id`)
+    REFERENCES `inventory_db`.`equipos` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `gsa_inventory_db`.`equipos_celulares_detalles`
+-- Table `inventory_db`.`equipos_celulares_detalles`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `gsa_inventory_db`.`equipos_celulares_detalles`;
-CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`equipos_celulares_detalles` (
+DROP TABLE IF EXISTS `inventory_db`.`equipos_celulares_detalles`;
+CREATE TABLE IF NOT EXISTS `inventory_db`.`equipos_celulares_detalles` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `memoria_ram` VARCHAR(255) NULL DEFAULT NULL,
   `almacenamiento` VARCHAR(255) NULL DEFAULT NULL,
@@ -313,17 +313,17 @@ CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`equipos_celulares_detalles` (
   UNIQUE INDEX `equipos_id_UNIQUE` (`equipos_id` ASC) VISIBLE,
   CONSTRAINT `fk_equipos_celulares_detalles_equipos1`
     FOREIGN KEY (`equipos_id`)
-    REFERENCES `gsa_inventory_db`.`equipos` (`id`)
+    REFERENCES `inventory_db`.`equipos` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `gsa_inventory_db`.`equipos_sim_cards_detalles`
+-- Table `inventory_db`.`equipos_sim_cards_detalles`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `gsa_inventory_db`.`equipos_sim_cards_detalles`;
-CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`equipos_sim_cards_detalles` (
+DROP TABLE IF EXISTS `inventory_db`.`equipos_sim_cards_detalles`;
+CREATE TABLE IF NOT EXISTS `inventory_db`.`equipos_sim_cards_detalles` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `operador` VARCHAR(100) NULL DEFAULT NULL,
   `equipos_id` INT NOT NULL,
@@ -332,17 +332,17 @@ CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`equipos_sim_cards_detalles` (
   UNIQUE INDEX `equipos_id_UNIQUE` (`equipos_id` ASC) VISIBLE,
   CONSTRAINT `fk_equipos_sim_cards_detalles_equipos1`
     FOREIGN KEY (`equipos_id`)
-    REFERENCES `gsa_inventory_db`.`equipos` (`id`)
+    REFERENCES `inventory_db`.`equipos` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `gsa_inventory_db`.`equipos_monitores_detalles`
+-- Table `inventory_db`.`equipos_monitores_detalles`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `gsa_inventory_db`.`equipos_monitores_detalles`;
-CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`equipos_monitores_detalles` (
+DROP TABLE IF EXISTS `inventory_db`.`equipos_monitores_detalles`;
+CREATE TABLE IF NOT EXISTS `inventory_db`.`equipos_monitores_detalles` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `tamano_pulgadas` DECIMAL(5,2) NULL DEFAULT NULL,
   `equipos_id` INT NOT NULL,
@@ -351,17 +351,17 @@ CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`equipos_monitores_detalles` (
   UNIQUE INDEX `equipos_id_UNIQUE` (`equipos_id` ASC) VISIBLE,
   CONSTRAINT `fk_equipos_monitores_detalles_equipos1`
     FOREIGN KEY (`equipos_id`)
-    REFERENCES `gsa_inventory_db`.`equipos` (`id`)
+    REFERENCES `inventory_db`.`equipos` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `gsa_inventory_db`.`equipos_servidores_detalles`
+-- Table `inventory_db`.`equipos_servidores_detalles`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `gsa_inventory_db`.`equipos_servidores_detalles`;
-CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`equipos_servidores_detalles` (
+DROP TABLE IF EXISTS `inventory_db`.`equipos_servidores_detalles`;
+CREATE TABLE IF NOT EXISTS `inventory_db`.`equipos_servidores_detalles` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `hostname` VARCHAR(255) NULL DEFAULT NULL,
   `tipo_servidor` VARCHAR(100) NULL DEFAULT NULL,
@@ -377,17 +377,17 @@ CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`equipos_servidores_detalles` (
   UNIQUE INDEX `equipos_id_UNIQUE` (`equipos_id` ASC) VISIBLE,
   CONSTRAINT `fk_equipos_servidores_detalles_equipos1`
     FOREIGN KEY (`equipos_id`)
-    REFERENCES `gsa_inventory_db`.`equipos` (`id`)
+    REFERENCES `inventory_db`.`equipos` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `gsa_inventory_db`.`equipos_televisores_detalles`
+-- Table `inventory_db`.`equipos_televisores_detalles`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `gsa_inventory_db`.`equipos_televisores_detalles`;
-CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`equipos_televisores_detalles` (
+DROP TABLE IF EXISTS `inventory_db`.`equipos_televisores_detalles`;
+CREATE TABLE IF NOT EXISTS `inventory_db`.`equipos_televisores_detalles` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `tipo_conexion` VARCHAR(100) NULL DEFAULT NULL,
   `pulgadas` DECIMAL(5,2) NULL DEFAULT NULL,
@@ -398,17 +398,17 @@ CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`equipos_televisores_detalles` (
   UNIQUE INDEX `equipos_id_UNIQUE` (`equipos_id` ASC) VISIBLE,
   CONSTRAINT `fk_equipos_televisores_detalles_equipos1`
     FOREIGN KEY (`equipos_id`)
-    REFERENCES `gsa_inventory_db`.`equipos` (`id`)
+    REFERENCES `inventory_db`.`equipos` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `gsa_inventory_db`.`equipos_ups_detalles`
+-- Table `inventory_db`.`equipos_ups_detalles`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `gsa_inventory_db`.`equipos_ups_detalles`;
-CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`equipos_ups_detalles` (
+DROP TABLE IF EXISTS `inventory_db`.`equipos_ups_detalles`;
+CREATE TABLE IF NOT EXISTS `inventory_db`.`equipos_ups_detalles` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `potencia` VARCHAR(50) NULL DEFAULT NULL,
   `input_voltaje` VARCHAR(50) NULL DEFAULT NULL,
@@ -419,17 +419,17 @@ CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`equipos_ups_detalles` (
   UNIQUE INDEX `equipos_id_UNIQUE` (`equipos_id` ASC) VISIBLE,
   CONSTRAINT `fk_equipos_ups_detalles_equipos1`
     FOREIGN KEY (`equipos_id`)
-    REFERENCES `gsa_inventory_db`.`equipos` (`id`)
+    REFERENCES `inventory_db`.`equipos` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `gsa_inventory_db`.`equipos_almacenamiento_detalles`
+-- Table `inventory_db`.`equipos_almacenamiento_detalles`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `gsa_inventory_db`.`equipos_almacenamiento_detalles`;
-CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`equipos_almacenamiento_detalles` (
+DROP TABLE IF EXISTS `inventory_db`.`equipos_almacenamiento_detalles`;
+CREATE TABLE IF NOT EXISTS `inventory_db`.`equipos_almacenamiento_detalles` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `capacidad` VARCHAR(50) NULL DEFAULT NULL,
   `tipo_interfaz` VARCHAR(100) NULL DEFAULT NULL,
@@ -439,17 +439,17 @@ CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`equipos_almacenamiento_detalles` 
   UNIQUE INDEX `equipos_id_UNIQUE` (`equipos_id` ASC) VISIBLE,
   CONSTRAINT `fk_equipos_almacenamiento_detalles_equipos1`
     FOREIGN KEY (`equipos_id`)
-    REFERENCES `gsa_inventory_db`.`equipos` (`id`)
+    REFERENCES `inventory_db`.`equipos` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `gsa_inventory_db`.`equipos_videobeams_detalles`
+-- Table `inventory_db`.`equipos_videobeams_detalles`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `gsa_inventory_db`.`equipos_videobeams_detalles`;
-CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`equipos_videobeams_detalles` (
+DROP TABLE IF EXISTS `inventory_db`.`equipos_videobeams_detalles`;
+CREATE TABLE IF NOT EXISTS `inventory_db`.`equipos_videobeams_detalles` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `tipo_conexion` VARCHAR(100) NULL DEFAULT NULL,
   `equipos_id` INT NOT NULL,
@@ -458,17 +458,17 @@ CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`equipos_videobeams_detalles` (
   UNIQUE INDEX `equipos_id_UNIQUE` (`equipos_id` ASC) VISIBLE,
   CONSTRAINT `fk_equipos_videobeams_detalles_equipos1`
     FOREIGN KEY (`equipos_id`)
-    REFERENCES `gsa_inventory_db`.`equipos` (`id`)
+    REFERENCES `inventory_db`.`equipos` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `gsa_inventory_db`.`equipos_comunicaciones_detalles`
+-- Table `inventory_db`.`equipos_comunicaciones_detalles`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `gsa_inventory_db`.`equipos_comunicaciones_detalles`;
-CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`equipos_comunicaciones_detalles` (
+DROP TABLE IF EXISTS `inventory_db`.`equipos_comunicaciones_detalles`;
+CREATE TABLE IF NOT EXISTS `inventory_db`.`equipos_comunicaciones_detalles` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `tipo_elemento_comunicacion` VARCHAR(255) NULL DEFAULT NULL,
   `equipos_id` INT NOT NULL,
@@ -477,17 +477,17 @@ CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`equipos_comunicaciones_detalles` 
   UNIQUE INDEX `equipos_id_UNIQUE` (`equipos_id` ASC) VISIBLE,
   CONSTRAINT `fk_equipos_comunicaciones_detalles_equipos1`
     FOREIGN KEY (`equipos_id`)
-    REFERENCES `gsa_inventory_db`.`equipos` (`id`)
+    REFERENCES `inventory_db`.`equipos` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `gsa_inventory_db`.`equipos_telefonos_ip_detalles`
+-- Table `inventory_db`.`equipos_telefonos_ip_detalles`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `gsa_inventory_db`.`equipos_telefonos_ip_detalles`;
-CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`equipos_telefonos_ip_detalles` (
+DROP TABLE IF EXISTS `inventory_db`.`equipos_telefonos_ip_detalles`;
+CREATE TABLE IF NOT EXISTS `inventory_db`.`equipos_telefonos_ip_detalles` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `extension` VARCHAR(50) NULL DEFAULT NULL,
   `numero_parte` VARCHAR(100) NULL DEFAULT NULL,
@@ -497,17 +497,17 @@ CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`equipos_telefonos_ip_detalles` (
   UNIQUE INDEX `equipos_id_UNIQUE` (`equipos_id` ASC) VISIBLE,
   CONSTRAINT `fk_equipos_telefonos_ip_detalles_equipos1`
     FOREIGN KEY (`equipos_id`)
-    REFERENCES `gsa_inventory_db`.`equipos` (`id`)
+    REFERENCES `inventory_db`.`equipos` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `gsa_inventory_db`.`usuarios_sistema`
+-- Table `inventory_db`.`usuarios_sistema`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `gsa_inventory_db`.`usuarios_sistema`;
-CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`usuarios_sistema` (
+DROP TABLE IF EXISTS `inventory_db`.`usuarios_sistema`;
+CREATE TABLE IF NOT EXISTS `inventory_db`.`usuarios_sistema` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `correo_corporativo` VARCHAR(255) NOT NULL,
   `contrasena_actualizada` VARCHAR(255) NOT NULL,
@@ -519,17 +519,17 @@ CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`usuarios_sistema` (
   INDEX `fk_usuarios_sistema_roles1_idx` (`roles_id` ASC) VISIBLE,
   CONSTRAINT `fk_usuarios_sistema_roles1`
     FOREIGN KEY (`roles_id`)
-    REFERENCES `gsa_inventory_db`.`roles` (`id`)
+    REFERENCES `inventory_db`.`roles` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `gsa_inventory_db`.`equipos_accesorios_detalles`
+-- Table `inventory_db`.`equipos_accesorios_detalles`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `gsa_inventory_db`.`equipos_accesorios_detalles`;
-CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`equipos_accesorios_detalles` (
+DROP TABLE IF EXISTS `inventory_db`.`equipos_accesorios_detalles`;
+CREATE TABLE IF NOT EXISTS `inventory_db`.`equipos_accesorios_detalles` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nombre_accesorio` VARCHAR(45) NULL,
   `equipos_id` INT NOT NULL,
@@ -537,17 +537,17 @@ CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`equipos_accesorios_detalles` (
   INDEX `fk_equipos_accesorios_detalles_equipos1_idx` (`equipos_id` ASC) VISIBLE,
   CONSTRAINT `fk_equipos_accesorios_detalles_equipos1`
     FOREIGN KEY (`equipos_id`)
-    REFERENCES `gsa_inventory_db`.`equipos` (`id`)
+    REFERENCES `inventory_db`.`equipos` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `gsa_inventory_db`.`acs_req`
+-- Table `inventory_db`.`acs_req`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `gsa_inventory_db`.`acs_req`;
-CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`acs_req` (
+DROP TABLE IF EXISTS `inventory_db`.`acs_req`;
+CREATE TABLE IF NOT EXISTS `inventory_db`.`acs_req` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `estado` ENUM('pendiente', 'activo', 'inactivo') NOT NULL DEFAULT 'pendiente',
   `revisado_por` INT NULL,
@@ -558,17 +558,17 @@ CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`acs_req` (
   INDEX `fk_acs_req_usuarios_sistema1_idx` (`usuarios_sistema_id` ASC) VISIBLE,
   CONSTRAINT `fk_acs_req_usuarios_sistema1`
     FOREIGN KEY (`usuarios_sistema_id`)
-    REFERENCES `gsa_inventory_db`.`usuarios_sistema` (`id`)
+    REFERENCES `inventory_db`.`usuarios_sistema` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `gsa_inventory_db`.`activos_asignados`
+-- Table `inventory_db`.`activos_asignados`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `gsa_inventory_db`.`activos_asignados`;
-CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`activos_asignados` (
+DROP TABLE IF EXISTS `inventory_db`.`activos_asignados`;
+CREATE TABLE IF NOT EXISTS `inventory_db`.`activos_asignados` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `usuarios_id` INT NOT NULL,
   `actas_id` INT NOT NULL,
@@ -582,17 +582,17 @@ CREATE TABLE IF NOT EXISTS `gsa_inventory_db`.`activos_asignados` (
   UNIQUE INDEX `equipos_id_UNIQUE` (`equipos_id` ASC) VISIBLE,
   CONSTRAINT `fk_activos_asignados_actas1`
     FOREIGN KEY (`actas_id`)
-    REFERENCES `gsa_inventory_db`.`actas` (`id`)
+    REFERENCES `inventory_db`.`actas` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_activos_asignados_usuarios1`
     FOREIGN KEY (`usuarios_id`)
-    REFERENCES `gsa_inventory_db`.`usuarios` (`id`)
+    REFERENCES `inventory_db`.`usuarios` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_activos_asignados_equipos1`
     FOREIGN KEY (`equipos_id`)
-    REFERENCES `gsa_inventory_db`.`equipos` (`id`)
+    REFERENCES `inventory_db`.`equipos` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

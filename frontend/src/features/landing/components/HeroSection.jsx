@@ -21,7 +21,7 @@ const HeroSection = () => {
           </div>
           
           <h1 className="text-5xl lg:text-7xl font-satoshi font-extrabold leading-tight tracking-tight animate-slideInLeft">
-            GSA Inventory IT
+            Inventory App IT
           </h1>
           
           <p className="text-xl lg:text-2xl font-inter font-light text-white/95 leading-relaxed max-w-xl animate-slideInLeft delay-100">

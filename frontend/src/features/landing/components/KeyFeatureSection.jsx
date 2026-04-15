@@ -83,7 +83,7 @@ const KeyFeatureSection = () => {
             Módulos Principales
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto font-inter">
-            Explora las funcionalidades clave de GSA Inventory y descubre cómo podemos optimizar la gestión de tus recursos.
+            Explora las funcionalidades clave de Inventory App y descubre cómo podemos optimizar la gestión de tus recursos.
           </p>
         </div>
 

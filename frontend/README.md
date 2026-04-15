@@ -1,4 +1,4 @@
-# GSA Inventory IT - Frontend
+# Inventory App IT - Frontend
 
 Sistema de gestión de inventario de equipos IT desarrollado con React + Vite.
 
