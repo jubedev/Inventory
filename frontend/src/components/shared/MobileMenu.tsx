@@ -1,19 +1,35 @@
+import React from "react";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useAppContext } from "../../hooks/useAppContext";
+import { AppContextType } from "../../types";
 
-const MobileMenu = ({ isOpen, onClose, activeSection }) => {
+interface MobileMenuProps {
+  isOpen: boolean;
+  onClose: () => void;
+  activeSection: string | null;
+  isAdminMode?: boolean; 
+  handleScrollToSection?: (sectionId: string) => (e: React.MouseEvent<HTMLAnchorElement>) => void;
+}
+
+const MobileMenu: React.FC<MobileMenuProps> = ({ 
+  isOpen, 
+  onClose, 
+  activeSection,
+  isAdminMode: propIsAdminMode,
+  handleScrollToSection: propHandleScrollToSection
+}) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { user, logout, isAuthenticated } = useAppContext();
+  const { user, logout, isAuthenticated } = useAppContext() as AppContextType;
   
-  // Detectar si estamos en modo admin
-  const isAdminMode = ['/dashboard', '/equipos', '/usuarios', '/tipos-equipo', '/movimientos', '/reportes'].some(
+  // Usar prop o calcular internamente (para compatibilidad)
+  const isAdminMode = propIsAdminMode ?? ['/dashboard', '/equipos', '/usuarios', '/tipos-equipo', '/movimientos', '/reportes'].some(
     path => location.pathname.startsWith(path)
   );
   
   if (!isOpen) return null;
 
-  const handleScrollToSection = (sectionId) => (e) => {
+  const handleScrollToSectionInternal = (sectionId: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     onClose();
     
@@ -36,13 +52,16 @@ const MobileMenu = ({ isOpen, onClose, activeSection }) => {
     }
   };
 
-  const handleLogout = () => {
-    logout();
+  // Usar el handler pasado por prop o el interno
+  const handleScrollToSection = propHandleScrollToSection || handleScrollToSectionInternal;
+
+  const handleLogout = async (): Promise<void> => {
+    await logout();
     onClose();
     navigate('/login');
   };
 
-  const handleNavClick = (path) => {
+  const handleNavClick = (path: string): void => {
     onClose();
     navigate(path);
   };
@@ -234,52 +253,13 @@ const MobileMenu = ({ isOpen, onClose, activeSection }) => {
                 </li>
                 <li>
                   <NavLink
-                    to="/contact"
+                    to="/login"
                     onClick={onClose}
-                    className={({ isActive }) => `
-                      block text-white px-4 py-3 rounded-xl transition-all duration-300 font-inter
-                      ${isActive 
-                        ? 'bg-white/30 font-semibold shadow-lg scale-105' 
-                        : 'hover:bg-white/20 hover:scale-105'
-                      }
-                    `}
+                    className="block text-white px-4 py-3 rounded-xl transition-all duration-300 font-inter hover:bg-white/20 hover:scale-105"
                   >
-                    📧 Contáctanos
+                    🔑 {isAuthenticated ? 'Dashboard' : 'Acceder'}
                   </NavLink>
                 </li>
-                
-                {isAuthenticated ? (
-                  // Usuario autenticado en landing
-                  <>
-                    <li className="pt-2">
-                      <button
-                        onClick={() => handleNavClick('/dashboard')}
-                        className="w-full text-center px-4 py-3 bg-white text-red-600 font-bold rounded-xl shadow-xl hover:bg-red-50 hover:shadow-2xl hover:scale-105 transition-all duration-300 font-satoshi"
-                      >
-                        📊 Ir al Dashboard
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        onClick={handleLogout}
-                        className="w-full text-center px-4 py-3 bg-red-700 text-white font-semibold rounded-xl hover:bg-red-800 transition-all duration-300"
-                      >
-                        🚪 Cerrar Sesión
-                      </button>
-                    </li>
-                  </>
-                ) : (
-                  // Usuario no autenticado
-                  <li className="pt-2">
-                    <NavLink
-                      to="/login"
-                      onClick={onClose}
-                      className="block text-center px-4 py-3 bg-white text-red-600 font-bold rounded-xl shadow-xl hover:bg-red-50 hover:shadow-2xl hover:scale-105 transition-all duration-300 font-satoshi"
-                    >
-                      🔐 Iniciar Sesión
-                    </NavLink>
-                  </li>
-                )}
               </ul>
             </div>
           )}

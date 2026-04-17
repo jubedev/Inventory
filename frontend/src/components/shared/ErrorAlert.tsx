@@ -1,9 +1,14 @@
-import PropTypes from 'prop-types'
+import React from "react";
+
+interface ErrorAlertProps {
+  message: string | null;
+  onClose?: () => void; // Función opcional para cerrar el mensaje de tipo void (no devuelve nada)
+}
 
 /**
  * Componente reutilizable para mostrar mensajes de error
  */
-const ErrorAlert = ({ message, onClose }) => {
+const ErrorAlert: React.FC<ErrorAlertProps> = ({ message, onClose }) => {
   if (!message) return null
 
   return (
@@ -19,11 +24,6 @@ const ErrorAlert = ({ message, onClose }) => {
       )}
     </div>
   )
-}
-
-ErrorAlert.propTypes = {
-  message: PropTypes.string,
-  onClose: PropTypes.func
 }
 
 export default ErrorAlert

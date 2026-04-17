@@ -1,20 +1,27 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink, Link, useNavigate, useLocation } from "react-router-dom";
 import { useAppContext } from "../../hooks/useAppContext";
 import MobileMenu from "./MobileMenu";
 import Icon from "../ui/Icon";
 
-const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState('inicio');
-  const [showUserMenu, setShowUserMenu] = useState(false);
+const Header: React.FC = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const [scrolled, setScrolled] = useState<boolean>(false);
+  const [activeSection, setActiveSection] = useState<string | null>('inicio');
+  const [showUserMenu, setShowUserMenu] = useState<boolean>(false);
+  
   const navigate = useNavigate();
   const location = useLocation();
+  
   const { user, logout, isAuthenticated } = useAppContext();
 
   // Detectar si estamos en modo admin (rutas privadas) Y autenticado
-  const isAdminMode = isAuthenticated && ['/dashboard', '/equipos', '/usuarios', '/solicitudes', '/tipos-equipo', '/movimientos', '/reportes', '/activos-asignados'].some(
+  const adminPaths: string[] = [
+    '/dashboard', '/equipos', '/usuarios', '/solicitudes', 
+    '/tipos-equipo', '/movimientos', '/reportes', '/activos-asignados'
+  ];
+  
+  const isAdminMode: boolean = isAuthenticated && adminPaths.some(
     path => location.pathname.startsWith(path)
   );
 
@@ -24,13 +31,13 @@ const Header = () => {
   }, [location.pathname]);
 
   useEffect(() => {
-    const handleScroll = () => {
+    const handleScroll = (): void => {
       setScrolled(window.scrollY > 20);
       
       // Solo detectar sección activa si estamos en la página principal
       if (location.pathname === '/') {
-        const sections = ['inicio', 'modulos'];
-        const scrollPosition = window.scrollY + 100;
+        const sections: string[] = ['inicio', 'modulos'];
+        const scrollPosition: number = window.scrollY + 100;
         
         for (const sectionId of sections) {
           const section = document.getElementById(sectionId);
@@ -57,7 +64,7 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [location.pathname]);
 
-  const handleScrollToSection = (sectionId) => (e) => {
+  const handleScrollToSection = (sectionId: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     
     // Si no estamos en la página principal, navegar primero
@@ -79,11 +86,11 @@ const Header = () => {
     }
   };
 
-  const handleLogout = () => {
-    logout()
-    navigate('/login')
-    setShowUserMenu(false)
-  }
+  const handleLogout = async (): Promise<void> => {
+    await logout();
+    navigate('/login');
+    setShowUserMenu(false);
+  };
 
   return (
     <header className={`shadow-2xl backdrop-blur-md fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
@@ -106,7 +113,7 @@ const Header = () => {
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label="Menú"
         >
-          <Icon name={isMenuOpen ? "close" : "hamburger"} className="w-6 h-6" />
+          <Icon name={isMenuOpen ? "close" : "hamburger"} />
         </button>
         <div className="hidden lg:block">
           {isAdminMode && isAuthenticated ? (
@@ -249,17 +256,24 @@ const Header = () => {
                     to="/login"
                     className="px-5 py-2.5 bg-white text-red-600 font-bold rounded-xl shadow-lg hover:bg-red-50 hover:shadow-2xl hover:scale-105 transition-all duration-300 ease-in-out border-2 border-white hover:border-red-100 font-satoshi text-sm"
                   >
-                    Iniciar Sesión
+                    Acceder
                   </NavLink>
                 )}
               </li>
-            </ul>
-          </nav>
+              </ul>
+            </nav>
           )}
         </div>
       </div>
       
-      <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} activeSection={activeSection} />
+      {/* Mobile Menu */}
+      <MobileMenu 
+        isOpen={isMenuOpen} 
+        onClose={() => setIsMenuOpen(false)} 
+        isAdminMode={isAdminMode}
+        handleScrollToSection={handleScrollToSection}
+        activeSection={activeSection}
+      />
     </header>
   );
 };
