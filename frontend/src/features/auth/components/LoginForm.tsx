@@ -1,53 +1,67 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppContext } from "../../../hooks/useAppContext";
 
-const LoginForm = () => {
+import Input from "../../../components/ui/Input";
+import Button from "../../../components/ui/Button";
+
+interface LoginFormData {
+  email: string;
+  password: string;
+}
+
+const LoginForm: React.FC = () => {
   const navigate = useNavigate();
   const { login, loading, error } = useAppContext();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<LoginFormData>({
     email: "",
-    password: ""
+    password: "",
   });
+
   const [loginError, setLoginError] = useState("");
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>): void => {
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [e.target.id]: e.target.value
+      [name]: value,
     });
     setLoginError(""); // Limpiar error al escribir
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoginError("");
-    
+
     const result = await login({
       email: formData.email,
-      password: formData.password
+      password: formData.password,
     });
-    
+
     if (result.success) {
       // Redirigir al dashboard después del login exitoso
-      navigate('/dashboard');
+      navigate("/dashboard");
     } else {
       setLoginError(result.error || "Error al iniciar sesión");
     }
   };
 
   return (
-    <section 
+    <section
       className="flex justify-center items-start sm:items-center min-h-screen bg-cover bg-center bg-no-repeat relative overflow-y-auto py-8"
       style={{
-        backgroundImage: "url('https://d1ih8jugeo2m5m.cloudfront.net/2023/12/plantillas-de-paginas-web-gratis-1200x685.jpg')"
+        backgroundImage:
+          "url('https://d1ih8jugeo2m5m.cloudfront.net/2023/12/plantillas-de-paginas-web-gratis-1200x685.jpg')",
       }}
     >
       {/* Overlay oscuro para mejorar legibilidad */}
       <div className="absolute inset-0 bg-black/40"></div>
-      
+
       {/* Contenedor Principal del Formulario */}
-      <form onSubmit={handleSubmit} className="relative w-full max-w-md p-8 space-y-6 bg-white/95 backdrop-blur-sm shadow-2xl rounded-2xl border border-gray-100 z-10 mx-4 animate-fade-in-up">
+      <form
+        onSubmit={handleSubmit}
+        className="relative w-full max-w-md p-8 space-y-6 bg-white/95 backdrop-blur-sm shadow-2xl rounded-2xl border border-gray-100 z-10 mx-4 animate-fade-in-up"
+      >
         {/* 1. Encabezado (Logo y Título) */}
         <div className="flex items-center space-x-4">
           {/* Contenedor del Logo */}
@@ -72,51 +86,37 @@ const LoginForm = () => {
         )}
 
         {/* 2. Campo de Email */}
-        <div>
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium text-gray-700 mb-1"
-          >
-            Correo Electrónico
-          </label>
-          <input
-            type="email"
-            id="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="tu.correo@ejemplo.com"
-            required
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out"
-          />
-        </div>
+        <Input
+          label="Correo Electrónico"
+          name="email"
+          type="email"
+          value={formData.email}
+          onChange={handleChange}
+          placeholder="tu.correo@ejemplo.com"
+          required
+          className="w-full"
+        />
 
         {/* 3. Campo de Contraseña */}
-        <div>
-          <label
-            htmlFor="password"
-            className="block text-sm font-medium text-gray-700 mb-1"
-          >
-            Contraseña
-          </label>
-          <input
-            type="password"
-            id="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="••••••••"
-            required
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out"
-          />
-        </div>
+        <Input
+          label="Contraseña"
+          name="password"
+          type="password"
+          value={formData.password}
+          onChange={handleChange}
+          placeholder="••••••••"
+          required
+          className="w-full"
+        />
 
         {/* 4. Botón de Enviar */}
-        <button
+        <Button
+          children={loading ? "Iniciando sesión..." : "Iniciar Sesión"}
           type="submit"
+          variant="primary"
+          className="w-full py-2 px-4 font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={loading}
-          className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
-        </button>
+        ></Button>
 
         {/* 5. Enlace Adicional */}
         <p className="text-center text-sm text-gray-500">
@@ -139,12 +139,13 @@ const LoginForm = () => {
           <div className="grow border-t border-gray-300"></div>
         </div>
         <Link to="/signup">
-          <button
+          <Button
             type="button"
-            className="w-full py-2 px-4 bg-white text-gray-600 font-semibold rounded-lg border border-gray-300 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2 transition duration-150 ease-in-out"
+            variant="outline"
+            className="w-full py-2 px-4 font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2 transition duration-150 ease-in-out"
           >
             Solicitar Acceso
-          </button>
+          </Button>
         </Link>
       </form>
     </section>
