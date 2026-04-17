@@ -1,4 +1,14 @@
-const StatsCard = ({ title, value, icon, color = "blue", trend }) => {
+import React from "react";
+
+interface StatsProps {
+  title: string;
+  value: string | number;
+  icon?: React.ReactNode;
+  color?: "blue" | "green" | "red" | "yellow" | "purple";
+  trend?: number;
+}
+
+const StatsCard: React.FC<StatsProps> = ({ title, value, icon, color = "blue", trend }) => {
   const colorClasses = {
     blue: "bg-blue-50 text-blue-600 border-blue-200",
     green: "bg-green-50 text-green-600 border-green-200",
