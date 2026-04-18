@@ -12,6 +12,7 @@ interface InputProps {
   error?: string | null;
   className?: string;
   options?: { value: string; label: string }[]; // Para cuando sea un 'select'
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void; // Para manejar eventos de teclado, especialmente en textarea y select
 }
 
 const Input: React.FC<InputProps> = ({
@@ -26,6 +27,7 @@ const Input: React.FC<InputProps> = ({
   error,
   className,
   options,
+  onKeyDown,
 }) => {
 
   return (
@@ -81,7 +83,8 @@ const Input: React.FC<InputProps> = ({
               ? "border-red-500 focus:ring-red-200"
               : "border-gray-300"
           }`}
-      />
+          onKeyDown={onKeyDown}
+        />
       )}  
       {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
     </div>
