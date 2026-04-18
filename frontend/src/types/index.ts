@@ -64,3 +64,9 @@ export interface ApiResponse<T> {
   total?: number;
   message?: string;
 }
+
+export interface NavItem {
+  name: string;
+  path: string;
+  icon: string | React.ReactNode;
+}
