@@ -1,9 +1,10 @@
+import React from 'react'
 import { Outlet, Navigate } from 'react-router-dom'
 import { useAppContext } from '../hooks/useAppContext'
 import Aside from '../components/shared/Aside'
 import Header from '../components/shared/Header'
 
-const DashboardLayout = () => {
+const DashboardLayout: React.FC = () => {
   const { isAuthenticated, loading } = useAppContext()
 
   if (loading) {
