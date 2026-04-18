@@ -1,8 +1,9 @@
+import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { useAppContext } from '../../hooks/useAppContext'
 import { asideLinks } from '../../utils/validators'
 
-const Aside = () => {
+const Aside: React.FC = () => {
   const { user } = useAppContext()
 
   return (
